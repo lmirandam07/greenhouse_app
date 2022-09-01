@@ -1,7 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_house/models/User.dart';
 import 'package:green_house/screens/auth/login/login_screen.dart';
 import 'package:green_house/widgets/custom_snackbar.dart';
 
@@ -17,7 +17,6 @@ class SignupController extends GetxController {
   var pass = '';
 
   Future<dynamic> signUp() async {
-    CollectionReference users = FirebaseFirestore.instance.collection('user');
     try {
       isLoading(true);
       await FirebaseAuth.instance
@@ -26,8 +25,13 @@ class SignupController extends GetxController {
         password: passController.text.trim(),
       )
           .then((value) async {
-        successSnackBar('Account created successfully');
-        users.add({'email': emailController.text, 'pass': passController.text});
+        successSnackBar('Cuenta creada exitosamente');
+        // final user = UserModel(
+        //     name: 'Alexander',
+        //     username: 'messijabu1014',
+        //     email: emailController.text,
+        //     password: passController.text);
+        // user.createUser(user);
         emailController.clear();
         passController.clear();
         confirmPassController.clear();
@@ -36,11 +40,11 @@ class SignupController extends GetxController {
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        errorSnackBar('The password provided is too weak.');
+        errorSnackBar('La contrasena es muy debil.');
       } else if (e.code == 'email-already-in-use') {
-        errorSnackBar('The account already exists for that email.');
+        errorSnackBar('Ya existe una cuenta con este email');
       } else {
-        errorSnackBar('Something went Wrong, Please try again.');
+        errorSnackBar('Algo ha salido mal. Intenta nuevamente');
       }
       isLoading(false);
     }
