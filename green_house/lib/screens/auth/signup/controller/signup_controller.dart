@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:green_house/models/User.dart';
+import 'package:green_house/models/user_model.dart';
 import 'package:green_house/screens/auth/login/login_screen.dart';
 import 'package:green_house/widgets/custom_snackbar.dart';
 
@@ -13,8 +13,6 @@ class SignupController extends GetxController {
   RxBool isPassObscure = true.obs;
   RxBool isConfirmPassObscure = true.obs;
   var isLoading = false.obs;
-  var email = '';
-  var pass = '';
 
   Future<dynamic> signUp() async {
     try {
@@ -26,12 +24,12 @@ class SignupController extends GetxController {
       )
           .then((value) async {
         successSnackBar('Cuenta creada exitosamente');
-        // final user = UserModel(
-        //     name: 'Alexander',
-        //     username: 'messijabu1014',
-        //     email: emailController.text,
-        //     password: passController.text);
-        // user.createUser(user);
+        final user = UserModel(
+            name: 'Alexander',
+            username: 'messijabu1014',
+            email: emailController.text,
+            password: passController.text);
+        user.createUser(user);
         emailController.clear();
         passController.clear();
         confirmPassController.clear();
