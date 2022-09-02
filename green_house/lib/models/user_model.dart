@@ -1,7 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class UserModel {
-  final docUser = FirebaseFirestore.instance.collection('user').doc();
   String id;
   final String name;
   final String username;
@@ -22,10 +19,4 @@ class UserModel {
         'password': password,
         'email': email
       };
-
-  createUser(UserModel user) async {
-    user.id = docUser.id;
-    await docUser.set(user.toJson());
-
-  }
 }
