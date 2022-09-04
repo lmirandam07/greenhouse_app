@@ -40,6 +40,7 @@ dependencies:
   flutter_switch: ^0.3.2
   firebase_auth: ^3.7.0
   firebase_core: ^1.21.1
+  cloud_firestore: ^2.2.2
   google_maps_flutter: ^2.1.12
   loading_overlay: ^0.3.0
 
