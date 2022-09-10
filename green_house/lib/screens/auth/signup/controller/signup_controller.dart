@@ -6,6 +6,7 @@ import 'package:green_house/screens/auth/login/login_screen.dart';
 import 'package:green_house/widgets/custom_snackbar.dart';
 
 class SignupController extends GetxController {
+  TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   TextEditingController confirmPassController = TextEditingController();
