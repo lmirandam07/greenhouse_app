@@ -5,13 +5,24 @@ import '../../models/user_model.dart';
 
 class UserService {
    //Firebase metods for the user model
-  final UserModel user;
+  UserService();
 
-  UserService(this.user);
+  final docUser = FirebaseFirestore.instance.collection('user');
 
-  final docUser = FirebaseFirestore.instance.collection('user').doc();
-  createUser() async {
-    user.id = docUser.id;
-    await docUser.set(user.toJson()); 
+  createUser(UserModel user) async {
+    user.id = docUser.doc().id;
+    await docUser.doc().set(user.toJson()); 
+  }
+
+   Future<bool>validateUserExist(String username) async {
+    final result = await docUser
+        .where('username', isEqualTo: username)
+        .get();
+    if (result.size > 0 ){
+      return true;
+    }else{
+      return false;
+    }
+    
   }
 }

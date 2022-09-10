@@ -57,7 +57,7 @@ class LoginScreen extends StatelessWidget {
                       padding: EdgeInsets.symmetric(
                           horizontal: screenHeight(context) * 0.036),
                       child: Text(
-                        'Hey, Bienvenido !',
+                        'Hey, Bienvenido!',
                         style: montserratSemiBold.copyWith(
                           fontSize: heading28,
                           color: AppColors.blackMainColor,
@@ -70,7 +70,7 @@ class LoginScreen extends StatelessWidget {
                     CustomTextField(
                       controller: loginController.emailController,
                       headText: 'Correo electrónico',
-                      hintText: 'johnsondoe@nomail.com',
+                      hintText: 'ejemplo@gmail.com',
                       prefixIconPath: AppIcons.mailIcon,
                       keyboardType: TextInputType.emailAddress,
                       validator: AppValidations.validateEmail,
@@ -81,7 +81,7 @@ class LoginScreen extends StatelessWidget {
                     CustomTextField(
                       controller: loginController.passController,
                       headText: 'Contraseña',
-                      hintText: '•••••••••••••••••••••••',
+                      hintText: '',
                       prefixIconPath: AppIcons.lockIcon,
                       obscureText: loginController.isPassObscure.value,
                       suffixIcon: IconButton(
@@ -103,7 +103,7 @@ class LoginScreen extends StatelessWidget {
                           onPressed: () {
                             Get.to(ForgotPassScreen());
                           },
-                          child: Text('Olvidaste tu contraseña?',
+                          child: Text('¿Olvidaste tu contraseña?',
                             style: montserratMedium.copyWith(
                               fontSize: body13,
                               color: AppColors.blueColor.withOpacity(0.6),
