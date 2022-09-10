@@ -5,6 +5,8 @@ import 'package:green_house/models/user_model.dart';
 import 'package:green_house/screens/auth/login/login_screen.dart';
 import 'package:green_house/widgets/custom_snackbar.dart';
 
+import '../../../../services/firestore_services/user_services.dart';
+
 class SignupController extends GetxController {
   TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -14,7 +16,6 @@ class SignupController extends GetxController {
   RxBool isPassObscure = true.obs;
   RxBool isConfirmPassObscure = true.obs;
   var isLoading = false.obs;
-
   Future<dynamic> signUp() async {
     try {
       isLoading(true);
@@ -30,7 +31,8 @@ class SignupController extends GetxController {
             username: 'messijabu1014',
             email: emailController.text,
             password: passController.text);
-        user.createUser(user);
+        final userService = UserService(user);
+        userService.createUser();
         emailController.clear();
         passController.clear();
         confirmPassController.clear();
