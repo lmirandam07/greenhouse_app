@@ -57,12 +57,21 @@ class SignupScreen extends StatelessWidget {
                         padding: EdgeInsets.symmetric(
                             horizontal: screenHeight(context) * 0.036),
                         child: Text(
-                          'Hey, Bienvenido !',
+                          '!Bienvenido a Greenhouse!',
                           style: montserratSemiBold.copyWith(
                             fontSize: heading28,
                             color: AppColors.blackMainColor,
                           ),
                         ),
+                      ),
+                      SizedBox(height: screenHeight(context) * 0.03),
+                      CustomTextField(
+                        controller: signupController.usernameController,
+                        headText: 'Username',
+                        hintText: '',
+                        prefixIconPath: AppIcons.userIcon,
+                        keyboardType: TextInputType.text,
+                        validator: AppValidations.validateRequired,
                       ),
 
                       /// email field
@@ -70,7 +79,7 @@ class SignupScreen extends StatelessWidget {
                       CustomTextField(
                         controller: signupController.emailController,
                         headText: 'Correo electrónico',
-                        hintText: 'johnsondoe@nomail.com',
+                        hintText: 'example@gmail.com',
                         prefixIconPath: AppIcons.mailIcon,
                         keyboardType: TextInputType.emailAddress,
                         validator: AppValidations.validateEmail,
@@ -81,7 +90,7 @@ class SignupScreen extends StatelessWidget {
                       CustomTextField(
                         controller: signupController.passController,
                         headText: 'Contraseña',
-                        hintText: '•••••••••••••••••••••••',
+                        hintText: '',
                         prefixIconPath: AppIcons.lockIcon,
                         validator: AppValidations.validatePassword,
                         obscureText: signupController.isPassObscure.value,
@@ -99,7 +108,7 @@ class SignupScreen extends StatelessWidget {
                       CustomTextField(
                         controller: signupController.confirmPassController,
                         headText: 'Repetir Contraseña',
-                        hintText: '•••••••••••••••••••••••',
+                        hintText: '',
                         prefixIconPath: AppIcons.lockIcon,
                         validator: validateConfirmPassword,
                         obscureText:

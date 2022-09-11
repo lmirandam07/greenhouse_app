@@ -4,9 +4,9 @@ class AppValidations {
         RegExp(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]"
             r"{0,253}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]"
             r"{0,253}[a-zA-Z0-9])?)*$");
-    if (value!.isEmpty) return "Required";
+    if (value!.isEmpty) return "Requerido";
     if (!regex.hasMatch(value)) {
-      return 'Please enter valid email';
+      return 'Por favor inserte un correo valido';
     } else {
       return null;
     }
@@ -14,10 +14,10 @@ class AppValidations {
 
   static String? validatePassword(String? value) {
     if (value!.isEmpty) {
-      return "Required";
+      return "requerido";
     }
     if (value.length < 6) {
-      return "Password length should be at least 6";
+      return "La contraseña debe tener almenos 6 caracteres";
     } else {
       return null;
     }
@@ -25,7 +25,7 @@ class AppValidations {
 
   static String? validateConfirmPassword(String? value) {
     if (value!.isEmpty) {
-      return "required";
+      return "Requerido";
     } else {
       return null;
     }
@@ -33,7 +33,7 @@ class AppValidations {
 
   static String? validateRequired(String? value) {
     if (value!.isEmpty) {
-      return "required";
+      return "Requerido";
     } else {
       return null;
     }

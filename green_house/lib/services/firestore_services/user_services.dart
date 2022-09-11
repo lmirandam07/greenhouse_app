@@ -4,12 +4,25 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../../models/user_model.dart';
 
 class UserService {
-  final UserModel user;
+   //Firebase metods for the user model
+  UserService();
 
-  UserService(this.user);
-  final docUser = FirebaseFirestore.instance.collection('user').doc();
-  createUser() async {
-    user.id = docUser.id;
-    await docUser.set(user.toJson());
+  final docUser = FirebaseFirestore.instance.collection('user');
+
+  createUser(UserModel user) async {
+    user.id = docUser.doc().id;
+    await docUser.doc().set(user.toJson()); 
+  }
+
+   Future<bool>validateUserExist(String username) async {
+    final result = await docUser
+        .where('username', isEqualTo: username)
+        .get();
+    if (result.size > 0 ){
+      return true;
+    }else{
+      return false;
+    }
+    
   }
 }
