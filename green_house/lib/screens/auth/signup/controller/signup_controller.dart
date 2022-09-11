@@ -36,7 +36,7 @@ class SignupController extends GetxController {
           )
               .then((value) async {
             final user = UserModel(
-                name: 'Alexander',
+                name: '',
                 username: usernameController.text,
                 email: emailController.text,
                 password: passController.text);
