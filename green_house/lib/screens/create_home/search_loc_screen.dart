@@ -5,7 +5,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import '../../constants/exports.dart';
 import '../../widgets/custom_button.dart';
 import '../../widgets/custom_text_field.dart';
-import 'controller/invite_member_controller.dart';
+import 'controller/create_home_controller.dart';
 
 class SearchLocationScreen extends StatefulWidget {
   SearchLocationScreen({Key? key}) : super(key: key);
@@ -15,7 +15,6 @@ class SearchLocationScreen extends StatefulWidget {
 }
 
 class _SearchLocationScreenState extends State<SearchLocationScreen> {
-
   final Set<Marker> _markers = {};
 
   void _onMapCreated(GoogleMapController controller) {
@@ -29,8 +28,7 @@ class _SearchLocationScreenState extends State<SearchLocationScreen> {
     });
   }
 
-  final InviteMemberController memberController =
-  Get.put(InviteMemberController());
+  final CreateHomeController memberController = Get.put(CreateHomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +84,8 @@ class _SearchLocationScreenState extends State<SearchLocationScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       /// search loc texts
-                      Text('Seleccionar ubicacion',
+                      Text(
+                        'Seleccionar ubicacion',
                         style: montserratRegular.copyWith(
                           fontSize: 18.0,
                           color: AppColors.whiteColor,
@@ -157,7 +156,6 @@ class _SearchLocationScreenState extends State<SearchLocationScreen> {
                     ],
                   ),
                 ),
-
               ],
             ),
           ),

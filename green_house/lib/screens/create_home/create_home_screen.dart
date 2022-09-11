@@ -2,20 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:green_house/constants/exports.dart';
-import 'package:green_house/screens/invite_member/search_loc_screen.dart';
 import 'package:green_house/widgets/custom_button.dart';
 import 'package:green_house/widgets/custom_text_field.dart';
 
-import 'controller/invite_member_controller.dart';
+import 'controller/create_home_controller.dart';
 
-class InviteMemberScreen extends StatefulWidget {
-  InviteMemberScreen({Key? key}) : super(key: key);
+class CreateHomeScreen extends StatefulWidget {
+  CreateHomeScreen({Key? key}) : super(key: key);
 
   @override
-  State<InviteMemberScreen> createState() => _InviteMemberScreenState();
+  State<CreateHomeScreen> createState() => _CreateHomeScreenState();
 }
 
-class _InviteMemberScreenState extends State<InviteMemberScreen> {
+class _CreateHomeScreenState extends State<CreateHomeScreen> {
   final Set<Marker> _markers = {};
 
   void _onMapCreated(GoogleMapController controller) {
@@ -23,14 +22,14 @@ class _InviteMemberScreenState extends State<InviteMemberScreen> {
       _markers.add(
         const Marker(
           markerId: MarkerId('id-1'),
-          position: LatLng(30.587968, 60.814708),
+          position: LatLng(8.9972, -79.5068),
         ),
       );
     });
   }
 
-  final InviteMemberController memberController =
-      Get.put(InviteMemberController());
+  final CreateHomeController createHomeController =
+      Get.put(CreateHomeController());
 
   @override
   Widget build(BuildContext context) {
@@ -61,9 +60,10 @@ class _InviteMemberScreenState extends State<InviteMemberScreen> {
                       Expanded(
                         child: CustomTextField(
                           headText: 'Nombre del hogar',
-                          hintText: 'johnsondoe',
+                          hintText: 'Hogar',
                           prefixIconPath: AppIcons.userIcon,
-                          controller: memberController.houseHoldNameController,
+                          controller:
+                              createHomeController.houseHoldNameController,
                         ),
                       ),
                     ],
@@ -76,7 +76,7 @@ class _InviteMemberScreenState extends State<InviteMemberScreen> {
                   headText: 'Invitar integrante',
                   hintText: 'johnsondoe',
                   prefixIconPath: AppIcons.userIcon,
-                  controller: memberController.inviteUserController,
+                  controller: createHomeController.inviteUserController,
                 ),
 
                 /// btns
@@ -92,7 +92,7 @@ class _InviteMemberScreenState extends State<InviteMemberScreen> {
                       Expanded(
                         child: CustomButton(
                           onTap: () {},
-                          btnText: 'Enviar',
+                          btnText: 'Agregar',
                         ),
                       ),
                       SizedBox(width: screenHeight(context) * 0.05),
@@ -129,7 +129,8 @@ class _InviteMemberScreenState extends State<InviteMemberScreen> {
                     children: [
                       CustomTextField(
                         isHead: false,
-                        controller: memberController.searchLocationController,
+                        controller:
+                            createHomeController.searchLocationController,
                         headText: '',
                         hintText: 'Buscar',
                         prefixIconPath: AppIcons.searchIcon,
@@ -148,7 +149,7 @@ class _InviteMemberScreenState extends State<InviteMemberScreen> {
                             onMapCreated: _onMapCreated,
                             markers: _markers,
                             initialCameraPosition: const CameraPosition(
-                              target: LatLng(30.587968, 60.814708),
+                              target: LatLng(8.9972, -79.5068),
                               //zoom: 5,
                             ),
                           ),
@@ -166,13 +167,12 @@ class _InviteMemberScreenState extends State<InviteMemberScreen> {
                   ),
                   child: CustomButton(
                     onTap: () {
-                     /// Get.to(SearchLocationScreen());
+                      /// Get.to(SearchLocationScreen());
                       Get.back();
                     },
                     btnText: 'Crear',
                   ),
                 ),
-
               ],
             ),
           ),

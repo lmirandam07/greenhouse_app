@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_house/screens/dialogs/new_member.dart';
-import 'package:green_house/screens/invite_member/search_loc_screen.dart';
+import 'package:green_house/screens/create_home/search_loc_screen.dart';
 import 'package:green_house/widgets/custom_button.dart';
 
 import '../../constants/exports.dart';
@@ -25,7 +25,7 @@ class HomeXSettingScreen extends StatelessWidget {
               isLeadingIcon: false,
               titleText: 'Hogares',
               action: GestureDetector(
-                onTap: (){
+                onTap: () {
                   Get.to(SearchLocationScreen());
                 },
                 child: Container(

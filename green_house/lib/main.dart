@@ -8,7 +8,7 @@ import 'package:green_house/screens/homes/home_x_screen.dart';
 import 'package:green_house/screens/homes/home_x_setting_screen.dart';
 import 'package:green_house/screens/homes/homes_screen.dart';
 import 'package:green_house/screens/household/household_screen.dart';
-import 'package:green_house/screens/invite_member/invite_member_screen.dart';
+import 'package:green_house/screens/create_home/create_home_screen.dart';
 import 'package:green_house/screens/profile/user_profile_screen.dart';
 
 import 'constants/exports.dart';
@@ -25,14 +25,15 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
-  // This widget is the root of your application.
+  // This widget is the root of the application.
   @override
   Widget build(BuildContext context) {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(
-        systemNavigationBarColor: AppColors.primaryColor, // navigation bar color
+        systemNavigationBarColor:
+            AppColors.primaryColor, // navigation bar color
         statusBarColor: Colors.black, //
-        statusBarIconBrightness: Brightness.light,// status bar color
+        statusBarIconBrightness: Brightness.light, // status bar color
       ),
     );
     return GetMaterialApp(
@@ -43,10 +44,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.lightGreen,
         scaffoldBackgroundColor: Colors.white,
       ),
-       home: SplashScreen(),
-     /// home: LoginScreen(),
+      home: SplashScreen(),
+
+      /// home: LoginScreen(),
       // BottomNavBar(),
     );
   }
 }
-
