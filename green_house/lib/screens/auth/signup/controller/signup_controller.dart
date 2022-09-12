@@ -5,7 +5,7 @@ import 'package:green_house/models/user_model.dart';
 import 'package:green_house/screens/auth/login/login_screen.dart';
 import 'package:green_house/widgets/custom_snackbar.dart';
 
-import '../../../../services/firestore_services/user_services.dart';
+import '../../../../services/firestore_services/firestore_services.dart';
 import '../signup_screen.dart';
 
 class SignupController extends GetxController {
@@ -16,12 +16,12 @@ class SignupController extends GetxController {
 
   RxBool isPassObscure = true.obs;
   RxBool isConfirmPassObscure = true.obs;
-  final userService = UserService();
+  final firestoreService = FirestoreService();
   var isLoading = false.obs;
   Future<dynamic> signUp() async {
     try {
       isLoading(true);
-      await userService
+      await firestoreService
           .validateUserExist(usernameController.text)
           .then((value) async {
         if (value) {
@@ -41,7 +41,7 @@ class SignupController extends GetxController {
                 email: emailController.text,
                 password: passController.text);
             successSnackBar('Cuenta creada correctamente');
-            userService.createUser(user);
+            firestoreService.createUser(user);
             emailController.clear();
             passController.clear();
             confirmPassController.clear();
