@@ -1,5 +1,3 @@
-import 'dart:ffi';
-import 'dart:html';
 import 'package:latlng/latlng.dart';
 
 class HomeModel {

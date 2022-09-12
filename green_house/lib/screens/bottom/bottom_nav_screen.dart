@@ -16,7 +16,6 @@ class BottomNavBar extends GetView<BottomNavController> {
   Widget build(BuildContext context) {
     Get.put(BottomNavController());
     return Scaffold(
-
       /// floating action button
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Transform.rotate(
@@ -40,7 +39,7 @@ class BottomNavBar extends GetView<BottomNavController> {
               ),
               child: Center(
                 child: Transform.rotate(
-                  angle: 90,
+                  angle: 90.1,
                   child: const Icon(
                     Icons.add,
                     color: AppColors.whiteColor,
