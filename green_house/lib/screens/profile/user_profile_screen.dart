@@ -3,8 +3,11 @@ import 'package:get/get.dart';
 import 'package:green_house/constants/exports.dart';
 import 'package:green_house/screens/profile/edit_profile_screen.dart';
 
+import '../../services/firestore_services/firestore_services.dart';
+
 class UserProfileScreen extends StatelessWidget {
-  const UserProfileScreen({Key? key}) : super(key: key);
+  UserProfileScreen({Key? key}) : super(key: key);
+  final firestoreService = FirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -58,13 +61,20 @@ class UserProfileScreen extends StatelessWidget {
                 ),
 
                 /// texts
-                Text(
-                  'Nombre del usuario',
-                  style: montserratMedium.copyWith(
-                    fontSize: 20.0,
-                    color: AppColors.blackColor,
-                  ),
-                ),
+                FutureBuilder(
+                    future: firestoreService.getUserData(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                      return Text(
+                        snapshot.data['username'],
+                        style: montserratMedium.copyWith(
+                          fontSize: 20.0,
+                          color: AppColors.blackColor,
+                        ),
+                      );
+                    }),
 
                 /// graph box
                 SizedBox(height: screenHeight(context) * 0.03),
@@ -169,7 +179,8 @@ class UserProfileScreen extends StatelessWidget {
                         child: Container(
                           height: 60.0,
                           width: screenWidth(context),
-                          margin: EdgeInsets.symmetric(horizontal: screenHeight(context) * 0.03),
+                          margin: EdgeInsets.symmetric(
+                              horizontal: screenHeight(context) * 0.03),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(radius10),
                             color: AppColors.whiteColor,
@@ -188,7 +199,8 @@ class UserProfileScreen extends StatelessWidget {
                         child: Container(
                           height: 60.0,
                           width: screenWidth(context),
-                          margin: EdgeInsets.symmetric(horizontal: screenHeight(context) * 0.03),
+                          margin: EdgeInsets.symmetric(
+                              horizontal: screenHeight(context) * 0.03),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(radius10),
                             color: AppColors.whiteColor,

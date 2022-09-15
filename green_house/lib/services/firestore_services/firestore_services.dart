@@ -11,9 +11,9 @@ class FirestoreService {
   final docUser = FirebaseFirestore.instance.collection('user');
   final docHome = FirebaseFirestore.instance.collection('home');
 
-  createUser(UserModel user) async {
-    user.id = docUser.doc().id;
-    await docUser.doc().set(user.toJson());
+  createUser(UserModel user, uid) async {
+    user.id = docUser.doc(uid).id;
+    await docUser.doc(uid).set(user.toJson());
   }
 
   createHome(HomeModel home) async {
@@ -28,5 +28,12 @@ class FirestoreService {
     } else {
       return false;
     }
+  }
+
+  getUserData() async {
+    final currentUser = await FirebaseAuth.instance.currentUser?.uid;
+    final snapshot = await docUser.doc(currentUser).get();
+    final userData = await snapshot.data();
+    return userData;
   }
 }

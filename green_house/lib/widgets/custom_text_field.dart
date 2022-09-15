@@ -15,25 +15,26 @@ class CustomTextField extends StatelessWidget {
   final EdgeInsets? padding;
   final String? Function(String?)? onSubmitted;
 
-  const CustomTextField({
-    Key? key,
-    required this.controller,
-    required this.headText,
-    required this.hintText,
-    this.keyboardType,
-    required this.prefixIconPath,
-    this.suffixIcon,
-    this.obscureText = false,
-    this.validator,
-    this.isHead = true,
-    this.padding,
-    this.onSubmitted
-  }) : super(key: key);
+  const CustomTextField(
+      {Key? key,
+      required this.controller,
+      required this.headText,
+      required this.hintText,
+      this.keyboardType,
+      required this.prefixIconPath,
+      this.suffixIcon,
+      this.obscureText = false,
+      this.validator,
+      this.isHead = true,
+      this.padding,
+      this.onSubmitted})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: padding ??  EdgeInsets.symmetric(horizontal: screenHeight(context) * 0.036),
+      padding: padding ??
+          EdgeInsets.symmetric(horizontal: screenHeight(context) * 0.036),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -59,7 +60,7 @@ class CustomTextField extends StatelessWidget {
               controller: controller,
               keyboardType: keyboardType,
               obscureText: obscureText!,
-              onFieldSubmitted:onSubmitted,
+              onFieldSubmitted: onSubmitted,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.symmetric(vertical: 8.0),
                 border: OutlineInputBorder(
@@ -100,8 +101,8 @@ class CustomTextField extends StatelessWidget {
                 ),
                 hintText: hintText,
                 hintStyle: montserratRegular.copyWith(
-                  fontSize: body15,
-                  color: AppColors.blackMainColor,
+                  fontSize: body14,
+                  color: AppColors.blackHintColor,
                 ),
                 suffixIcon: suffixIcon ?? const SizedBox(),
               ),

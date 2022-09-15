@@ -7,6 +7,7 @@ class AppColors {
   static const Color whiteColor = Color(0xffFFFFFF);
   static const Color blackColor = Color(0xff000000);
   static const Color blackMainColor = Color(0xff373737);
+  static const Color blackHintColor = Color.fromARGB(255, 172, 170, 170);
   static const Color fieldBackColor = Color(0xffF6F3F3);
   static const Color greyDarkColor = Color(0xff707070);
   static const Color greyColor = Color(0xffDADADA);
@@ -14,5 +15,4 @@ class AppColors {
   static const Color dividerColor = Color(0xff253274);
   static const Color blueColor = Color(0xff0038FF);
   static const Color whiteLightColor = Color(0xffEAEBF9);
-
 }
