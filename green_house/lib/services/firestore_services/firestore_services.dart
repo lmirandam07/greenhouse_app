@@ -36,4 +36,11 @@ class FirestoreService {
     final userData = await snapshot.data();
     return userData;
   }
+
+  UpdateUserData(Map<String, Object?> data) async {
+    final userData = await getUserData();
+    final user = await docUser.doc(userData['id']);
+    print(data);
+    user.update(data);
+  }
 }

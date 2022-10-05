@@ -46,7 +46,7 @@ class EditProfileScreen extends StatelessWidget {
                 CustomTextField(
                   controller: profileController.userNameController,
                   headText: 'Nombre del usuario',
-                  hintText: 'johnsondoe',
+                  hintText: 'example',
                   prefixIconPath: AppIcons.userIcon,
                 ),
 
@@ -121,7 +121,9 @@ class EditProfileScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: CustomButton(
-                          onTap: () {},
+                          onTap: () {
+                            profileController.UpdateUser();
+                          },
                           btnText: 'Guardar',
                         ),
                       ),
