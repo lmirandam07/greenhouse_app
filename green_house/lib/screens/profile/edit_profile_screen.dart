@@ -45,7 +45,15 @@ class EditProfileScreen extends StatelessWidget {
                 SizedBox(height: screenHeight(context) * 0.032),
                 CustomTextField(
                   controller: profileController.userNameController,
-                  headText: 'Nombre del usuario',
+                  headText: 'Nickname',
+                  hintText: 'example',
+                  prefixIconPath: AppIcons.userIcon,
+                ),
+
+                SizedBox(height: screenHeight(context) * 0.032),
+                CustomTextField(
+                  controller: profileController.nameController,
+                  headText: 'Nombre',
                   hintText: 'example',
                   prefixIconPath: AppIcons.userIcon,
                 ),

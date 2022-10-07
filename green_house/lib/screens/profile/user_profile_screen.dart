@@ -67,13 +67,22 @@ class UserProfileScreen extends StatelessWidget {
                       if (snapshot.connectionState == ConnectionState.waiting) {
                         return Center(child: CircularProgressIndicator());
                       }
-                      return Text(
-                        snapshot.data['username'],
-                        style: montserratMedium.copyWith(
-                          fontSize: 20.0,
-                          color: AppColors.blackColor,
+                      return ListView(shrinkWrap: true, children: <Widget>[
+                        Center(
+                          child: Text(snapshot.data['username'],
+                              style: montserratMedium.copyWith(
+                                fontSize: 18.0,
+                                color: AppColors.blackColor,
+                              )),
                         ),
-                      );
+                        Center(
+                          child: Text(snapshot.data['name'],
+                              style: montserratMedium.copyWith(
+                                fontSize: 14.0,
+                                color: AppColors.blackHintColor,
+                              )),
+                        )
+                      ]);
                     }),
 
                 /// graph box
