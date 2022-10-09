@@ -17,7 +17,7 @@ class AppValidations {
       return "requerido";
     }
     if (value.length < 6) {
-      return "La contraseña debe tener almenos 6 caracteres";
+      return "La contraseña debe tener al menos 6 caracteres";
     } else {
       return null;
     }

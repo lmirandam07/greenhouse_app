@@ -175,8 +175,7 @@ class _CreateHomeScreenState extends State<CreateHomeScreen> {
                     ),
                     child: CustomButton(
                       onTap: () {
-                        /// Get.to(SearchLocationScreen());
-                        Get.back();
+                        createHomeController.createHome();
                       },
                       btnText: 'Crear',
                     ),
