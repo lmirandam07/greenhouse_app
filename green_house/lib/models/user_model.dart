@@ -6,7 +6,7 @@ class UserModel {
   final String email;
 
   UserModel(
-      {this.id = '',
+      { this.id='',
       required this.name,
       required this.username,
       required this.email,

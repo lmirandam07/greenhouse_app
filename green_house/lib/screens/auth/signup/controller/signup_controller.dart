@@ -26,7 +26,6 @@ class SignupController extends GetxController {
           .then((value) async {
         if (value) {
           errorSnackBar('Ya existe el usuario');
-          Get.off(SignupScreen());
           isLoading(false);
         } else {
           await FirebaseAuth.instance
@@ -36,12 +35,12 @@ class SignupController extends GetxController {
           )
               .then((value) async {
             final user = UserModel(
-                name: '',
+                name: 'Prueba',
                 username: usernameController.text,
                 email: emailController.text,
                 password: passController.text);
             successSnackBar('Cuenta creada correctamente');
-            firestoreService.createUser(user);
+            firestoreService.createUser(user, value.user?.uid);
             emailController.clear();
             passController.clear();
             confirmPassController.clear();
