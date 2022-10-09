@@ -57,7 +57,7 @@ class SignupScreen extends StatelessWidget {
                         padding: EdgeInsets.symmetric(
                             horizontal: screenHeight(context) * 0.036),
                         child: Text(
-                          '!Bienvenido a Greenhouse!',
+                          '¡Bienvenido a Greenhouse!',
                           style: montserratSemiBold.copyWith(
                             fontSize: heading28,
                             color: AppColors.blackMainColor,
