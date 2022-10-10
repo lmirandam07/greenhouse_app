@@ -4,7 +4,7 @@ class HomeModel {
   String home_id;
   final String home_name;
   final String owner_id;
-  final GeoPoint ubication;
+  final String ubication;
 
   HomeModel(
       {this.home_id = '',

@@ -17,7 +17,7 @@ class ProfileController extends GetxController {
   Map<String, Object> userdata = {};
   Future<dynamic> UpdateUser() async {
     final currentUser =
-        await firestoreService.getUserData().then((value) async {
+        await firestoreService.getCurrentUserData().then((value) async {
       if (userNameController.text.isEmpty && nameController.text.isEmpty) {
         userdata = {'username': value['username'], 'name': value['name']};
       } else if (nameController.text.isEmpty &&

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_house/models/home_members.dart';
+import 'package:green_house/models/home_model.dart';
 import 'package:green_house/screens/create_home/create_home_screen.dart';
+import 'package:green_house/screens/homes/homes_screen.dart';
 import 'package:green_house/widgets/custom_snackbar.dart';
 
 import '../../../services/firestore_services/firestore_services.dart';
@@ -15,6 +18,7 @@ class CreateHomeController extends GetxController {
   var isLoading = false.obs;
 
   List invitedUsers = [];
+  List<HomeMembersModel> inviteUserModel = [];
 
   Future<dynamic> inviteUser() async {
     var user = inviteUserController.text;
@@ -26,7 +30,6 @@ class CreateHomeController extends GetxController {
           invitedUsers.add(user);
           successSnackBar("Se agregó al usuario ${user} al hogar");
           inviteUserController.text = "";
-          print(invitedUsers);
         } else if (invitedUsers.contains(user)) {
           // Si el usuario ya fue agregado
           errorSnackBar('El usuario ${user} ya fue invitado');
@@ -43,5 +46,37 @@ class CreateHomeController extends GetxController {
     }
   }
 
-  Future<dynamic> createHome() async {}
+  Future<dynamic> createHome() async {
+    await firestoreService.getCurrentUserData().then((value) async {
+      try {
+        final home = HomeModel(
+            home_name: houseHoldNameController.text,
+            owner_id: value['id'],
+            ubication: searchLocationController.text);
+        final homeOwner = HomeMembersModel(
+            member_id: value['id'],
+            member_role: 'Owner',
+            member_status: 'accepted');
+        inviteUserModel.add(homeOwner);
+        invitedUsers.forEach((user) async {
+          await firestoreService.getUserData(user).then((value) async {
+            final homeMember = HomeMembersModel(
+                member_id: value['id'],
+                member_role: 'common',
+                member_status: 'pending');
+            inviteUserModel.add(homeMember);
+          });
+        });
+        firestoreService.createHome(home, inviteUserModel);
+        successSnackBar('Casa creada correctamente');
+        houseHoldNameController.clear();
+        inviteUserController.clear();
+        Get.off(() => const HomesScreen());
+        isLoading(false);
+      } catch (e) {
+        errorSnackBar('Error al crear la casa. Intente nuevamente');
+        isLoading(false);
+      }
+    });
+  }
 }
