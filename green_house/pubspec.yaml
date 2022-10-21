@@ -41,6 +41,9 @@ dependencies:
   google_maps_flutter: ^2.1.12
   latlng: ^0.2.0
   loading_overlay: ^0.3.0
+  geolocator: ^9.0.1
+  google_maps_webservice: ^0.0.19
+  google_maps_place_picker_mb: ^2.0.0-mb.22
 
 dev_dependencies:
   change_app_package_name: ^1.1.0

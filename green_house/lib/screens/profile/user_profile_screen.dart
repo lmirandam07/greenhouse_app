@@ -65,7 +65,7 @@ class UserProfileScreen extends StatelessWidget {
                     future: firestoreService.getCurrentUserData(),
                     builder: (context, AsyncSnapshot snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       }
                       return ListView(shrinkWrap: true, children: <Widget>[
                         Center(

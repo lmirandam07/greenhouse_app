@@ -1,13 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_house/constants/exports.dart';
+import 'package:green_house/models/home_model.dart';
 import 'package:green_house/screens/homes/components/home_box.dart';
 import 'package:green_house/screens/create_home/create_home_screen.dart';
 
+import '../../services/firestore_services/firestore_services.dart';
 import '../../widgets/custom_app_bar.dart';
 
 class HomesScreen extends StatelessWidget {
-  const HomesScreen({Key? key}) : super(key: key);
+  HomesScreen({Key? key}) : super(key: key);
+  final firestoreService = FirestoreService();
+  final List<dynamic> homes = [];
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +47,28 @@ class HomesScreen extends StatelessWidget {
 
             /// list
             SizedBox(height: screenHeight(context) * 0.016),
-            const HomeBox(),
-            const HomeBox(),
+            FutureBuilder(
+                future: firestoreService.getUserHomes(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasData) {
+                    List homesList = snapshot.data;
+                    print('Casa List');
+                    print(homesList.length);
+                    print(snapshot.data);
+                    return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: homesList.length,
+                        itemBuilder: (context, index) {
+                          return const Center(child: HomeBox());
+                        });
+                  } else {
+                    return const Center(
+                        child: Text('No perteneces a ningun hogar'));
+                  }
+                }),
           ],
         ),
       ),

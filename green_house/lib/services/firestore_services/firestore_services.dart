@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:green_house/models/home_members.dart';
@@ -32,6 +34,11 @@ class FirestoreService {
         .collection('home_members')
         .doc(member.member_id)
         .set(member.toJson());
+    await docUser
+        .doc(member.member_id)
+        .collection('user_homes')
+        .doc(home_id)
+        .set({'home_id': home_id, 'home_status': member.member_status});
   }
 
   Future<bool> validateUserExist(String username) async {
@@ -62,5 +69,32 @@ class FirestoreService {
     final userData = await getCurrentUserData();
     final user = await docUser.doc(userData['id']);
     user.update(data);
+  }
+
+  getUserHomes() async {
+    List homeDocs = [];
+    final userData = await getCurrentUserData();
+    print('Usario 1 ' + userData['id']);
+    final homeSnapshot = await docUser
+        .doc(userData['id'])
+        .collection('user_homes')
+        .get()
+        .then((value) async {
+      value.docs
+          .map((doc) => json.decode(json.encode(doc.data())))
+          .toList()
+          .forEach((userHome) async {
+        await docHome.doc(userHome['home_id']).get().then((home) async {
+          homeDocs.add(home.data());
+          print(homeDocs);
+        }).whenComplete(() {
+          print('Usario 2 ' + userData['id']);
+          print('Fin ' + homeDocs.toString());
+          return homeDocs;
+        });
+      });
+    });
+    print('bject');
+    // yield homes;
   }
 }

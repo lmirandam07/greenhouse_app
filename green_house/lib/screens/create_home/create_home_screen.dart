@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
+import 'package:google_maps_place_picker_mb/providers/place_provider.dart';
+import 'package:google_maps_place_picker_mb/providers/search_provider.dart';
 import 'package:green_house/constants/exports.dart';
 import 'package:green_house/widgets/custom_button.dart';
 import 'package:green_house/widgets/custom_text_field.dart';
@@ -65,7 +68,7 @@ class _CreateHomeScreenState extends State<CreateHomeScreen> {
                           child: CustomTextField(
                             headText: 'Nombre del hogar',
                             hintText: 'Hogar',
-                            prefixIconPath: AppIcons.userIcon,
+                            prefixIconPath: AppIcons.homeIcon,
                             controller:
                                 createHomeController.houseHoldNameController,
                           ),
@@ -76,49 +79,46 @@ class _CreateHomeScreenState extends State<CreateHomeScreen> {
 
                   /// invite member field
                   SizedBox(height: screenHeight(context) * 0.04),
-                  CustomTextField(
-                    headText: 'Invitar integrante',
-                    hintText: 'johnsondoe',
-                    prefixIconPath: AppIcons.userIcon,
-                    controller: createHomeController.inviteUserController,
+                  Padding(
+                    padding:
+                        EdgeInsets.only(left: screenHeight(context) * 0.032),
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: CustomTextField(
+                            headText: 'Invitar integrante',
+                            hintText: 'username',
+                            prefixIconPath: AppIcons.userIcon,
+                            controller:
+                                createHomeController.inviteUserController,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              right: screenHeight(context) * 0.032,
+                              top: screenHeight(context) * 0.030),
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  fixedSize: Size(screenWidth(context) * 0.020,
+                                      screenHeight(context) * 0.010)),
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  createHomeController.inviteUser();
+                                }
+                              },
+                              child: const Icon(
+                                // <-- Icon
+                                Icons.send,
+                                size: 24.0,
+                              )),
+                        ),
+                      ],
+                    ),
                   ),
 
                   /// btns
                   SizedBox(height: screenHeight(context) * 0.02),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: screenHeight(context) * 0.032,
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        SizedBox(width: screenHeight(context) * 0.02),
-                        Expanded(
-                          child: CustomButton(
-                            onTap: () {
-                              if (_formKey.currentState!.validate()) {
-                                createHomeController.inviteUser();
-                              }
-                            },
-                            btnText: 'Agregar',
-                          ),
-                        ),
-                        SizedBox(width: screenHeight(context) * 0.05),
-                        Container(
-                          height: 45.0,
-                          width: 45.0,
-                          decoration: BoxDecoration(
-                            color: AppColors.fieldBackColor,
-                            borderRadius: BorderRadius.circular(radius10),
-                          ),
-                          child: Center(
-                            child: SvgPicture.asset(AppIcons.documentIcon),
-                          ),
-                        ),
-                        SizedBox(width: screenHeight(context) * 0.05),
-                      ],
-                    ),
-                  ),
 
                   /// map box
                   SizedBox(height: screenHeight(context) * 0.032),
@@ -135,33 +135,29 @@ class _CreateHomeScreenState extends State<CreateHomeScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        CustomTextField(
-                          isHead: false,
-                          controller:
-                              createHomeController.searchLocationController,
-                          headText: '',
-                          hintText: 'Buscar',
-                          prefixIconPath: AppIcons.searchIcon,
-                          padding: const EdgeInsets.symmetric(horizontal: 0.0),
-                        ),
                         const SizedBox(height: 16.0),
                         Container(
-                          height: screenHeight(context) * 0.28,
+                          height: screenHeight(context) * 0.45,
                           width: screenWidth(context),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(radius10),
                           ),
                           child: ClipRRect(
-                            borderRadius: BorderRadius.circular(radius10),
-                            child: GoogleMap(
-                              onMapCreated: _onMapCreated,
-                              markers: _markers,
-                              initialCameraPosition: const CameraPosition(
-                                target: LatLng(8.9972, -79.5068),
-                                //zoom: 5,
-                              ),
-                            ),
-                          ),
+                              borderRadius: BorderRadius.circular(radius10),
+                              child: PlacePicker(
+                                apiKey:
+                                    "AIzaSyCXI5XhOZrtBHLKGqj_2VLOXjMgOzau4HQ",
+                                initialPosition: const LatLng(8.9972, -79.5068),
+                                useCurrentLocation: true,
+                                autocompleteLanguage: 'es',
+                                region: 'pa',
+                                selectedPlaceWidgetBuilder: (_, selectedPlace,
+                                    state, isSearchBarFocused) {
+                                  print(selectedPlace?.geometry?.location.lat);
+                                  print(selectedPlace?.geometry?.location.lng);
+                                  return const SizedBox.shrink();
+                                },
+                              )),
                         ),
                       ],
                     ),
