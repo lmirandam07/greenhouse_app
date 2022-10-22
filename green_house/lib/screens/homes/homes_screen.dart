@@ -48,13 +48,13 @@ class HomesScreen extends StatelessWidget {
             /// list
             SizedBox(height: screenHeight(context) * 0.016),
             FutureBuilder(
-                future: firestoreService.getUserHomes(),
+                future: firestoreService.getUserHomeList(),
                 builder: (BuildContext context, AsyncSnapshot snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
                   }
                   if (snapshot.hasData) {
-                    List homesList = snapshot.data;
+                    final homesList = snapshot.data;
                     print('Casa List');
                     print(homesList.length);
                     print(snapshot.data);
@@ -62,7 +62,8 @@ class HomesScreen extends StatelessWidget {
                         shrinkWrap: true,
                         itemCount: homesList.length,
                         itemBuilder: (context, index) {
-                          return const Center(child: HomeBox());
+                          return Center(
+                              child: Text(homesList[index]['home_name']));
                         });
                   } else {
                     return const Center(

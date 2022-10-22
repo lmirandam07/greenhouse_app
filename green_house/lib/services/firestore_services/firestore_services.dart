@@ -61,7 +61,7 @@ class FirestoreService {
     final userData = await docUser
         .where('username', isEqualTo: username)
         .get()
-        .then((data) => data.docs.first);
+        .then((data) => data.docs.single);
     return userData;
   }
 
@@ -71,30 +71,31 @@ class FirestoreService {
     user.update(data);
   }
 
-  getUserHomes() async {
-    List homeDocs = [];
+  Future<QuerySnapshot<Map<String, dynamic>>> getUserHomes() async {
     final userData = await getCurrentUserData();
-    print('Usario 1 ' + userData['id']);
-    final homeSnapshot = await docUser
-        .doc(userData['id'])
-        .collection('user_homes')
-        .get()
-        .then((value) async {
-      value.docs
-          .map((doc) => json.decode(json.encode(doc.data())))
-          .toList()
-          .forEach((userHome) async {
-        await docHome.doc(userHome['home_id']).get().then((home) async {
-          homeDocs.add(home.data());
-          print(homeDocs);
-        }).whenComplete(() {
-          print('Usario 2 ' + userData['id']);
-          print('Fin ' + homeDocs.toString());
-          return homeDocs;
-        });
-      });
+    final userHome =
+        await docUser.doc(userData['id']).collection('user_homes').get();
+    return userHome;
+  }
+
+  getUserHomesId() async {
+    List userHomesId = [];
+    final userHome = await getUserHomes();
+    userHome.docs.forEach((homes) {
+      userHomesId.add(homes.data()['home_id']);
     });
-    print('bject');
-    // yield homes;
+    return userHomesId;
+  }
+
+  Future<Iterable> getUserHomeList() async {
+    final userHomesId = await getUserHomesId();
+    print(userHomesId);
+    final userHomeList =
+        await docHome.where('home_id', whereIn: userHomesId).get();
+    final userHomeDocs = userHomeList.docs
+        .map((doc) => json.decode(json.encode(doc.data())))
+        .toList();
+    print(userHomeDocs);
+    return userHomeDocs;
   }
 }
