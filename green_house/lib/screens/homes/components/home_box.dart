@@ -5,12 +5,13 @@ import 'package:green_house/screens/homes/home_x_screen.dart';
 import '../../../constants/exports.dart';
 
 class HomeBox extends StatelessWidget {
-  const HomeBox({Key? key}) : super(key: key);
+  final String homeName;
+  const HomeBox(this.homeName);
 
   @override
   Widget build(BuildContext context) {
     return Bounceable(
-      onTap: (){
+      onTap: () {
         Get.to(HomeXScreen());
       },
       child: Container(
@@ -36,12 +37,16 @@ class HomeBox extends StatelessWidget {
                 color: AppColors.primaryColor,
               ),
               child: Center(
-                child: SvgPicture.asset(AppIcons.homeIcon, color: AppColors.whiteColor,),
+                child: SvgPicture.asset(
+                  AppIcons.homeIcon,
+                  color: AppColors.whiteColor,
+                ),
               ),
             ),
             SizedBox(width: screenHeight(context) * 0.014),
             Expanded(
-              child: Text('Nombre de hogar',
+              child: Text(
+                homeName,
                 style: montserratRegular.copyWith(
                   fontSize: body17,
                   color: AppColors.blackColor,
@@ -61,19 +66,20 @@ class HomeBox extends StatelessWidget {
                       color: AppColors.primaryColor,
                     ),
                     child: Center(
-                      child: Text('2',
+                      child: Text(
+                        '2',
                         style: montserratSemiBold.copyWith(
                           fontSize: body6,
                           color: AppColors.whiteColor,
                         ),
                       ),
                     ),
-                  ),),
+                  ),
+                ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: SvgPicture.asset(AppIcons.personGroupIcon),
                 ),
-
               ],
             ),
           ],

@@ -147,14 +147,16 @@ class _CreateHomeScreenState extends State<CreateHomeScreen> {
                               child: PlacePicker(
                                 apiKey:
                                     "AIzaSyCXI5XhOZrtBHLKGqj_2VLOXjMgOzau4HQ",
-                                initialPosition: const LatLng(8.9972, -79.5068),
+                                initialPosition: LatLng(8.9972, -79.5068),
                                 useCurrentLocation: true,
                                 autocompleteLanguage: 'es',
                                 region: 'pa',
                                 selectedPlaceWidgetBuilder: (_, selectedPlace,
                                     state, isSearchBarFocused) {
-                                  print(selectedPlace?.geometry?.location.lat);
-                                  print(selectedPlace?.geometry?.location.lng);
+                                  createHomeController.setLong =
+                                      selectedPlace?.geometry?.location.lat;
+                                  createHomeController.setLat =
+                                      selectedPlace?.geometry?.location.lng;
                                   return const SizedBox.shrink();
                                 },
                               )),

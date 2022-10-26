@@ -55,15 +55,12 @@ class HomesScreen extends StatelessWidget {
                   }
                   if (snapshot.hasData) {
                     final homesList = snapshot.data;
-                    print('Casa List');
-                    print(homesList.length);
-                    print(snapshot.data);
                     return ListView.builder(
                         shrinkWrap: true,
                         itemCount: homesList.length,
                         itemBuilder: (context, index) {
                           return Center(
-                              child: Text(homesList[index]['home_name']));
+                              child: HomeBox(homesList[index]['home_name']));
                         });
                   } else {
                     return const Center(
