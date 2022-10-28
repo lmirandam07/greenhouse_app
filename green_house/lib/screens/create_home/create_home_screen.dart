@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:google_maps_place_picker_mb/google_maps_place_picker.dart';
-import 'package:google_maps_place_picker_mb/providers/place_provider.dart';
-import 'package:google_maps_place_picker_mb/providers/search_provider.dart';
 import 'package:green_house/constants/exports.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:green_house/widgets/custom_button.dart';
 import 'package:green_house/widgets/custom_text_field.dart';
 
@@ -21,8 +20,19 @@ class _CreateHomeScreenState extends State<CreateHomeScreen> {
   final Set<Marker> _markers = {};
   final _formKey = GlobalKey<FormState>();
 
+  void _getUserLocation() async {
+    var position = await GeolocatorPlatform.instance.getCurrentPosition();
+    print(position);
+
+    setState(() {
+      createHomeController.setLat = position.latitude;
+      createHomeController.setLong = position.longitude;
+    });
+  }
+
   void _onMapCreated(GoogleMapController controller) {
     setState(() {
+      _getUserLocation();
       _markers.add(
         const Marker(
           markerId: MarkerId('id-1'),
@@ -147,15 +157,15 @@ class _CreateHomeScreenState extends State<CreateHomeScreen> {
                               child: PlacePicker(
                                 apiKey:
                                     "AIzaSyCXI5XhOZrtBHLKGqj_2VLOXjMgOzau4HQ",
-                                initialPosition: LatLng(8.9972, -79.5068),
+                                initialPosition: const LatLng(8.9972, -79.5068),
                                 useCurrentLocation: true,
                                 autocompleteLanguage: 'es',
                                 region: 'pa',
                                 selectedPlaceWidgetBuilder: (_, selectedPlace,
                                     state, isSearchBarFocused) {
-                                  createHomeController.setLong =
-                                      selectedPlace?.geometry?.location.lat;
                                   createHomeController.setLat =
+                                      selectedPlace?.geometry?.location.lat;
+                                  createHomeController.setLong =
                                       selectedPlace?.geometry?.location.lng;
                                   return const SizedBox.shrink();
                                 },

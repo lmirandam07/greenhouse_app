@@ -78,13 +78,35 @@ class FirestoreService {
     return userHome;
   }
 
-  getUserHomesId() async {
+  Future<List> getUserHomesId() async {
     List userHomesId = [];
     final userHome = await getUserHomes();
     userHome.docs.forEach((homes) {
       userHomesId.add(homes.data()['home_id']);
     });
     return userHomesId;
+  }
+
+  Future<Map<String, dynamic>> getUserHomeCount(String homeId) async {
+    final userData = await getCurrentUserData();
+    final userDocs = await docHome
+        .doc(homeId)
+        .collection('home_members')
+        .where('member_status', isEqualTo: 'accepted')
+        .get();
+    final userCount = userDocs.docs.length;
+    final userDoc = await docHome
+        .doc(homeId)
+        .collection('home_members')
+        .doc(userData['id'])
+        .get();
+
+    final userStatus = userDoc.data()?['member_status'];
+    final Map<String, dynamic> userHomeData = {
+      'count': userCount,
+      'status': userStatus
+    };
+    return userHomeData;
   }
 
   Future<Iterable> getUserHomeList() async {
@@ -95,7 +117,6 @@ class FirestoreService {
     final userHomeDocs = userHomeList.docs
         .map((doc) => json.decode(json.encode(doc.data())))
         .toList();
-    print(userHomeDocs);
     return userHomeDocs;
   }
 }

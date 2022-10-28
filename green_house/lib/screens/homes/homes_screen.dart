@@ -18,56 +18,59 @@ class HomesScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            /// top app bar
-            CustomAppBar(
-              isLeadingIcon: false,
-              titleText: 'Hogares',
-              action: GestureDetector(
-                onTap: () {
-                  Get.to(CreateHomeScreen());
-                },
-                child: Container(
-                  height: 45.0,
-                  width: 45.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(radius15),
-                    color: AppColors.primaryColor,
-                  ),
-                  child: const Center(
-                    child: Icon(Icons.add,
-                        color: AppColors.blackColor, size: 30.0),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              /// top app bar
+              CustomAppBar(
+                isLeadingIcon: false,
+                titleText: 'Hogares',
+                action: GestureDetector(
+                  onTap: () {
+                    Get.to(CreateHomeScreen());
+                  },
+                  child: Container(
+                    height: 45.0,
+                    width: 45.0,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(radius15),
+                      color: AppColors.primaryColor,
+                    ),
+                    child: const Center(
+                      child: Icon(Icons.add,
+                          color: AppColors.blackColor, size: 30.0),
+                    ),
                   ),
                 ),
               ),
-            ),
 
-            /// list
-            SizedBox(height: screenHeight(context) * 0.016),
-            FutureBuilder(
-                future: firestoreService.getUserHomeList(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return const Center(child: CircularProgressIndicator());
-                  }
-                  if (snapshot.hasData) {
-                    final homesList = snapshot.data;
-                    return ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: homesList.length,
-                        itemBuilder: (context, index) {
-                          return Center(
-                              child: HomeBox(homesList[index]['home_name']));
-                        });
-                  } else {
-                    return const Center(
-                        child: Text('No perteneces a ningun hogar'));
-                  }
-                }),
-          ],
+              /// list
+              SizedBox(height: screenHeight(context) * 0.016),
+              FutureBuilder(
+                  future: firestoreService.getUserHomeList(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    if (snapshot.hasData) {
+                      final homesList = snapshot.data;
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: homesList.length,
+                          itemBuilder: (context, index) {
+                            return Center(
+                                child: HomeBox(homesList[index]['home_name'],
+                                    homesList[index]['home_id']));
+                          });
+                    } else {
+                      return const Center(
+                          child: Text('No perteneces a ningun hogar'));
+                    }
+                  }),
+            ],
+          ),
         ),
       ),
     );
