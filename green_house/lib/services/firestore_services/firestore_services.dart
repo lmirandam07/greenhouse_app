@@ -111,7 +111,6 @@ class FirestoreService {
 
   Future<Iterable> getUserHomeList() async {
     final userHomesId = await getUserHomesId();
-    print(userHomesId);
     final userHomeList =
         await docHome.where('home_id', whereIn: userHomesId).get();
     final userHomeDocs = userHomeList.docs
