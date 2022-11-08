@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:green_house/screens/homes/home_x_screen.dart';
+import 'package:green_house/screens/dialogs/house_invitation_dialog.dart';
+import 'package:green_house/screens/homes/home_screen.dart';
 
 import '../../../constants/exports.dart';
 import '../../../services/firestore_services/firestore_services.dart';
@@ -8,14 +9,14 @@ import '../../../services/firestore_services/firestore_services.dart';
 class HomeBox extends StatelessWidget {
   final String homeName;
   final String homeId;
-  HomeBox(this.homeName, this.homeId);
+  HomeBox(this.homeName, this.homeId, {Key? key}) : super(key: key);
   final firestoreService = FirestoreService();
 
   @override
   Widget build(BuildContext context) {
     return Bounceable(
       onTap: () {
-        Get.to(HomeXScreen());
+        Get.to(HomeScreen(homeName, homeId));
       },
       child: Container(
         width: screenWidth(context),
@@ -108,10 +109,15 @@ class HomeBox extends StatelessWidget {
                           child: SvgPicture.asset(AppIcons.personGroupIcon),
                         ),
                       ] else ...[
-                        const Padding(
-                          padding: EdgeInsets.all(15.0),
-                          child: Icon(Icons.info_rounded,
-                              color: AppColors.notifyColor),
+                        Padding(
+                          padding: const EdgeInsets.all(15.0),
+                          child: IconButton(
+                            icon: const Icon(Icons.info_rounded,
+                                color: AppColors.notifyColor),
+                            onPressed: () {
+                              Get.dialog(HomeInvitation(homeId));
+                            },
+                          ),
                         ),
                       ],
                     ],

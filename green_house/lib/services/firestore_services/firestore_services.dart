@@ -118,4 +118,28 @@ class FirestoreService {
         .toList();
     return userHomeDocs;
   }
+
+  getHomeData(String homeId) async {
+    final snapshot = await docHome.doc(homeId).get();
+    final homeData = snapshot.data();
+    final snapshotOwner = await docUser.doc(homeData?['owner_id']).get();
+    final ownerData = snapshotOwner.data();
+    final data = {...?homeData, ...?ownerData};
+    return data;
+  }
+
+  updateHomeStatus(String homeId, String status) async {
+    final userData = await getCurrentUserData();
+    final userHome =
+        docUser.doc(userData['id']).collection('user_homes').doc(homeId);
+    final homeUser =
+        docHome.doc(homeId).collection('home_members').doc(userData['id']);
+    if (status == 'accepted') {
+      userHome.update({'home_status': 'accepted'});
+      homeUser.update({'member_status': 'accepted'});
+    } else {
+      userHome.delete();
+      homeUser.delete();
+    }
+  }
 }
