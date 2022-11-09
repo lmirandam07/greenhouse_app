@@ -66,7 +66,7 @@ class HomesScreen extends StatelessWidget {
                           });
                     } else {
                       return const Center(
-                          child: Text('No perteneces a ningun hogar'));
+                          child: Text('No perteneces a ningún hogar'));
                     }
                   }),
             ],

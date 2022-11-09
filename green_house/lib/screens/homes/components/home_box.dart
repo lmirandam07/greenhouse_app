@@ -110,7 +110,7 @@ class HomeBox extends StatelessWidget {
                         ),
                       ] else ...[
                         Padding(
-                          padding: const EdgeInsets.all(15.0),
+                          padding: const EdgeInsets.all(2.0),
                           child: IconButton(
                             icon: const Icon(Icons.info_rounded,
                                 color: AppColors.notifyColor),

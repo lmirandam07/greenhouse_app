@@ -7,12 +7,15 @@ import '../../services/firestore_services/firestore_services.dart';
 import '../../widgets/custom_SizeButton.dart';
 import '../bottom/bottom_nav_screen.dart';
 import '../bottom/controller/bottom_nav_controller.dart';
+import '../homes/controller/invitation_controller.dart';
 
 class HomeInvitation extends StatelessWidget {
   final String homeId;
   HomeInvitation(this.homeId, {Key? key}) : super(key: key);
   final firestoreService = FirestoreService();
   final botomNavBar = BottomNavController();
+  final InvitationController invitationController =
+      Get.put(InvitationController());
 
   @override
   Widget build(BuildContext context) {
@@ -97,11 +100,6 @@ class HomeInvitation extends StatelessWidget {
                           ],
                         ),
                       ),
-
-                      /// Seleccionar one
-
-                      ///
-
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 26.0),
                         child: Row(
@@ -110,25 +108,27 @@ class HomeInvitation extends StatelessWidget {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             CustomSizeButton(
-                              onTap: () async {
-                                await firestoreService
-                                    .updateHomeStatus(homeId, 'accepted')
-                                    .then((value) {
-                                  botomNavBar.homeFun();
-                                  Get.to(() => const BottomNavBar());
-                                });
+                              onTap: () {
+                                invitationController.invitationUpdate(
+                                    homeId, 'accepted');
+                                botomNavBar.homeFun();
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const BottomNavBar()));
                               },
                               btnText: 'Aceptar',
                               height: 45.0,
                             ),
                             CustomSizeButton(
-                              onTap: () async {
-                                await firestoreService
-                                    .updateHomeStatus(homeId, 'denied')
-                                    .then((value) {
-                                  botomNavBar.homeFun();
-                                  Get.to(() => const BottomNavBar());
-                                });
+                              onTap: () {
+                                invitationController.invitationUpdate(
+                                    homeId, 'denied');
+                                botomNavBar.homeFun();
+                                Navigator.of(context).pushReplacement(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const BottomNavBar()));
                               },
                               btnText: 'Rechazar',
                               height: 45.0,

@@ -2,13 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_house/screens/dialogs/new_member.dart';
 import 'package:green_house/widgets/custom_button.dart';
+import 'package:green_house/screens/edit_home/edit_home_screen.dart';
 
 import '../../constants/exports.dart';
 import '../../widgets/custom_app_bar.dart';
 import 'components/x_setting_box.dart';
 
 class HomeSettingScreen extends StatelessWidget {
-  const HomeSettingScreen({Key? key}) : super(key: key);
+  final String homeId;
+  final String homeName;
+  const HomeSettingScreen(this.homeName, this.homeId, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,10 +26,10 @@ class HomeSettingScreen extends StatelessWidget {
             /// top app bar
             CustomAppBar(
               isLeadingIcon: false,
-              titleText: 'Hogares',
+              titleText: homeName,
               action: GestureDetector(
                 onTap: () {
-                  //Get.to(SearchLocationScreen());
+                  Get.to(EditHome(homeName, homeId));
                 },
                 child: Container(
                   height: 45.0,

@@ -71,6 +71,11 @@ class FirestoreService {
     user.update(data);
   }
 
+  UpdateHomeData(Map<String, Object?> data, homeId) async {
+    final home = await docHome.doc(homeId);
+    home.update(data);
+  }
+
   Future<QuerySnapshot<Map<String, dynamic>>> getUserHomes() async {
     final userData = await getCurrentUserData();
     final userHome =

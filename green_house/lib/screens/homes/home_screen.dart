@@ -41,7 +41,7 @@ class HomeScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(right: 10.0),
                         child: IconButton(
                           onPressed: () {
-                            Get.to(HomeSettingScreen());
+                            Get.to(HomeSettingScreen(homeName, homeId));
                           },
                           icon: SvgPicture.asset(
                             AppIcons.moreVertIcon,

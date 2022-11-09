@@ -62,50 +62,50 @@ class CustomTextField extends StatelessWidget {
               obscureText: obscureText!,
               onFieldSubmitted: onSubmitted,
               decoration: InputDecoration(
-                contentPadding: EdgeInsets.symmetric(vertical: 8.0),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(radius10),
-                  borderSide: const BorderSide(
-                    color: AppColors.fieldBackColor,
-                    width: 0.7,
+                  contentPadding: const EdgeInsets.symmetric(vertical: 8.0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(radius10),
+                    borderSide: const BorderSide(
+                      color: AppColors.fieldBackColor,
+                      width: 0.7,
+                    ),
                   ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(radius10),
-                  borderSide: const BorderSide(
-                    color: AppColors.primaryColor,
-                    width: 0.7,
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(radius10),
+                    borderSide: const BorderSide(
+                      color: AppColors.primaryColor,
+                      width: 0.7,
+                    ),
                   ),
-                ),
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(radius10),
-                  borderSide: const BorderSide(
-                    color: AppColors.fieldBackColor,
-                    width: 0.7,
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(radius10),
+                    borderSide: const BorderSide(
+                      color: AppColors.fieldBackColor,
+                      width: 0.7,
+                    ),
                   ),
-                ),
-                errorBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(radius10),
-                  borderSide: const BorderSide(
-                    color: AppColors.redColor,
-                    width: 0.7,
+                  errorBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(radius10),
+                    borderSide: const BorderSide(
+                      color: AppColors.redColor,
+                      width: 0.7,
+                    ),
                   ),
-                ),
-                fillColor: AppColors.fieldBackColor,
-                filled: true,
-                prefixIcon: SvgPicture.asset(
-                  prefixIconPath!,
-                  height: 15.7,
-                  width: 16.2,
-                  fit: BoxFit.scaleDown,
-                ),
-                hintText: hintText,
-                hintStyle: montserratRegular.copyWith(
-                  fontSize: body14,
-                  color: AppColors.blackHintColor,
-                ),
-                suffixIcon: suffixIcon ?? const SizedBox(),
-              ),
+                  fillColor: AppColors.fieldBackColor,
+                  filled: true,
+                  prefixIcon: SvgPicture.asset(
+                    prefixIconPath!,
+                    height: 15.7,
+                    width: 16.2,
+                    fit: BoxFit.scaleDown,
+                  ),
+                  hintText: hintText,
+                  hintStyle: montserratRegular.copyWith(
+                    fontSize: body14,
+                    color: AppColors.blackHintColor,
+                  ),
+                  suffixIcon: suffixIcon ?? const SizedBox()),
+                  
             ),
           ),
         ],
