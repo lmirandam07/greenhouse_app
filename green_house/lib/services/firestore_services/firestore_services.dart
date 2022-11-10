@@ -147,4 +147,10 @@ class FirestoreService {
       homeUser.delete();
     }
   }
+
+  validateUserOwner(String ownerId) async {
+    final userData = await getCurrentUserData();
+    final isOwner = userData['id'] == ownerId ? true : false;
+    return isOwner;
+  }
 }

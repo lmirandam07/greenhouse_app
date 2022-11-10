@@ -9,14 +9,15 @@ import '../../../services/firestore_services/firestore_services.dart';
 class HomeBox extends StatelessWidget {
   final String homeName;
   final String homeId;
-  HomeBox(this.homeName, this.homeId, {Key? key}) : super(key: key);
+  final String ownerId;
+  HomeBox(this.homeName, this.homeId, this.ownerId,{Key? key}) : super(key: key);
   final firestoreService = FirestoreService();
 
   @override
   Widget build(BuildContext context) {
     return Bounceable(
       onTap: () {
-        Get.to(HomeScreen(homeName, homeId));
+        Get.to(HomeScreen(homeName, homeId,ownerId));
       },
       child: Container(
         width: screenWidth(context),

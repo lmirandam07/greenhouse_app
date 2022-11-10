@@ -8,7 +8,8 @@ import '../../widgets/custom_app_bar.dart';
 class HomeScreen extends StatelessWidget {
   final String homeId;
   final String homeName;
-  const HomeScreen(this.homeName, this.homeId, {Key? key}) : super(key: key);
+  final String ownerId;
+  const HomeScreen(this.homeName, this.homeId, this.ownerId,{Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class HomeScreen extends StatelessWidget {
                         padding: const EdgeInsets.only(right: 10.0),
                         child: IconButton(
                           onPressed: () {
-                            Get.to(HomeSettingScreen(homeName, homeId));
+                            Get.to(HomeSettingScreen(homeName, homeId,ownerId));
                           },
                           icon: SvgPicture.asset(
                             AppIcons.moreVertIcon,

@@ -61,6 +61,9 @@ class _EditHomeState extends State<EditHome> {
               child: FutureBuilder(
                   future: firestoreService.getHomeData(widget.homeId),
                   builder: (context, AsyncSnapshot snapshot) {
+                    if (snapshot.data == null) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
                     return Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -155,7 +158,13 @@ class _EditHomeState extends State<EditHome> {
                           ),
                           child: CustomButton(
                             onTap: () {
-                              editHomeController.editHome();
+                              if (editHomeController
+                                      .houseHoldNameController.text ==
+                                  '') {
+                                editHomeController.houseHoldNameController
+                                    .text = widget.homeName;
+                              }
+                              editHomeController.editHome(widget.homeId);
                             },
                             btnText: 'Editar',
                           ),

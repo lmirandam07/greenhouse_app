@@ -5,13 +5,16 @@ import 'package:green_house/widgets/custom_button.dart';
 import 'package:green_house/screens/edit_home/edit_home_screen.dart';
 
 import '../../constants/exports.dart';
+import '../../services/firestore_services/firestore_services.dart';
 import '../../widgets/custom_app_bar.dart';
 import 'components/x_setting_box.dart';
 
 class HomeSettingScreen extends StatelessWidget {
   final String homeId;
   final String homeName;
-  const HomeSettingScreen(this.homeName, this.homeId, {Key? key})
+  final String ownerId;
+  final firestoreService = FirestoreService();
+  HomeSettingScreen(this.homeName, this.homeId, this.ownerId, {Key? key})
       : super(key: key);
 
   @override
@@ -24,31 +27,42 @@ class HomeSettingScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             /// top app bar
-            CustomAppBar(
-              isLeadingIcon: false,
-              titleText: homeName,
-              action: GestureDetector(
-                onTap: () {
-                  Get.to(EditHome(homeName, homeId));
-                },
-                child: Container(
-                  height: 45.0,
-                  width: 45.0,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(radius15),
-                    color: AppColors.primaryColor,
-                  ),
-                  child: Center(
-                    child: SvgPicture.asset(
-                      AppIcons.pencilIcon,
-                      fit: BoxFit.scaleDown,
-                      height: 24.0,
-                      width: 24.0,
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            FutureBuilder(
+                future: firestoreService.validateUserOwner(ownerId),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.data == true) {
+                    return CustomAppBar(
+                      isLeadingIcon: false,
+                      titleText: homeName,
+                      action: GestureDetector(
+                        onTap: () {
+                          Get.to(EditHome(homeName, homeId));
+                        },
+                        child: Container(
+                          height: 45.0,
+                          width: 45.0,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(radius15),
+                            color: AppColors.primaryColor,
+                          ),
+                          child: Center(
+                            child: SvgPicture.asset(
+                              AppIcons.pencilIcon,
+                              fit: BoxFit.scaleDown,
+                              height: 24.0,
+                              width: 24.0,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  } else {
+                    return CustomAppBar(
+                      isLeadingIcon: false,
+                      titleText: homeName,
+                    );
+                  }
+                }),
 
             /// members
             Expanded(
