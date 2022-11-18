@@ -37,6 +37,7 @@ class InvitationController extends GetxController {
             member_role: 'common',
             member_status: 'pending');
         await firestoreService.createHomeMembers(homeId, homeMember);
+        userNameController.clear();
         successSnackBar('El usuario $username fue invitado correctamente');
       }
     } else {

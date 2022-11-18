@@ -66,7 +66,7 @@ class NewMemberDialog extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          'Correo del integrante',
+                          'Introduzca el username',
                           style: montserratRegular.copyWith(
                             fontSize: body16,
                             color: AppColors.blackColor,
