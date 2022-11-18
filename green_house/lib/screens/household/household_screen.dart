@@ -4,6 +4,8 @@ import 'package:green_house/constants/exports.dart';
 import '../../widgets/custom_app_bar.dart';
 import 'components/activity_item_box.dart';
 
+import '../../services/firestore_services/firestore_services.dart';
+
 class HouseHoldScreen extends StatelessWidget {
   const HouseHoldScreen({Key? key}) : super(key: key);
 
@@ -16,7 +18,7 @@ class HouseHoldScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             /// top app bar
-            const CustomAppBar(
+            CustomAppBar(
               isLeadingIcon: true,
               titleText: 'Nombre de hogar',
             ),

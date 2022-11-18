@@ -50,6 +50,20 @@ class FirestoreService {
     }
   }
 
+  Future<bool> validateUserHomeExist(String homeId, String username) async {
+    final user = await getUserData(username);
+    final result = await docHome
+        .doc(homeId)
+        .collection('home_members')
+        .where('member_id', isEqualTo: user['id'])
+        .get();
+    if (result.size > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   getCurrentUserData() async {
     final currentUser = await FirebaseAuth.instance.currentUser?.uid;
     final snapshot = await docUser.doc(currentUser).get();
@@ -92,6 +106,16 @@ class FirestoreService {
     return userHomesId;
   }
 
+  Future<Iterable> getUserHomeList() async {
+    final userHomesId = await getUserHomesId();
+    final userHomeList =
+        await docHome.where('home_id', whereIn: userHomesId).get();
+    final userHomeDocs = userHomeList.docs
+        .map((doc) => json.decode(json.encode(doc.data())))
+        .toList();
+    return userHomeDocs;
+  }
+
   Future<Map<String, dynamic>> getUserHomeCount(String homeId) async {
     final userData = await getCurrentUserData();
     final userDocs = await docHome
@@ -112,16 +136,6 @@ class FirestoreService {
       'status': userStatus
     };
     return userHomeData;
-  }
-
-  Future<Iterable> getUserHomeList() async {
-    final userHomesId = await getUserHomesId();
-    final userHomeList =
-        await docHome.where('home_id', whereIn: userHomesId).get();
-    final userHomeDocs = userHomeList.docs
-        .map((doc) => json.decode(json.encode(doc.data())))
-        .toList();
-    return userHomeDocs;
   }
 
   getHomeData(String homeId) async {
@@ -152,5 +166,30 @@ class FirestoreService {
     final userData = await getCurrentUserData();
     final isOwner = userData['id'] == ownerId ? true : false;
     return isOwner;
+  }
+
+  Future<QuerySnapshot<Map<String, dynamic>>> getHomeUsers(
+      String homeId) async {
+    final homeUsers =
+        await docHome.doc(homeId).collection('home_members').get();
+    return homeUsers;
+  }
+
+  Future<List> getHomeUsersId(String homeId) async {
+    List homesUsersId = [];
+    final homeUsers = await getHomeUsers(homeId);
+    homeUsers.docs.forEach((homes) {
+      homesUsersId.add(homes.data()['member_id']);
+    });
+    return homesUsersId;
+  }
+
+  Future<Iterable> getHomeUserList(String homeId) async {
+    final homeUsersId = await getHomeUsersId(homeId);
+    final homeUsersList = await docUser.where('id', whereIn: homeUsersId).get();
+    final homeUserDocs = homeUsersList.docs
+        .map((doc) => json.decode(json.encode(doc.data())))
+        .toList();
+    return homeUserDocs;
   }
 }

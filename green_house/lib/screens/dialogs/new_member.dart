@@ -3,9 +3,13 @@ import 'package:get/get.dart';
 import 'package:green_house/widgets/custom_button.dart';
 
 import '../../constants/exports.dart';
+import '../homes/controller/invitation_controller.dart';
 
 class NewMemberDialog extends StatelessWidget {
-  const NewMemberDialog({Key? key}) : super(key: key);
+  final String homeId;
+  NewMemberDialog(this.homeId, {Key? key}) : super(key: key);
+  final InvitationController invitationController =
+      Get.put(InvitationController());
 
   @override
   Widget build(BuildContext context) {
@@ -81,81 +85,17 @@ class NewMemberDialog extends StatelessWidget {
                           ),
                         ),
                         child: TextFormField(
+                          controller: invitationController.userNameController,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             contentPadding:
-                            EdgeInsets.only(left: 16.0, bottom: 10.0),
+                                EdgeInsets.only(left: 16.0, bottom: 10.0),
                           ),
                         ),
                       ),
                     ],
                   ),
                 ),
-
-                /// Seleccionar one
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 16.0, right: 16.0, bottom: 16.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Seleccionar rol',
-                          style: montserratRegular.copyWith(
-                            fontSize: body16,
-                            color: AppColors.blackColor,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 40.0,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(radius10),
-                          color: AppColors.whiteColor,
-                          border: Border.all(
-                            color: AppColors.primaryColor,
-                            width: 1.0,
-                          ),
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: screenHeight(context) * 0.012),
-                              child: Text(
-                                'Integrante',
-                                style: montserratRegular.copyWith(
-                                  fontSize: body12,
-                                  color: AppColors.blackColor,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: AppColors.primaryColor,
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(radius8),
-                                    bottomRight: Radius.circular(radius8),
-                                  ),
-                                ),
-                                child: Center(
-                                  child:
-                                  SvgPicture.asset(AppIcons.dropdownIcon),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
 
                 ///
                 const SizedBox(height: 30.0),
@@ -163,7 +103,7 @@ class NewMemberDialog extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: CustomButton(
                     onTap: () {
-                      Get.back();
+                      invitationController.invitateUser(homeId);
                     },
                     btnText: 'Invitar',
                   ),

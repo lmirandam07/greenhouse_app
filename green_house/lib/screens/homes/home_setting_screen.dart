@@ -101,7 +101,7 @@ class HomeSettingScreen extends StatelessWidget {
                             ),
                             child: Center(
                               child: Text(
-                                'Integrantes de X Home',
+                                'Integrantes',
                                 style: montserratMedium.copyWith(
                                   fontSize: body20,
                                   color: AppColors.whiteColor,
@@ -112,9 +112,23 @@ class HomeSettingScreen extends StatelessWidget {
 
                           /// items
                           SizedBox(height: screenHeight(context) * 0.008),
-                          const XSettingBox(),
-                          const XSettingBox(),
-                          const XSettingBox(),
+                          FutureBuilder(
+                              future: firestoreService.getHomeUserList(homeId),
+                              builder: (context, AsyncSnapshot snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                }
+                                final userList = snapshot.data;
+                                return ListView.builder(
+                                    shrinkWrap: true,
+                                    itemCount: userList.length,
+                                    itemBuilder: (context, index) {
+                                      return XSettingBox(
+                                          userList[index]['username']);
+                                    });
+                              }),
 
                           SizedBox(height: screenHeight(context) * 0.02),
                         ],
@@ -127,7 +141,7 @@ class HomeSettingScreen extends StatelessWidget {
                       ),
                       child: CustomButton(
                         onTap: () {
-                          Get.dialog(NewMemberDialog());
+                          Get.dialog(NewMemberDialog(homeId));
                         },
                         btnText: 'Nuevo Integrante',
                       ),

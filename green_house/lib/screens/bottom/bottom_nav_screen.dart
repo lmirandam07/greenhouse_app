@@ -60,7 +60,7 @@ class BottomNavBar extends GetView<BottomNavController> {
             children: [
               Expanded(
                 child: controller.analytic.value == true
-                    ? const HouseHoldScreen()
+                    ? HouseHoldScreen()
                     : controller.home.value == true
                         ? HomesScreen()
                         : controller.profile.value == true

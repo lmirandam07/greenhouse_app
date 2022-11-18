@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:green_house/constants/shadows.dart';
 
 import '../constants/exports.dart';
+
+import '../../services/firestore_services/firestore_services.dart';
 
 class CustomAppBar extends StatelessWidget {
   final bool? isLeadingIcon;
   final String? titleText;
   final Widget? action;
 
-  const CustomAppBar({
+  CustomAppBar({
     Key? key,
     this.isLeadingIcon = false,
     required this.titleText,
     this.action,
   }) : super(key: key);
+
+  final firestoreService = FirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +42,22 @@ class CustomAppBar extends StatelessWidget {
         children: [
           isLeadingIcon == true
               ? Bounceable(
-                  onTap: () {},
+                  onTap: () {
+                    Get.defaultDialog(
+                      title: "Seleccionar Hogar",
+                      buttonColor: AppColors.primaryDarkColor,
+                      content: Column(
+                        children: [FutureBuilder(
+                  future: firestoreService.getUserHomeList(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    return Text("A"); 
+                  })],
+                      ),
+                    );
+                  },
                   child: Container(
                     padding: const EdgeInsets.all(12.0),
                     decoration: BoxDecoration(

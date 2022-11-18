@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import '../../../constants/exports.dart';
 
 class XSettingBox extends StatelessWidget {
-  const XSettingBox({Key? key}) : super(key: key);
+  final String userName;
+  const XSettingBox(this.userName, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class XSettingBox extends StatelessWidget {
           SizedBox(width: screenHeight(context) * 0.01),
           Expanded(
             child: Text(
-              'Nombre de integrante',
+              userName,
               style: montserratRegular.copyWith(
                 fontSize: body15,
                 color: AppColors.blackColor,
