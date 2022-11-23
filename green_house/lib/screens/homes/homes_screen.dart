@@ -61,8 +61,10 @@ class HomesScreen extends StatelessWidget {
                           itemCount: homesList.length,
                           itemBuilder: (context, index) {
                             return Center(
-                                child: HomeBox(homesList[index]['home_name'],
-                                    homesList[index]['home_id'],homesList[index]['owner_id']));
+                                child: HomeBox(
+                                    homesList[index]['home_name'],
+                                    homesList[index]['home_id'],
+                                    homesList[index]['owner_id']));
                           });
                     } else {
                       return const Center(

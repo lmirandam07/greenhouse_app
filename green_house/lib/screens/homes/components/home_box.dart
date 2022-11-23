@@ -10,14 +10,15 @@ class HomeBox extends StatelessWidget {
   final String homeName;
   final String homeId;
   final String ownerId;
-  HomeBox(this.homeName, this.homeId, this.ownerId,{Key? key}) : super(key: key);
+  HomeBox(this.homeName, this.homeId, this.ownerId, {Key? key})
+      : super(key: key);
   final firestoreService = FirestoreService();
 
   @override
   Widget build(BuildContext context) {
     return Bounceable(
       onTap: () {
-        Get.to(HomeScreen(homeName, homeId,ownerId));
+        Get.to(HomeScreen(homeName, homeId, ownerId));
       },
       child: Container(
         width: screenWidth(context),
@@ -34,7 +35,7 @@ class HomeBox extends StatelessWidget {
             future: firestoreService.getUserHomeCount(homeId),
             builder: (context, AsyncSnapshot snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(child: CircularProgressIndicator());
+                return const Center(child: LinearProgressIndicator());
               }
               return Row(
                 crossAxisAlignment: CrossAxisAlignment.center,

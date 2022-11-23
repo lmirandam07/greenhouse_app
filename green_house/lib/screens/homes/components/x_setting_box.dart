@@ -4,7 +4,8 @@ import '../../../constants/exports.dart';
 
 class XSettingBox extends StatelessWidget {
   final String userName;
-  const XSettingBox(this.userName, {Key? key}) : super(key: key);
+  final String email;
+  const XSettingBox(this.userName, this.email, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +47,21 @@ class XSettingBox extends StatelessWidget {
           ),
           SizedBox(width: screenHeight(context) * 0.01),
           Expanded(
-            child: Text(
-              userName,
-              style: montserratRegular.copyWith(
-                fontSize: body15,
-                color: AppColors.blackColor,
-              ),
+            child: Column(
+              children: [
+                Text(
+                  userName,
+                  style: montserratRegular.copyWith(
+                    fontSize: body15,
+                    color: AppColors.blackColor,
+                  ),
+                ),
+                Text(email,
+                    style: montserratMedium.copyWith(
+                      fontSize: 14.0,
+                      color: AppColors.blackHintColor,
+                    ))
+              ],
             ),
           ),
           InkWell(

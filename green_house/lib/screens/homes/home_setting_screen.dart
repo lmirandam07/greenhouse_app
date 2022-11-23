@@ -126,7 +126,7 @@ class HomeSettingScreen extends StatelessWidget {
                                     itemCount: userList.length,
                                     itemBuilder: (context, index) {
                                       return XSettingBox(
-                                          userList[index]['username']);
+                                          userList[index]['username'],userList[index]['email']);
                                     });
                               }),
 

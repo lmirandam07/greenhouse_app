@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:green_house/constants/shadows.dart';
+import '../../widgets/custom_SizeButton.dart';
 
 import '../constants/exports.dart';
 
 import '../../services/firestore_services/firestore_services.dart';
+import 'custom_SizeButton.dart';
 
 class CustomAppBar extends StatelessWidget {
   final bool? isLeadingIcon;
@@ -23,7 +24,7 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 75,
+      height: 90,
       width: screenWidth(context),
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
       decoration: BoxDecoration(
@@ -47,14 +48,54 @@ class CustomAppBar extends StatelessWidget {
                       title: "Seleccionar Hogar",
                       buttonColor: AppColors.primaryDarkColor,
                       content: Column(
-                        children: [FutureBuilder(
-                  future: firestoreService.getUserHomeList(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                    return Text("A"); 
-                  })],
+                        children: [
+                          FutureBuilder(
+                              future: firestoreService.getUserHomeList(),
+                              builder: (BuildContext context,
+                                  AsyncSnapshot snapshot) {
+                                if (snapshot.connectionState ==
+                                    ConnectionState.waiting) {
+                                  return const Center(
+                                      child: CircularProgressIndicator());
+                                }
+                                if (snapshot.hasData) {
+                                  final homes = snapshot.data;
+                                  return Column(
+                                    children: [
+                                      Container(
+                                        height: 80,
+                                        width: 200,
+                                        child: ListView.builder(
+                                          shrinkWrap: true,
+                                          itemCount: homes.length,
+                                          itemBuilder: ((context, index) {
+                                            return HomeSelect(
+                                                homeId: homes[index]['home_id'],
+                                                homeName: homes[index]
+                                                    ['home_name']);
+                                          }),
+                                        ),
+                                      ),
+                                      CustomSizeButton(
+                                          onTap: () => Get.back(),
+                                          btnText: 'Regresar',
+                                          height: 45)
+                                    ],
+                                  );
+                                } else {
+                                  return Column(
+                                    children: [
+                                      const Text(
+                                          "No hay casas disponibles para cambiar"),
+                                      CustomSizeButton(
+                                          onTap: () {},
+                                          btnText: 'Ok',
+                                          height: 45.0)
+                                    ],
+                                  );
+                                }
+                              })
+                        ],
                       ),
                     );
                   },
@@ -91,5 +132,45 @@ class CustomAppBar extends StatelessWidget {
         ],
       ),
     );
+  }
+}
+
+class HomeSelect extends StatelessWidget {
+  final String homeId;
+  final String homeName;
+  HomeSelect({
+    Key? key,
+    required this.homeId,
+    required this.homeName,
+  }) : super(key: key);
+
+  final firestoreService = FirestoreService();
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: firestoreService.getUserHomeCount(homeId),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.data == null) {
+            return const Center(child: LinearProgressIndicator());
+          }
+          if (snapshot.data['status'] == 'accepted') {
+            return Center(
+              child: TextButton(
+                  style: TextButton.styleFrom(
+                    side: const BorderSide(
+                      width: 1.0,
+                      color: AppColors.primaryDarkColor,
+                    ),
+                  ),
+                  onPressed: () {},
+                  child: Center(
+                    child: Text(homeName),
+                  )),
+            );
+          } else {
+            return const SizedBox.shrink();
+          }
+        });
   }
 }
