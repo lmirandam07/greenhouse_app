@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class HomeMembersModel {
   final String member_id;
   final String member_role;
