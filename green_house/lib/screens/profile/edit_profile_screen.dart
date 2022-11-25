@@ -6,11 +6,14 @@ import 'package:green_house/screens/profile/components/registered_box.dart';
 import 'package:green_house/screens/profile/controller/profile_controller.dart';
 import 'package:green_house/widgets/custom_button.dart';
 import 'package:green_house/widgets/custom_text_field.dart';
+import '../../services/firestore_services/firestore_services.dart';
 
 class EditProfileScreen extends StatelessWidget {
   EditProfileScreen({Key? key}) : super(key: key);
 
   final ProfileController profileController = Get.put(ProfileController());
+
+  final firestoreService = FirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -99,21 +102,31 @@ class EditProfileScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      RegisteredBox(onTap: () {
-                        Get.dialog(
-                          LeaveHomeDialog(),
-                        );
-                      }),
-                      RegisteredBox(onTap: () {
-                        Get.dialog(
-                          LeaveHomeDialog(),
-                        );
-                      }),
-                      RegisteredBox(onTap: () {
-                        Get.dialog(
-                          LeaveHomeDialog(),
-                        );
-                      }),
+                      FutureBuilder(
+                          future: firestoreService.getUserHomeList(),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            }
+                            if (snapshot.hasData) {
+                              final homesList = snapshot.data;
+                              return ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: homesList.length,
+                                  itemBuilder: (context, index) {
+                                    return HomeSelect(
+                                        homeId: homesList[index]['home_id'],
+                                        homeName: homesList[index]['home_name'],
+                                        ownerId: homesList[index]['owner_id']);
+                                  });
+                            } else {
+                              return const Center(
+                                  child: Text('No perteneces a ningún hogar'));
+                            }
+                          }),
 
                       SizedBox(height: screenHeight(context) * 0.02),
                     ],
@@ -153,5 +166,43 @@ class EditProfileScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+class HomeSelect extends StatelessWidget {
+  final String homeId;
+  final String homeName;
+  final String ownerId;
+
+  HomeSelect(
+      {Key? key,
+      required this.homeId,
+      required this.homeName,
+      required this.ownerId})
+      : super(key: key);
+
+  final firestoreService = FirestoreService();
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+        future: firestoreService.getUserHomeCount(homeId),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.data == null) {
+            return const Center(child: LinearProgressIndicator());
+          }
+          if (snapshot.data['status'] == 'accepted') {
+            return Center(
+                child: RegisteredBox(
+                    homeName: homeName,
+                    onTap: () {
+                      Get.dialog(
+                        LeaveHomeDialog(homeId: homeId, ownerId: ownerId),
+                      );
+                    }));
+          } else {
+            return const SizedBox.shrink();
+          }
+        });
   }
 }

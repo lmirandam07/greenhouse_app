@@ -30,7 +30,10 @@ class HomeSettingScreen extends StatelessWidget {
             FutureBuilder(
                 future: firestoreService.validateUserOwner(ownerId),
                 builder: (context, AsyncSnapshot snapshot) {
-                  if (snapshot.data == true) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.data) {
                     return CustomAppBar(
                       isLeadingIcon: false,
                       titleText: homeName,
@@ -126,7 +129,10 @@ class HomeSettingScreen extends StatelessWidget {
                                     itemCount: userList.length,
                                     itemBuilder: (context, index) {
                                       return XSettingBox(
-                                          userList[index]['username'],userList[index]['email']);
+                                          userList[index]['username'],
+                                          userList[index]['email'],
+                                          userList[index]['id'],
+                                          homeId);
                                     });
                               }),
 

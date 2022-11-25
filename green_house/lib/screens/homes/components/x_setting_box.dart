@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
 
 import '../../../constants/exports.dart';
+import '../../../services/firestore_services/firestore_services.dart';
+import '../../dialogs/remove_user.dart';
+import 'package:get/get.dart';
 
 class XSettingBox extends StatelessWidget {
   final String userName;
   final String email;
-  const XSettingBox(this.userName, this.email, {Key? key}) : super(key: key);
+  final String userId;
+  final String homeId;
+  XSettingBox(this.userName, this.email, this.userId, this.homeId, {Key? key})
+      : super(key: key);
+
+  final firestoreService = FirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -64,28 +72,33 @@ class XSettingBox extends StatelessWidget {
               ],
             ),
           ),
-          InkWell(
-            onTap: () {},
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 8.0,
-                top: 8.0,
-                bottom: 8.0,
-                right: 8.0,
-              ),
-              child: SvgPicture.asset(AppIcons.settingIcon),
-            ),
-          ),
-          InkWell(
-            onTap: () {},
-            child: Padding(
-              padding: const EdgeInsets.only(
-                left: 8.0,
-                top: 8.0,
-                bottom: 8.0,
-              ),
-              child: SvgPicture.asset(AppIcons.deleteIcon),
-            ),
+          Container(
+            height: 35,
+            width: 35,
+            child: FutureBuilder(
+                future: firestoreService.validateUserOwner(userId),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: LinearProgressIndicator());
+                  }
+                  if (!snapshot.data) {
+                    return InkWell(
+                      onTap: () {
+                        Get.dialog(RemoveUserDialog(userId, userName, homeId));
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                          left: 8.0,
+                          top: 8.0,
+                          bottom: 8.0,
+                        ),
+                        child: SvgPicture.asset(AppIcons.deleteIcon),
+                      ),
+                    );
+                  } else {
+                    return const SizedBox.shrink();
+                  }
+                }),
           ),
         ],
       ),

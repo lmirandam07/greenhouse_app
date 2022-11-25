@@ -1,8 +1,6 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_house/constants/exports.dart';
-import 'package:green_house/models/home_model.dart';
 import 'package:green_house/screens/homes/components/home_box.dart';
 import 'package:green_house/screens/create_home/create_home_screen.dart';
 

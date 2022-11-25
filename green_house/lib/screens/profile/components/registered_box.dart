@@ -1,14 +1,12 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 
 import '../../../constants/exports.dart';
 
 class RegisteredBox extends StatelessWidget {
-
+  final String homeName;
   final VoidCallback? onTap;
 
-  const RegisteredBox({Key? key, required this.onTap}) : super(key: key);
+  const RegisteredBox({Key? key, required this.homeName, required this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +49,7 @@ class RegisteredBox extends StatelessWidget {
           SizedBox(width: screenHeight(context) * 0.01),
           Expanded(
             child: Text(
-              'Nombre de integrante',
+              homeName,
               style: montserratRegular.copyWith(
                 fontSize: body15,
                 color: AppColors.blackColor,
@@ -69,7 +67,7 @@ class RegisteredBox extends StatelessWidget {
                   bottom: 8.0,
                   right: 8.0,
                 ),
-                child: SvgPicture.asset(AppIcons.logoutIcon) ,
+                child: SvgPicture.asset(AppIcons.logoutIcon),
               ),
             ),
           ),

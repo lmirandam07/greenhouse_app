@@ -168,6 +168,25 @@ class FirestoreService {
     return isOwner;
   }
 
+  exitHome(String homeId, String ownerId) async {
+    final userData = await getCurrentUserData();
+    final isOwner = await validateUserOwner(ownerId);
+    final userHome =
+        docUser.doc(userData['id']).collection('user_homes').doc(homeId);
+
+    userHome.delete();
+
+    if (isOwner) {
+      final home = docHome.doc(homeId);
+
+      home.delete();
+    } else {
+      final homeUser =
+          docHome.doc(homeId).collection('home_members').doc(userData['id']);
+      homeUser.delete();
+    }
+  }
+
   Future<QuerySnapshot<Map<String, dynamic>>> getHomeUsers(
       String homeId) async {
     final homeUsers =

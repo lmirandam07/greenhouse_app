@@ -4,13 +4,13 @@ import 'package:green_house/constants/exports.dart';
 import 'package:green_house/widgets/custom_button.dart';
 
 import '../../services/firestore_services/firestore_services.dart';
-import '../profile/edit_profile_screen.dart';
 
-class LeaveHomeDialog extends StatelessWidget {
+class RemoveUserDialog extends StatelessWidget {
+  final String userId;
+  final String username;
   final String homeId;
-  final String ownerId;
 
-  LeaveHomeDialog({Key? key, required this.homeId, required this.ownerId})
+  RemoveUserDialog(this.userId, this.username, this.homeId, {Key? key})
       : super(key: key);
 
   final firestoreService = FirestoreService();
@@ -38,7 +38,7 @@ class LeaveHomeDialog extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                '¿Deseas salir de este hogar?',
+                'Estas seguro de remover a $username de este hogar?',
                 style: montserratMedium.copyWith(
                   fontSize: body17,
                   color: AppColors.blackColor,
@@ -49,10 +49,7 @@ class LeaveHomeDialog extends StatelessWidget {
                 children: [
                   Expanded(
                     child: CustomButton(
-                      onTap: () async {
-                        await firestoreService.exitHome(homeId, ownerId);
-                        Get.to(EditProfileScreen());
-                      },
+                      onTap: () {},
                       btnText: 'Aceptar',
                     ),
                   ),

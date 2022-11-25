@@ -3,14 +3,16 @@ import 'package:get/get.dart';
 import 'package:green_house/constants/exports.dart';
 import 'package:green_house/screens/homes/components/emission_box.dart';
 import 'package:green_house/screens/homes/home_setting_screen.dart';
+import '../../services/firestore_services/firestore_services.dart';
 import '../../widgets/custom_app_bar.dart';
 
 class HomeScreen extends StatelessWidget {
   final String homeId;
   final String homeName;
   final String ownerId;
-  const HomeScreen(this.homeName, this.homeId, this.ownerId,{Key? key}) : super(key: key);
-
+  HomeScreen(this.homeName, this.homeId, this.ownerId, {Key? key})
+      : super(key: key);
+  final firestoreService = FirestoreService();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -21,10 +23,34 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             /// top app bar
-            CustomAppBar(
-              isLeadingIcon: false,
-              titleText: homeName,
-            ),
+            FutureBuilder(
+                future: firestoreService.validateUserOwner(ownerId),
+                builder: (context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.data) {
+                    return CustomAppBar(
+                        isLeadingIcon: false,
+                        titleText: homeName,
+                        action: Align(
+                          alignment: Alignment.centerRight,
+                          child: Padding(
+                            padding: const EdgeInsets.only(right: 5.0),
+                            child: IconButton(
+                              onPressed: () {
+                                Get.to(HomeSettingScreen(
+                                    homeName, homeId, ownerId));
+                              },
+                              icon: SvgPicture.asset(AppIcons.settingIcon),
+                            ),
+                          ),
+                        ));
+                  } else {
+                    return CustomAppBar(
+                        isLeadingIcon: false, titleText: homeName);
+                  }
+                }),
 
             ///
             Expanded(
@@ -36,20 +62,6 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     /// vert dot icon
                     SizedBox(height: screenHeight(context) * 0.024),
-                    Align(
-                      alignment: Alignment.centerRight,
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 10.0),
-                        child: IconButton(
-                          onPressed: () {
-                            Get.to(HomeSettingScreen(homeName, homeId,ownerId));
-                          },
-                          icon: SvgPicture.asset(
-                            AppIcons.moreVertIcon,
-                          ),
-                        ),
-                      ),
-                    ),
 
                     /// filter icon with chart
                     Row(
