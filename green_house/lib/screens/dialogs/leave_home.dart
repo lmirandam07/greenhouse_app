@@ -4,6 +4,8 @@ import 'package:green_house/constants/exports.dart';
 import 'package:green_house/widgets/custom_button.dart';
 
 import '../../services/firestore_services/firestore_services.dart';
+import '../bottom/bottom_nav_screen.dart';
+import '../bottom/controller/bottom_nav_controller.dart';
 import '../profile/edit_profile_screen.dart';
 
 class LeaveHomeDialog extends StatelessWidget {
@@ -13,6 +15,7 @@ class LeaveHomeDialog extends StatelessWidget {
   LeaveHomeDialog({Key? key, required this.homeId, required this.ownerId})
       : super(key: key);
 
+  final botomNavBar = BottomNavController();
   final firestoreService = FirestoreService();
 
   @override
@@ -51,7 +54,9 @@ class LeaveHomeDialog extends StatelessWidget {
                     child: CustomButton(
                       onTap: () async {
                         await firestoreService.exitHome(homeId, ownerId);
-                        Get.to(EditProfileScreen());
+                        botomNavBar.profile();
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => const BottomNavBar()));
                       },
                       btnText: 'Aceptar',
                     ),

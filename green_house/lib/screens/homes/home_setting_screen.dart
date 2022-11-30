@@ -132,7 +132,9 @@ class HomeSettingScreen extends StatelessWidget {
                                           userList[index]['username'],
                                           userList[index]['email'],
                                           userList[index]['id'],
-                                          homeId);
+                                          homeId,
+                                          ownerId,
+                                          homeName);
                                     });
                               }),
 

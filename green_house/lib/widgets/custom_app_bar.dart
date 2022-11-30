@@ -88,7 +88,9 @@ class CustomAppBar extends StatelessWidget {
                                       const Text(
                                           "No hay casas disponibles para cambiar"),
                                       CustomSizeButton(
-                                          onTap: () {},
+                                          onTap: () {
+                                            Get.back();
+                                          },
                                           btnText: 'Ok',
                                           height: 45.0)
                                     ],

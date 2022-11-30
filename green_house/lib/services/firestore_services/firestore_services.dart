@@ -187,6 +187,17 @@ class FirestoreService {
     }
   }
 
+  removeUser(String homeId, String username) async {
+    final userData = await getUserData(username);
+    final userHome =
+        docUser.doc(userData['id']).collection('user_homes').doc(homeId);
+    final homeUser =
+        docHome.doc(homeId).collection('home_members').doc(userData['id']);
+
+    userHome.delete();
+    homeUser.delete();
+  }
+
   Future<QuerySnapshot<Map<String, dynamic>>> getHomeUsers(
       String homeId) async {
     final homeUsers =
@@ -210,5 +221,11 @@ class FirestoreService {
         .map((doc) => json.decode(json.encode(doc.data())))
         .toList();
     return homeUserDocs;
+  }
+
+  Future<bool> userHomeStatus(String homeId, String userId) async {
+    final userHome =
+        await docHome.doc(homeId).collection('home_members').doc(userId).get();
+    return userHome['member_status'] == 'accepted' ? true : false;
   }
 }
