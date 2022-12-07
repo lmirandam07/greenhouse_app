@@ -108,8 +108,10 @@ class FirestoreService {
 
   Future<Iterable> getUserHomeList() async {
     final userHomesId = await getUserHomesId();
-    final userHomeList =
-        await docHome.where('home_id', whereIn: userHomesId).get();
+    final userHomeList = await docHome
+        .where('home_id', whereIn: userHomesId)
+        .where('activated', isEqualTo: true)
+        .get();
     final userHomeDocs = userHomeList.docs
         .map((doc) => json.decode(json.encode(doc.data())))
         .toList();
@@ -179,7 +181,7 @@ class FirestoreService {
     if (isOwner) {
       final home = docHome.doc(homeId);
 
-      home.delete();
+      home.update({'activated': false});
     } else {
       final homeUser =
           docHome.doc(homeId).collection('home_members').doc(userData['id']);

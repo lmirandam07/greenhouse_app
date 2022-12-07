@@ -70,6 +70,7 @@ class CreateHomeController extends GetxController {
         final home = HomeModel(
             home_name: houseHoldNameController.text,
             owner_id: value['id'],
+            activated: true,
             ubication: coords);
         final homeOwner = HomeMembersModel(
             member_id: value['id'],
