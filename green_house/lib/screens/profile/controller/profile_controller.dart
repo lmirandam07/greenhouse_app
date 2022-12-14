@@ -43,7 +43,7 @@ class ProfileController extends GetxController {
           } else {
             await firestoreService.UpdateUserData(userdata).then((value) async {
               botomNavBar.profile();
-              Get.to(() => const BottomNavBar());
+              Get.to(() => BottomNavBar());
               successSnackBar('Perfil actualizado exitosamente');
               isLoading(false);
             });

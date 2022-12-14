@@ -114,8 +114,7 @@ class HomeInvitation extends StatelessWidget {
                                 botomNavBar.homeFun();
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            const BottomNavBar()));
+                                        builder: (context) => BottomNavBar()));
                               },
                               btnText: 'Aceptar',
                               height: 45.0,
@@ -127,8 +126,7 @@ class HomeInvitation extends StatelessWidget {
                                 botomNavBar.homeFun();
                                 Navigator.of(context).pushReplacement(
                                     MaterialPageRoute(
-                                        builder: (context) =>
-                                            const BottomNavBar()));
+                                        builder: (context) => BottomNavBar()));
                               },
                               btnText: 'Rechazar',
                               height: 45.0,

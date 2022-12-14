@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_house/constants/exports.dart';
-import 'package:green_house/screens/create_home/create_home_screen.dart';
+import 'package:green_house/screens/homes/homes_screen.dart';
 import 'package:green_house/widgets/custom_button.dart';
 
 import '../../widgets/custom_app_bar.dart';
@@ -10,7 +10,9 @@ import 'components/activity_item_box.dart';
 import '../../services/firestore_services/firestore_services.dart';
 
 class HouseHoldScreen extends StatelessWidget {
-  HouseHoldScreen({Key? key}) : super(key: key);
+  String? homeName;
+  String? homeId;
+  HouseHoldScreen([this.homeName, this.homeId]);
   final firestoreService = FirestoreService();
 
   @override
@@ -18,13 +20,19 @@ class HouseHoldScreen extends StatelessWidget {
     return Scaffold(
       body: SafeArea(
           child: FutureBuilder(
-              future: firestoreService.getUserHomeList(),
+              future: firestoreService.getUserHomeAcceptedList(),
               builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: CircularProgressIndicator());
                 }
                 if (snapshot.hasData) {
                   final homesList = snapshot.data;
+
+                  if (homeId == null) {
+                    homeName = homesList[0]['home_name'];
+                    homeId = homesList[0]['home_id'];
+                  }
+
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -32,7 +40,7 @@ class HouseHoldScreen extends StatelessWidget {
                       /// top app bar
                       CustomAppBar(
                         isLeadingIcon: true,
-                        titleText: 'Nombre de hogar',
+                        titleText: homeName,
                       ),
 
                       /// weight and oxygen box
@@ -186,7 +194,7 @@ class HouseHoldScreen extends StatelessWidget {
                           padding: EdgeInsets.only(
                               right: 6.0, left: 15.0, top: 175.0, bottom: 10.0),
                           child: Text(
-                            'No perteneces a ningún hogar.\nCrea un hogar para empezar a visualizar los datos',
+                            'No perteneces a ningún hogar.\nCrea un hogar o acepta alguna invitación para empezar a visualizar los datos',
                             textAlign: TextAlign.center,
                           ),
                         )),
@@ -195,7 +203,7 @@ class HouseHoldScreen extends StatelessWidget {
                               top: 10.0, bottom: 40.0, right: 40.0, left: 40.0),
                           child: CustomButton(
                               onTap: () {
-                                Get.to(CreateHomeScreen());
+                                Get.to(HomesScreen());
                               },
                               btnText: 'Crear Hogar'),
                         )

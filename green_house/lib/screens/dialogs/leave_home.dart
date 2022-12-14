@@ -56,7 +56,7 @@ class LeaveHomeDialog extends StatelessWidget {
                         await firestoreService.exitHome(homeId, ownerId);
                         botomNavBar.profile();
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const BottomNavBar()));
+                            builder: (context) => BottomNavBar()));
                       },
                       btnText: 'Aceptar',
                     ),

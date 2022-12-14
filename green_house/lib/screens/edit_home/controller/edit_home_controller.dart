@@ -37,14 +37,12 @@ class EditHomeController extends GetxController {
         'ubication': coords
       };
 
-      firestoreService.UpdateHomeData(
-        home_data, homeId
-      );
+      firestoreService.UpdateHomeData(home_data, homeId);
 
       successSnackBar('Casa editada correctamente');
       houseHoldNameController.clear();
       botomNavBar.homeFun();
-      Get.to(() => const BottomNavBar());
+      Get.to(() => BottomNavBar());
       isLoading(false);
     } catch (e) {
       errorSnackBar('Error al editar la casa. Intente nuevamente');

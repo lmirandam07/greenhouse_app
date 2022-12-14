@@ -91,7 +91,7 @@ class CreateHomeController extends GetxController {
         houseHoldNameController.clear();
         inviteUserController.clear();
         botomNavBar.homeFun();
-        Get.to(() => const BottomNavBar());
+        Get.to(() => BottomNavBar());
         isLoading(false);
       } catch (e) {
         errorSnackBar('Error al crear la casa. Intente nuevamente');

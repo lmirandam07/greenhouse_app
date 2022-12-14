@@ -5,7 +5,10 @@ import '../../widgets/custom_SizeButton.dart';
 import '../constants/exports.dart';
 
 import '../../services/firestore_services/firestore_services.dart';
+import '../screens/bottom/bottom_nav_screen.dart';
+import '../screens/bottom/controller/bottom_nav_controller.dart';
 import 'custom_SizeButton.dart';
+import '../../screens/household/household_screen.dart';
 
 class CustomAppBar extends StatelessWidget {
   final bool? isLeadingIcon;
@@ -140,6 +143,7 @@ class CustomAppBar extends StatelessWidget {
 class HomeSelect extends StatelessWidget {
   final String homeId;
   final String homeName;
+  final botomNavBar = BottomNavController();
   HomeSelect({
     Key? key,
     required this.homeId,
@@ -165,7 +169,11 @@ class HomeSelect extends StatelessWidget {
                       color: AppColors.primaryDarkColor,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    botomNavBar.analyticFun();
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => BottomNavBar(homeName, homeId)));
+                  },
                   child: Center(
                     child: Text(homeName),
                   )),

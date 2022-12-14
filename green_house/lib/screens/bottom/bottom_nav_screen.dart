@@ -10,7 +10,9 @@ import '../setting/setting_screen.dart';
 import 'controller/bottom_nav_controller.dart';
 
 class BottomNavBar extends GetView<BottomNavController> {
-  const BottomNavBar({Key? key}) : super(key: key);
+  String? homeName;
+  String? homeId;
+  BottomNavBar([this.homeName, this.homeId]);
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +62,7 @@ class BottomNavBar extends GetView<BottomNavController> {
             children: [
               Expanded(
                 child: controller.analytic.value == true
-                    ? HouseHoldScreen()
+                    ? HouseHoldScreen(homeName, homeId)
                     : controller.home.value == true
                         ? HomesScreen()
                         : controller.profile.value == true

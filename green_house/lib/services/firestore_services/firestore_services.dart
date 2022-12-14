@@ -97,6 +97,16 @@ class FirestoreService {
     return userHome;
   }
 
+  Future<QuerySnapshot<Map<String, dynamic>>> getUserHomesAccepted() async {
+    final userData = await getCurrentUserData();
+    final userHome = await docUser
+        .doc(userData['id'])
+        .collection('user_homes')
+        .where('home_status', isEqualTo: 'accepted')
+        .get();
+    return userHome;
+  }
+
   Future<List> getUserHomesId() async {
     List userHomesId = [];
     final userHome = await getUserHomes();
@@ -106,8 +116,29 @@ class FirestoreService {
     return userHomesId;
   }
 
+  Future<List> getUserHomesAcceptedId() async {
+    List userHomesId = [];
+    final userHome = await getUserHomesAccepted();
+    userHome.docs.forEach((homes) {
+      userHomesId.add(homes.data()['home_id']);
+    });
+    return userHomesId;
+  }
+
   Future<Iterable> getUserHomeList() async {
     final userHomesId = await getUserHomesId();
+    final userHomeList = await docHome
+        .where('home_id', whereIn: userHomesId)
+        .where('activated', isEqualTo: true)
+        .get();
+    final userHomeDocs = userHomeList.docs
+        .map((doc) => json.decode(json.encode(doc.data())))
+        .toList();
+    return userHomeDocs;
+  }
+
+  Future<Iterable> getUserHomeAcceptedList() async {
+    final userHomesId = await getUserHomesAcceptedId();
     final userHomeList = await docHome
         .where('home_id', whereIn: userHomesId)
         .where('activated', isEqualTo: true)
@@ -228,6 +259,16 @@ class FirestoreService {
   Future<bool> userHomeStatus(String homeId, String userId) async {
     final userHome =
         await docHome.doc(homeId).collection('home_members').doc(userId).get();
+    return userHome['member_status'] == 'accepted' ? true : false;
+  }
+
+  Future<bool> currentUserHomeStatus(String homeId) async {
+    final userData = await getCurrentUserData();
+    final userHome = await docHome
+        .doc(homeId)
+        .collection('home_members')
+        .doc(userData['id'])
+        .get();
     return userHome['member_status'] == 'accepted' ? true : false;
   }
 }

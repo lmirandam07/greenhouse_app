@@ -85,7 +85,7 @@ class RemoveUserDialog extends StatelessWidget {
                         await firestoreService.removeUser(homeId, username);
                         botomNavBar.homeFun();
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => const BottomNavBar()));
+                            builder: (context) => BottomNavBar()));
                       },
                       btnText: 'Aceptar',
                     ),
