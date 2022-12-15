@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_house/screens/dialogs/components/dropdown_menu.dart';
 import 'package:green_house/widgets/custom_button.dart';
 
 import '../../constants/exports.dart';
@@ -7,13 +8,23 @@ import '../../constants/exports.dart';
 class ReIssueDialog extends StatelessWidget {
   const ReIssueDialog({Key? key}) : super(key: key);
 
+  List<DropdownMenuItem<String>> get dropdownItems {
+    List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text("USA"), value: "USA"),
+      DropdownMenuItem(child: Text("Canada"), value: "Canada"),
+      DropdownMenuItem(child: Text("Brazil"), value: "Brazil"),
+      DropdownMenuItem(child: Text("England"), value: "England"),
+    ];
+    return menuItems;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Material(
       color: Colors.transparent,
       child: Center(
         child: SingleChildScrollView(
-          padding: EdgeInsets.only(bottom: 40.0),
+          padding: const EdgeInsets.only(bottom: 40.0),
           child: Container(
             width: screenWidth(context),
             margin: const EdgeInsets.symmetric(horizontal: 20.0),
@@ -111,110 +122,7 @@ class ReIssueDialog extends StatelessWidget {
                       Container(
                         height: 40.0,
                         width: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(radius10),
-                          color: AppColors.whiteColor,
-                          border: Border.all(
-                            color: AppColors.primaryColor,
-                            width: 1.0,
-                          ),
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: screenHeight(context) * 0.012),
-                              child: Text(
-                                'Hogares',
-                                style: montserratRegular.copyWith(
-                                  fontSize: 14.0,
-                                  color: AppColors.blackColor,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: AppColors.primaryColor,
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(radius8),
-                                    bottomRight: Radius.circular(radius8),
-                                  ),
-                                ),
-                                child: Center(
-                                  child:
-                                      SvgPicture.asset(AppIcons.dropdownIcon),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                /// Seleccionar two
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 16.0, right: 16.0, bottom: 16.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          'Seleccionar',
-                          style: montserratRegular.copyWith(
-                            fontSize: 16.0,
-                            color: AppColors.blackColor,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: 40.0,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(radius10),
-                          color: AppColors.whiteColor,
-                          border: Border.all(
-                            color: AppColors.primaryColor,
-                            width: 1.0,
-                          ),
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: screenHeight(context) * 0.012),
-                              child: Text(
-                                'Hogares',
-                                style: montserratRegular.copyWith(
-                                  fontSize: 14.0,
-                                  color: AppColors.blackColor,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: AppColors.primaryColor,
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(radius8),
-                                    bottomRight: Radius.circular(radius8),
-                                  ),
-                                ),
-                                child: Center(
-                                  child:
-                                      SvgPicture.asset(AppIcons.dropdownIcon),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        child: DropdownMenu(),
                       ),
                     ],
                   ),
@@ -229,7 +137,7 @@ class ReIssueDialog extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          'Título de emisión',
+                          'Monto',
                           style: montserratRegular.copyWith(
                             fontSize: 16.0,
                             color: AppColors.blackColor,

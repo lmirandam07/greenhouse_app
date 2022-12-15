@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_house/constants/exports.dart';
-import 'package:green_house/screens/dialogs/reissue_dialog.dart';
+import 'package:green_house/screens/dialogs/emission_power_dialog.dart';
 
 import '../homes/homes_screen.dart';
 import '../household/household_screen.dart';

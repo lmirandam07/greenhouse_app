@@ -44,6 +44,7 @@ dependencies:
   geolocator: ^9.0.1
   google_maps_webservice: ^0.0.19
   google_maps_place_picker_mb: ^2.0.0-mb.22
+  dropdown_button2: ^1.9.2
 
 dev_dependencies:
   change_app_package_name: ^1.1.0
