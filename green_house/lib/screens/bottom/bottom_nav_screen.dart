@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_house/constants/exports.dart';
 import 'package:green_house/screens/dialogs/emission_power_dialog.dart';
+import 'package:green_house/screens/dialogs/emission_transport_dialog.dart';
 
 import '../homes/homes_screen.dart';
 import '../household/household_screen.dart';
@@ -26,7 +27,7 @@ class BottomNavBar extends GetView<BottomNavController> {
           padding: const EdgeInsets.only(bottom: 30.0, right: 40),
           child: FloatingActionButton(
             onPressed: () {
-              Get.dialog(ReIssueDialog());
+              Get.dialog(ReIssueDialogTransport());
             },
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(radius15),

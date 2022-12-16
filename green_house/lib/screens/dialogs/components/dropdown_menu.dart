@@ -1,10 +1,12 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:green_house/constants/exports.dart';
 
 import '../../../services/firestore_services/firestore_services.dart';
 
 class DropdownMenu extends StatefulWidget {
-  const DropdownMenu({Key? key}) : super(key: key);
+  final Color dropdownColor;
+  DropdownMenu([this.dropdownColor = AppColors.primaryColor]);
 
   @override
   State<DropdownMenu> createState() => _DropdownMenuState();
@@ -12,18 +14,9 @@ class DropdownMenu extends StatefulWidget {
 
 class _DropdownMenuState extends State<DropdownMenu> {
   final firestoreService = FirestoreService();
-  final List<String> items = [
-    'Item1',
-    'Item2',
-    'Item3',
-    'Item4',
-    'Item5',
-    'Item6',
-    'Item7',
-    'Item8',
-  ];
+  final List<String> homes = [];
 
-  String? selectedValue;
+  String? homeSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -34,41 +27,40 @@ class _DropdownMenuState extends State<DropdownMenu> {
               future: firestoreService.getUserHomeAcceptedList(),
               builder: (context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
+                  return Center(
+                      child: CircularProgressIndicator(
+                    color: widget.dropdownColor,
+                  ));
                 }
                 if (snapshot.hasData) {
+                  final homesList = snapshot.data;
+                  homesList.forEach((home) {
+                    homes.add(home['home_name'] + "_" + home['home_id']);
+                  });
                   return DropdownButton2(
                     isExpanded: true,
                     hint: Row(
                       children: const [
-                        Icon(
-                          Icons.list,
-                          size: 16,
-                          color: Colors.yellow,
-                        ),
-                        SizedBox(
-                          width: 4,
-                        ),
                         Expanded(
                           child: Text(
-                            'Select Item',
+                            'Hogares',
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.bold,
-                              color: Colors.yellow,
+                              color: Colors.white,
                             ),
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
                       ],
                     ),
-                    items: items
+                    items: homes
                         .map((item) => DropdownMenuItem<String>(
                               value: item,
                               child: Text(
-                                item,
+                                item.split('_')[0],
                                 style: const TextStyle(
-                                  fontSize: 14,
+                                  fontSize: 12,
                                   fontWeight: FontWeight.bold,
                                   color: Colors.white,
                                 ),
@@ -76,37 +68,39 @@ class _DropdownMenuState extends State<DropdownMenu> {
                               ),
                             ))
                         .toList(),
-                    value: selectedValue,
+                    value: homeSelected,
                     onChanged: (value) {
                       setState(() {
-                        selectedValue = value as String;
+                        homes.clear();
+                        homeSelected = value as String;
+                        homes.clear();
                       });
                     },
                     icon: const Icon(
                       Icons.arrow_forward_ios_outlined,
                     ),
                     iconSize: 14,
-                    iconEnabledColor: Colors.yellow,
+                    iconEnabledColor: Colors.white,
                     iconDisabledColor: Colors.grey,
-                    buttonHeight: 50,
-                    buttonWidth: 160,
+                    buttonHeight: 150,
+                    buttonWidth: 200,
                     buttonPadding: const EdgeInsets.only(left: 14, right: 14),
                     buttonDecoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(14),
                       border: Border.all(
                         color: Colors.black26,
                       ),
-                      color: Colors.redAccent,
+                      color: widget.dropdownColor,
                     ),
                     buttonElevation: 2,
                     itemHeight: 40,
                     itemPadding: const EdgeInsets.only(left: 14, right: 14),
                     dropdownMaxHeight: 200,
-                    dropdownWidth: 200,
+                    dropdownWidth: 180,
                     dropdownPadding: null,
                     dropdownDecoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(14),
-                      color: Colors.redAccent,
+                      color: widget.dropdownColor,
                     ),
                     dropdownElevation: 8,
                     scrollbarRadius: const Radius.circular(40),

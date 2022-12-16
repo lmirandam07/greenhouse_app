@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_house/screens/dialogs/components/dropdown_menu.dart';
 import 'package:green_house/widgets/custom_button.dart';
+import 'package:green_house/widgets/custom_button_emission.dart';
 
 import '../../constants/exports.dart';
 
-class ReIssueDialog extends StatelessWidget {
-  const ReIssueDialog({Key? key}) : super(key: key);
+class ReIssueDialogTransport extends StatelessWidget {
+  const ReIssueDialogTransport({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class ReIssueDialog extends StatelessWidget {
                   padding: EdgeInsets.symmetric(
                       vertical: screenHeight(context) * 0.02),
                   decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
+                    color: AppColors.blueColor,
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(radius10),
                       topLeft: Radius.circular(radius10),
@@ -43,7 +45,7 @@ class ReIssueDialog extends StatelessWidget {
                   ),
                   child: Center(
                     child: Text(
-                      'Nueva Emisión',
+                      'Nueva Emisión de Movilización',
                       style: montserratMedium.copyWith(
                         fontSize: 20.0,
                         color: AppColors.whiteColor,
@@ -71,12 +73,12 @@ class ReIssueDialog extends StatelessWidget {
                       ),
                       Container(
                         height: 40.0,
-                        width: 100,
+                        width: 150,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(radius10),
                           color: AppColors.whiteColor,
                           border: Border.all(
-                            color: AppColors.primaryColor,
+                            color: AppColors.blueColor,
                             width: 1.0,
                           ),
                         ),
@@ -92,7 +94,6 @@ class ReIssueDialog extends StatelessWidget {
                   ),
                 ),
 
-                /// Seleccionar one
                 Padding(
                   padding: const EdgeInsets.only(
                       left: 16.0, right: 16.0, bottom: 16.0),
@@ -101,7 +102,7 @@ class ReIssueDialog extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          'Seleccionar',
+                          'Tipo de transporte',
                           style: montserratRegular.copyWith(
                             fontSize: 16.0,
                             color: AppColors.blackColor,
@@ -110,53 +111,13 @@ class ReIssueDialog extends StatelessWidget {
                       ),
                       Container(
                         height: 40.0,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(radius10),
-                          color: AppColors.whiteColor,
-                          border: Border.all(
-                            color: AppColors.primaryColor,
-                            width: 1.0,
-                          ),
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: screenHeight(context) * 0.012),
-                              child: Text(
-                                'Hogares',
-                                style: montserratRegular.copyWith(
-                                  fontSize: 14.0,
-                                  color: AppColors.blackColor,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: AppColors.primaryColor,
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(radius8),
-                                    bottomRight: Radius.circular(radius8),
-                                  ),
-                                ),
-                                child: Center(
-                                  child:
-                                      SvgPicture.asset(AppIcons.dropdownIcon),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        width: 150,
+                        child: DropdownMenu(AppColors.blueColor),
                       ),
                     ],
                   ),
                 ),
 
-                /// Seleccionar two
                 Padding(
                   padding: const EdgeInsets.only(
                       left: 16.0, right: 16.0, bottom: 16.0),
@@ -174,47 +135,8 @@ class ReIssueDialog extends StatelessWidget {
                       ),
                       Container(
                         height: 40.0,
-                        width: 100,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(radius10),
-                          color: AppColors.whiteColor,
-                          border: Border.all(
-                            color: AppColors.primaryColor,
-                            width: 1.0,
-                          ),
-                        ),
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: screenHeight(context) * 0.012),
-                              child: Text(
-                                'Hogares',
-                                style: montserratRegular.copyWith(
-                                  fontSize: 14.0,
-                                  color: AppColors.blackColor,
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: AppColors.primaryColor,
-                                  borderRadius: BorderRadius.only(
-                                    topRight: Radius.circular(radius8),
-                                    bottomRight: Radius.circular(radius8),
-                                  ),
-                                ),
-                                child: Center(
-                                  child:
-                                      SvgPicture.asset(AppIcons.dropdownIcon),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        width: 150,
+                        child: DropdownMenu(AppColors.blueColor),
                       ),
                     ],
                   ),
@@ -229,7 +151,7 @@ class ReIssueDialog extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          'Título de emisión',
+                          'Monto',
                           style: montserratRegular.copyWith(
                             fontSize: 16.0,
                             color: AppColors.blackColor,
@@ -238,12 +160,12 @@ class ReIssueDialog extends StatelessWidget {
                       ),
                       Container(
                         height: 40.0,
-                        width: 100,
+                        width: 150,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(radius10),
                           color: AppColors.whiteColor,
                           border: Border.all(
-                            color: AppColors.primaryColor,
+                            color: AppColors.blueColor,
                             width: 1.0,
                           ),
                         ),
@@ -257,7 +179,7 @@ class ReIssueDialog extends StatelessWidget {
                                 '\$',
                                 style: montserratRegular.copyWith(
                                   fontSize: 17.0,
-                                  color: AppColors.primaryColor,
+                                  color: AppColors.blueColor,
                                 ),
                               ),
                             ),
@@ -282,7 +204,8 @@ class ReIssueDialog extends StatelessWidget {
                 const SizedBox(height: 30.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: CustomButton(
+                  child: CustomButtonEmission(
+                    color: AppColors.blueColor,
                     onTap: () {
                       Get.back();
                     },
