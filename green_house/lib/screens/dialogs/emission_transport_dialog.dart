@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:green_house/screens/dialogs/components/dropdown_transport_menu.dart';
 import 'package:green_house/screens/dialogs/components/dropdown_menu.dart';
 import 'package:green_house/widgets/custom_button.dart';
 import 'package:green_house/widgets/custom_button_emission.dart';
@@ -112,7 +113,7 @@ class ReIssueDialogTransport extends StatelessWidget {
                       Container(
                         height: 40.0,
                         width: 150,
-                        child: DropdownMenu(AppColors.blueColor),
+                        child: DropdownTransportMenu(AppColors.blueColor),
                       ),
                     ],
                   ),

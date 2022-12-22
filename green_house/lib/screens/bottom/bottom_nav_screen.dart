@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:green_house/constants/exports.dart';
 import 'package:green_house/screens/dialogs/emission_power_dialog.dart';
 import 'package:green_house/screens/dialogs/emission_transport_dialog.dart';
+import 'package:green_house/screens/dialogs/emission_type.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../homes/homes_screen.dart';
 import '../household/household_screen.dart';
@@ -27,7 +29,10 @@ class BottomNavBar extends GetView<BottomNavController> {
           padding: const EdgeInsets.only(bottom: 30.0, right: 40),
           child: FloatingActionButton(
             onPressed: () {
-              Get.dialog(ReIssueDialogTransport());
+              showMaterialModalBottomSheet(
+                context: context,
+                builder: (context) => const EmissionType(),
+              );
             },
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(radius15),

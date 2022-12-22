@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:green_house/models/home_members.dart';
 
+import '../../models/emission_model.dart';
 import '../../models/user_model.dart';
 import '../../models/home_model.dart';
 
@@ -13,6 +14,7 @@ class FirestoreService {
 
   final docUser = FirebaseFirestore.instance.collection('user');
   final docHome = FirebaseFirestore.instance.collection('home');
+  final docEmission = FirebaseFirestore.instance.collection('emission');
 
   createUser(UserModel user, uid) async {
     user.id = docUser.doc(uid).id;
@@ -270,5 +272,10 @@ class FirestoreService {
         .doc(userData['id'])
         .get();
     return userHome['member_status'] == 'accepted' ? true : false;
+  }
+
+  createEmission(EmissionModel emission) async {
+    emission.emission_id = docEmission.doc().id;
+    await docEmission.doc(emission.emission_id).set(emission.toJson());
   }
 }

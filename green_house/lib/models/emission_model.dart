@@ -1,5 +1,5 @@
 class EmissionModel {
-  final String emission_id;
+  String emission_id;
   final String emission_title;
   final String emission_type;
   final double emission_value;

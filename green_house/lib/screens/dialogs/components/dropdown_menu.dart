@@ -1,8 +1,10 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:green_house/constants/exports.dart';
 
 import '../../../services/firestore_services/firestore_services.dart';
+import '../controller/emission_controller.dart';
 
 class DropdownMenu extends StatefulWidget {
   final Color dropdownColor;
@@ -17,7 +19,7 @@ class _DropdownMenuState extends State<DropdownMenu> {
   final List<String> homes = [];
 
   String? homeSelected;
-
+  final EmissionController emissionController = Get.put(EmissionController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,6 +29,7 @@ class _DropdownMenuState extends State<DropdownMenu> {
               future: firestoreService.getUserHomeAcceptedList(),
               builder: (context, AsyncSnapshot snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
+                  homes.clear();
                   return Center(
                       child: CircularProgressIndicator(
                     color: widget.dropdownColor,
@@ -69,11 +72,13 @@ class _DropdownMenuState extends State<DropdownMenu> {
                             ))
                         .toList(),
                     value: homeSelected,
+                    searchController: emissionController.homeController,
                     onChanged: (value) {
                       setState(() {
                         homes.clear();
                         homeSelected = value as String;
                         homes.clear();
+                        print(emissionController.homeController.text);
                       });
                     },
                     icon: const Icon(

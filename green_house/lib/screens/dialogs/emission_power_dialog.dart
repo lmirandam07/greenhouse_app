@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_house/screens/dialogs/components/dropdown_menu.dart';
+import 'package:green_house/screens/dialogs/controller/emission_controller.dart';
 import 'package:green_house/widgets/custom_button.dart';
 import 'package:green_house/widgets/custom_button_emission.dart';
 
 import '../../constants/exports.dart';
 
 class ReIssueDialogPower extends StatelessWidget {
-  const ReIssueDialogPower({Key? key}) : super(key: key);
+  ReIssueDialogPower({Key? key}) : super(key: key);
 
+  final EmissionController emissionController = Get.put(EmissionController());
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -83,6 +85,7 @@ class ReIssueDialogPower extends StatelessWidget {
                           ),
                         ),
                         child: TextFormField(
+                          controller: emissionController.titleController,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             contentPadding:
@@ -162,6 +165,7 @@ class ReIssueDialogPower extends StatelessWidget {
                             ),
                             Expanded(
                               child: TextFormField(
+                                controller: emissionController.valueController,
                                 keyboardType: TextInputType.number,
                                 decoration: const InputDecoration(
                                   border: InputBorder.none,
@@ -183,7 +187,7 @@ class ReIssueDialogPower extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: CustomButtonEmission(
                     onTap: () {
-                      Get.back();
+                      emissionController.createEmissionController('power');
                     },
                     btnText: 'Registrar',
                     color: AppColors.powerColor,
