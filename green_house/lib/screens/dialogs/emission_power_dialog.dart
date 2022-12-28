@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_house/screens/dialogs/components/dropdown_menu.dart';
 import 'package:green_house/screens/dialogs/controller/emission_controller.dart';
-import 'package:green_house/widgets/custom_button.dart';
 import 'package:green_house/widgets/custom_button_emission.dart';
 
 import '../../constants/exports.dart';
@@ -11,6 +10,7 @@ class ReIssueDialogPower extends StatelessWidget {
   ReIssueDialogPower({Key? key}) : super(key: key);
 
   final EmissionController emissionController = Get.put(EmissionController());
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -116,7 +116,13 @@ class ReIssueDialogPower extends StatelessWidget {
                       Container(
                         height: 40.0,
                         width: 150,
-                        child: DropdownMenu(AppColors.powerColor),
+                        child: DropdownMenu((value) {
+                        
+                          String _itemSelected;
+                          _itemSelected = value as String;
+                          emissionController.homeController.text =
+                              _itemSelected.split('_')[1];
+                        }, AppColors.powerColor),
                       ),
                     ],
                   ),

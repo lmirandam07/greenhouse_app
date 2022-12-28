@@ -7,8 +7,9 @@ import '../../../services/firestore_services/firestore_services.dart';
 import '../controller/emission_controller.dart';
 
 class DropdownMenu extends StatefulWidget {
+  final Function(String?) onChanged;
   final Color dropdownColor;
-  DropdownMenu([this.dropdownColor = AppColors.primaryColor]);
+  DropdownMenu(this.onChanged, [this.dropdownColor = AppColors.primaryColor]);
 
   @override
   State<DropdownMenu> createState() => _DropdownMenuState();
@@ -72,15 +73,7 @@ class _DropdownMenuState extends State<DropdownMenu> {
                             ))
                         .toList(),
                     value: homeSelected,
-                    searchController: emissionController.homeController,
-                    onChanged: (value) {
-                      setState(() {
-                        homes.clear();
-                        homeSelected = value as String;
-                        homes.clear();
-                        print(emissionController.homeController.text);
-                      });
-                    },
+                    onChanged: widget.onChanged,
                     icon: const Icon(
                       Icons.arrow_forward_ios_outlined,
                     ),

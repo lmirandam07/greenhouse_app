@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:green_house/constants/exports.dart';
 
 class DropdownTransportMenu extends StatefulWidget {
+  final Function(String?) onChanged;
   final Color dropdownColor;
-  DropdownTransportMenu([this.dropdownColor = AppColors.primaryColor]);
+  DropdownTransportMenu(this.onChanged, [this.dropdownColor = AppColors.primaryColor]);
 
   @override
   State<DropdownTransportMenu> createState() => DropdownTransportMenuState();

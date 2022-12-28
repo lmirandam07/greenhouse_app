@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:green_house/screens/dialogs/components/dropdown_transport_menu.dart';
 import 'package:green_house/screens/dialogs/components/dropdown_menu.dart';
-import 'package:green_house/widgets/custom_button.dart';
 import 'package:green_house/widgets/custom_button_emission.dart';
 
 import '../../constants/exports.dart';
+import 'controller/emission_controller.dart';
 
 class ReIssueDialogTransport extends StatelessWidget {
-  const ReIssueDialogTransport({Key? key}) : super(key: key);
+  ReIssueDialogTransport({Key? key}) : super(key: key);
+
+  final EmissionController emissionController = Get.put(EmissionController());
+
 
   @override
   Widget build(BuildContext context) {
@@ -113,7 +116,10 @@ class ReIssueDialogTransport extends StatelessWidget {
                       Container(
                         height: 40.0,
                         width: 150,
-                        child: DropdownTransportMenu(AppColors.blueColor),
+                        child: DropdownTransportMenu((value) {
+                          String _itemSelected;
+                          _itemSelected = value as String;
+                        }, AppColors.blueColor),
                       ),
                     ],
                   ),
@@ -137,7 +143,12 @@ class ReIssueDialogTransport extends StatelessWidget {
                       Container(
                         height: 40.0,
                         width: 150,
-                        child: DropdownMenu(AppColors.blueColor),
+                        child: DropdownMenu((value) {
+                          String _itemSelected;
+                          _itemSelected = value as String;
+                          emissionController.homeController.text =
+                              _itemSelected.split('_')[1];
+                        }, AppColors.blueColor),
                       ),
                     ],
                   ),

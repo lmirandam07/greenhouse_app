@@ -19,7 +19,7 @@ class EmissionType extends StatelessWidget {
           ListTile(
             title: const Text('Transporte'),
             leading: const Icon(Icons.train_sharp, color: AppColors.blueColor),
-            onTap: () => Get.dialog(const ReIssueDialogTransport()),
+            onTap: () => Get.dialog(ReIssueDialogTransport()),
           ),
           ListTile(
             title: const Text('Energia'),

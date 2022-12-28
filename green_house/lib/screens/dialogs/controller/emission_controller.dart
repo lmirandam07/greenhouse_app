@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'dart:math';
 import 'package:green_house/models/emission_model.dart';
 import 'package:green_house/screens/profile/edit_profile_screen.dart';
 import '../../../models/home_members.dart';
@@ -16,31 +17,38 @@ class EmissionController extends GetxController {
   final firestoreService = FirestoreService();
   var isLoading = false.obs;
 
+
   Future<dynamic> createEmissionController(String type) async {
     final user = await firestoreService.getCurrentUserData();
+    double kwh_value = 0.0;
+    double co2_value = 0.0;
     String title = titleController.text;
     double value = double.parse(valueController.text);
     String home = homeController.text;
     if (type == 'power') {
-      try {
-        final emission = EmissionModel(
-            emission_title: title,
-            emission_type: type,
-            emission_value: value,
-            emission_userId: user['id'],
-            emission_homeId: home);
-        await firestoreService.createEmission(emission);
-        successSnackBar('Emision creada correctamente');
-        titleController.clear();
-        valueController.clear();
-        homeController.clear();
-        botomNavBar.homeFun();
-        Get.to(() => BottomNavBar());
-        isLoading(false);
-      } catch (e) {
-        errorSnackBar('Error al crear la casa. Intente nuevamente');
-        isLoading(false);
-      }
+      kwh_value = value * 0.17;
+      co2_value = kwh_value * 0.30;
+      co2_value = double.parse(co2_value.toStringAsFixed(2));
+      print(co2_value);
+    }
+    try {
+      final emission = EmissionModel(
+          emission_title: title,
+          emission_type: type,
+          emission_value: co2_value,
+          emission_userId: user['id'],
+          emission_homeId: home);
+      await firestoreService.createEmission(emission);
+      successSnackBar('Emision creada correctamente');
+      titleController.clear();
+      valueController.clear();
+      homeController.clear();
+      botomNavBar.homeFun();
+      Get.to(() => BottomNavBar());
+      isLoading(false);
+    } catch (e) {
+      errorSnackBar('Error al crear la casa. Intente nuevamente');
+      isLoading(false);
     }
   }
 }
