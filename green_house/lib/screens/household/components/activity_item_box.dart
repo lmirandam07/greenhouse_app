@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import '../../../constants/exports.dart';
 
 class ActivityItemBox extends StatelessWidget {
-  const ActivityItemBox({Key? key}) : super(key: key);
+  final String emissionTitle;
+  final double emission_value;
+  const ActivityItemBox(this.emissionTitle, this.emission_value, {Key? key})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,7 @@ class ActivityItemBox extends StatelessWidget {
               ),
               child: Center(
                 child: Text(
-                  'Título de emisión',
+                  emissionTitle,
                   style: montserratRegular.copyWith(
                     fontSize: body18,
                     color: AppColors.blackColor,
@@ -72,7 +75,7 @@ class ActivityItemBox extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '45 kg',
+                  '$emission_value kg',
                   style: montserratSemiBold.copyWith(
                     fontSize: body16,
                     color: AppColors.blackMainColor,

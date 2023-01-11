@@ -163,10 +163,40 @@ class HouseHoldScreen extends StatelessWidget {
                                     ),
 
                                     /// items
-                                    const ActivityItemBox(),
-                                    const ActivityItemBox(),
-                                    const ActivityItemBox(),
-                                    const ActivityItemBox(),
+                                    FutureBuilder(
+                                        future: firestoreService
+                                            .getHomeEmission(homeId),
+                                        builder:
+                                            (context, AsyncSnapshot snapshot) {
+                                          if (snapshot.connectionState ==
+                                              ConnectionState.waiting) {
+                                            return const Center(
+                                                child:
+                                                    LinearProgressIndicator());
+                                          }
+                                          if (snapshot.hasData &&
+                                              snapshot.data.length > 0) {
+                                            final homeEmission = snapshot.data;
+                                            print('Si hay datos');
+                                            return ListView.builder(
+                                                shrinkWrap: true,
+                                                itemCount: homeEmission.length,
+                                                itemBuilder: (context, index) {
+                                                  return ActivityItemBox(
+                                                      homeEmission[index]
+                                                          ['emission_title'],
+                                                      homeEmission[index]
+                                                          ['emission_value']);
+                                                });
+                                          } else {
+                                            print('No hay datos');
+                                            return const Center(
+                                                child: Text(
+                                              'No hay actividad reciente en este hogar',
+                                              textAlign: TextAlign.center,
+                                            ));
+                                          }
+                                        }),
 
                                     SizedBox(
                                         height: screenHeight(context) * 0.02),

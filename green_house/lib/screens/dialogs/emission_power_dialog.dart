@@ -117,7 +117,6 @@ class ReIssueDialogPower extends StatelessWidget {
                         height: 40.0,
                         width: 150,
                         child: DropdownMenu((value) {
-                        
                           String _itemSelected;
                           _itemSelected = value as String;
                           emissionController.homeController.text =

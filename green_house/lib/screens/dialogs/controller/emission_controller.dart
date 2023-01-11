@@ -13,21 +13,31 @@ class EmissionController extends GetxController {
   TextEditingController titleController = TextEditingController();
   TextEditingController valueController = TextEditingController();
   TextEditingController homeController = TextEditingController();
+  TextEditingController transportTypeController = TextEditingController();
+
   final botomNavBar = BottomNavController();
   final firestoreService = FirestoreService();
   var isLoading = false.obs;
 
-
   Future<dynamic> createEmissionController(String type) async {
     final user = await firestoreService.getCurrentUserData();
-    double kwh_value = 0.0;
     double co2_value = 0.0;
+    // Power multipliers
+    double kwh_value = 0.0;
+
+    // Transport multipliers
+    double time_value = 0.0;
+
     String title = titleController.text;
     double value = double.parse(valueController.text);
     String home = homeController.text;
     if (type == 'power') {
       kwh_value = value * 0.17;
       co2_value = kwh_value * 0.30;
+      co2_value = double.parse(co2_value.toStringAsFixed(2));
+      print(co2_value);
+    } else if (type == 'transport') {
+      co2_value = time_value * 0.30;
       co2_value = double.parse(co2_value.toStringAsFixed(2));
       print(co2_value);
     }

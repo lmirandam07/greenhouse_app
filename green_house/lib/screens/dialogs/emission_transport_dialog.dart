@@ -12,7 +12,6 @@ class ReIssueDialogTransport extends StatelessWidget {
 
   final EmissionController emissionController = Get.put(EmissionController());
 
-
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -163,7 +162,7 @@ class ReIssueDialogTransport extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          'Monto',
+                          'Duración del recorrido',
                           style: montserratRegular.copyWith(
                             fontSize: 16.0,
                             color: AppColors.blackColor,
@@ -188,9 +187,9 @@ class ReIssueDialogTransport extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 8.0),
                               child: Text(
-                                '\$',
+                                'mins',
                                 style: montserratRegular.copyWith(
-                                  fontSize: 17.0,
+                                  fontSize: 10.0,
                                   color: AppColors.blueColor,
                                 ),
                               ),

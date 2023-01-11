@@ -278,4 +278,24 @@ class FirestoreService {
     emission.emission_id = docEmission.doc().id;
     await docEmission.doc(emission.emission_id).set(emission.toJson());
   }
+
+  Future<Iterable> getHomeEmission(String? homeId) async {
+    final emissionsDocs =
+        await docEmission.where('emission_home', isEqualTo: homeId).get();
+    final homeEmissionList = emissionsDocs.docs
+        .map((doc) => json.decode(json.encode(doc.data())))
+        .toList();
+    return homeEmissionList;
+  }
+
+  getCurrentUserEmission() async {
+    final userData = await getCurrentUserData();
+    final emissionsDocs = await docEmission
+        .where('emission_user', isEqualTo: userData['id'])
+        .get();
+    final userEmissionList = emissionsDocs.docs
+        .map((doc) => json.decode(json.encode(doc.data())))
+        .toList();
+    return userEmissionList;
+  }
 }
