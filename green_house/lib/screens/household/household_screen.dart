@@ -53,74 +53,99 @@ class HouseHoldScreen extends StatelessWidget {
                             children: [
                               SizedBox(height: screenHeight(context) * 0.04),
 
-                              Center(
-                                child: Container(
-                                  height: screenHeight(context) * 0.23,
-                                  width: screenHeight(context) * 0.23,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: AppColors.whiteColor,
-                                    boxShadow: [
-                                      mainShadow,
-                                    ],
-                                  ),
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: AppColors.whiteColor,
-                                      border: Border.all(
-                                        width: 12.0,
-                                        color: AppColors.primaryColor,
-                                      ),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          '45 kg',
-                                          style: montserratSemiBold.copyWith(
-                                            fontSize: body22,
-                                            color: AppColors.blackMainColor,
-                                          ),
+                              FutureBuilder<Object>(
+                                  future: firestoreService
+                                      .homeEmissionTotal(homeId),
+                                  builder: (context, AsyncSnapshot snapshot) {
+                                    if (snapshot.connectionState ==
+                                        ConnectionState.waiting) {
+                                      return const Center(
+                                          child: CircularProgressIndicator());
+                                    }
+                                    final total = snapshot.data;
+                                    Color colorTotal;
+                                    if (total >= 20 && total <= 40) {
+                                      colorTotal = AppColors.notifyColor;
+                                    } else if (total > 40) {
+                                      colorTotal = AppColors.redColor;
+                                    } else {
+                                      colorTotal = AppColors.primaryColor;
+                                    }
+
+                                    return Center(
+                                      child: Container(
+                                        height: screenHeight(context) * 0.23,
+                                        width: screenHeight(context) * 0.23,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: AppColors.whiteColor,
+                                          boxShadow: [
+                                            mainShadow,
+                                          ],
                                         ),
-                                        RichText(
-                                          text: TextSpan(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            color: AppColors.whiteColor,
+                                            border: Border.all(
+                                              width: 12.0,
+                                              color: colorTotal,
+                                            ),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             children: [
-                                              TextSpan(
-                                                text: 'CO',
-                                                style: montserratLight.copyWith(
-                                                  fontSize: body20,
+                                              Text(
+                                                total.toStringAsFixed(2),
+                                                style:
+                                                    montserratSemiBold.copyWith(
+                                                  fontSize: body22,
                                                   color:
                                                       AppColors.blackMainColor,
                                                 ),
                                               ),
-                                              WidgetSpan(
-                                                child: Transform.translate(
-                                                  offset:
-                                                      const Offset(0.0, 0.0),
-                                                  child: Text(
-                                                    '2',
-                                                    style: montserratRegular
-                                                        .copyWith(
-                                                      fontSize: body12,
-                                                      color: AppColors
-                                                          .blackMainColor,
+                                              RichText(
+                                                text: TextSpan(
+                                                  children: [
+                                                    TextSpan(
+                                                      text: 'CO',
+                                                      style: montserratLight
+                                                          .copyWith(
+                                                        fontSize: body20,
+                                                        color: AppColors
+                                                            .blackMainColor,
+                                                      ),
                                                     ),
-                                                  ),
+                                                    WidgetSpan(
+                                                      child:
+                                                          Transform.translate(
+                                                        offset: const Offset(
+                                                            0.0, 0.0),
+                                                        child: Text(
+                                                          '2',
+                                                          style:
+                                                              montserratRegular
+                                                                  .copyWith(
+                                                            fontSize: body12,
+                                                            color: AppColors
+                                                                .blackMainColor,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                             ],
                                           ),
                                         ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
+                                      ),
+                                    );
+                                  }),
 
                               /// recent activity
                               SizedBox(height: screenHeight(context) * 0.02),
@@ -177,16 +202,25 @@ class HouseHoldScreen extends StatelessWidget {
                                           if (snapshot.hasData &&
                                               snapshot.data.length > 0) {
                                             final homeEmission = snapshot.data;
-                                            print('Si hay datos');
+                                            Color color;
                                             return ListView.builder(
                                                 shrinkWrap: true,
                                                 itemCount: homeEmission.length,
                                                 itemBuilder: (context, index) {
+                                                  if (homeEmission[index]
+                                                          ['emission_type'] ==
+                                                      'power') {
+                                                    color =
+                                                        AppColors.powerColor;
+                                                  } else {
+                                                    color = AppColors.blueColor;
+                                                  }
                                                   return ActivityItemBox(
                                                       homeEmission[index]
                                                           ['emission_title'],
                                                       homeEmission[index]
-                                                          ['emission_value']);
+                                                          ['emission_value'],
+                                                      color);
                                                 });
                                           } else {
                                             print('No hay datos');

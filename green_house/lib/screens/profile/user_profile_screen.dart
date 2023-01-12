@@ -4,6 +4,7 @@ import 'package:green_house/constants/exports.dart';
 import 'package:green_house/screens/profile/edit_profile_screen.dart';
 
 import '../../services/firestore_services/firestore_services.dart';
+import '../household/components/activity_item_box.dart';
 
 class UserProfileScreen extends StatelessWidget {
   UserProfileScreen({Key? key}) : super(key: key);
@@ -183,46 +184,41 @@ class UserProfileScreen extends StatelessWidget {
                       ),
 
                       /// empty box
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0),
-                        child: Container(
-                          height: 60.0,
-                          width: screenWidth(context),
-                          margin: EdgeInsets.symmetric(
-                              horizontal: screenHeight(context) * 0.03),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(radius10),
-                            color: AppColors.whiteColor,
-                            boxShadow: [
-                              mainShadow,
-                            ],
-                            border: Border.all(
-                              color: AppColors.primaryColor,
-                              width: 1.0,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 15.0),
-                        child: Container(
-                          height: 60.0,
-                          width: screenWidth(context),
-                          margin: EdgeInsets.symmetric(
-                              horizontal: screenHeight(context) * 0.03),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(radius10),
-                            color: AppColors.whiteColor,
-                            boxShadow: [
-                              mainShadow,
-                            ],
-                            border: Border.all(
-                              color: AppColors.primaryColor,
-                              width: 1.0,
-                            ),
-                          ),
-                        ),
-                      ),
+
+                      FutureBuilder(
+                          future: firestoreService.getCurrentUserEmission(),
+                          builder: (context, AsyncSnapshot snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                  child: LinearProgressIndicator());
+                            }
+                            if (snapshot.hasData && snapshot.data.length > 0) {
+                              final homeEmission = snapshot.data;
+                              Color color;
+                              return ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: homeEmission.length,
+                                  itemBuilder: (context, index) {
+                                    if (homeEmission[index]['emission_type'] ==
+                                        'power') {
+                                      color = AppColors.powerColor;
+                                    } else {
+                                      color = AppColors.blueColor;
+                                    }
+                                    return ActivityItemBox(
+                                        homeEmission[index]['emission_title'],
+                                        homeEmission[index]['emission_value'],
+                                        color);
+                                  });
+                            } else {
+                              return const Center(
+                                  child: Text(
+                                'No tienes emisiones registradas',
+                                textAlign: TextAlign.center,
+                              ));
+                            }
+                          }),
 
                       SizedBox(height: screenHeight(context) * 0.02),
                     ],

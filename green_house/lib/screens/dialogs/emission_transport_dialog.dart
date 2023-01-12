@@ -86,6 +86,7 @@ class ReIssueDialogTransport extends StatelessWidget {
                           ),
                         ),
                         child: TextFormField(
+                          controller: emissionController.titleController,
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             contentPadding:
@@ -118,6 +119,8 @@ class ReIssueDialogTransport extends StatelessWidget {
                         child: DropdownTransportMenu((value) {
                           String _itemSelected;
                           _itemSelected = value as String;
+                          emissionController.transportTypeController.text =
+                              _itemSelected;
                         }, AppColors.blueColor),
                       ),
                     ],
@@ -196,6 +199,7 @@ class ReIssueDialogTransport extends StatelessWidget {
                             ),
                             Expanded(
                               child: TextFormField(
+                                controller: emissionController.valueController,
                                 keyboardType: TextInputType.number,
                                 decoration: const InputDecoration(
                                   border: InputBorder.none,
@@ -218,7 +222,7 @@ class ReIssueDialogTransport extends StatelessWidget {
                   child: CustomButtonEmission(
                     color: AppColors.blueColor,
                     onTap: () {
-                      Get.back();
+                      emissionController.createEmissionController('transport');
                     },
                     btnText: 'Registrar',
                   ),

@@ -288,7 +288,7 @@ class FirestoreService {
     return homeEmissionList;
   }
 
-  getCurrentUserEmission() async {
+  Future<Iterable> getCurrentUserEmission() async {
     final userData = await getCurrentUserData();
     final emissionsDocs = await docEmission
         .where('emission_user', isEqualTo: userData['id'])
@@ -297,5 +297,14 @@ class FirestoreService {
         .map((doc) => json.decode(json.encode(doc.data())))
         .toList();
     return userEmissionList;
+  }
+
+  Future<double> homeEmissionTotal(String? homeId) async {
+    double total = 0.0;
+    final homeEmissionList = await getHomeEmission(homeId);
+    homeEmissionList.forEach((emission) {
+      total = total + emission['emission_value'];
+    });
+    return total;
   }
 }

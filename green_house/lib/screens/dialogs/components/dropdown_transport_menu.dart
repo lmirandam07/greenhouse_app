@@ -38,7 +38,7 @@ class DropdownTransportMenuState extends State<DropdownTransportMenu> {
                   child: Text(
                     'Transportes',
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 12,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),

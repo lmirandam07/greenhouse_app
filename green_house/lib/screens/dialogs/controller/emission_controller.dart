@@ -31,13 +31,15 @@ class EmissionController extends GetxController {
     String title = titleController.text;
     double value = double.parse(valueController.text);
     String home = homeController.text;
+    String transport_type = transportTypeController.text;
+
     if (type == 'power') {
       kwh_value = value * 0.17;
       co2_value = kwh_value * 0.30;
       co2_value = double.parse(co2_value.toStringAsFixed(2));
       print(co2_value);
     } else if (type == 'transport') {
-      co2_value = time_value * 0.30;
+      co2_value = value * 0.30;
       co2_value = double.parse(co2_value.toStringAsFixed(2));
       print(co2_value);
     }
@@ -49,7 +51,7 @@ class EmissionController extends GetxController {
           emission_userId: user['id'],
           emission_homeId: home);
       await firestoreService.createEmission(emission);
-      successSnackBar('Emision creada correctamente');
+      successSnackBar('Emisión creada correctamente');
       titleController.clear();
       valueController.clear();
       homeController.clear();

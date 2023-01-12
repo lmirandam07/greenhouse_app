@@ -5,7 +5,9 @@ import '../../../constants/exports.dart';
 class ActivityItemBox extends StatelessWidget {
   final String emissionTitle;
   final double emission_value;
-  const ActivityItemBox(this.emissionTitle, this.emission_value, {Key? key})
+  final Color color;
+  const ActivityItemBox(this.emissionTitle, this.emission_value, this.color,
+      {Key? key})
       : super(key: key);
 
   @override
@@ -22,7 +24,7 @@ class ActivityItemBox extends StatelessWidget {
         color: AppColors.whiteColor,
         borderRadius: BorderRadius.circular(radius10),
         border: Border.all(
-          color: AppColors.primaryColor,
+          color: color,
           width: 0.2,
         ),
         boxShadow: [
@@ -41,7 +43,7 @@ class ActivityItemBox extends StatelessWidget {
                   bottomLeft: Radius.circular(radius10),
                 ),
                 border: Border.all(
-                  color: AppColors.primaryColor,
+                  color: color,
                   width: 0.8,
                 ),
               ),
@@ -49,7 +51,8 @@ class ActivityItemBox extends StatelessWidget {
                 child: Text(
                   emissionTitle,
                   style: montserratRegular.copyWith(
-                    fontSize: body18,
+                    fontSize: body14,
+                    fontWeight: FontWeight.w400,
                     color: AppColors.blackColor,
                   ),
                 ),
@@ -58,11 +61,11 @@ class ActivityItemBox extends StatelessWidget {
           ),
           Container(
             height: 65.0,
-            padding: const EdgeInsets.symmetric(horizontal: 13.0),
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
             decoration: BoxDecoration(
-              color: AppColors.primaryColor.withOpacity(0.1),
+              color: color.withOpacity(0.1),
               border: Border.all(
-                color: AppColors.primaryColor,
+                color: color,
                 width: 0.8,
               ),
               borderRadius: BorderRadius.only(
@@ -75,9 +78,9 @@ class ActivityItemBox extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  '$emission_value kg',
+                  '${emission_value.toStringAsFixed(2)} kg',
                   style: montserratSemiBold.copyWith(
-                    fontSize: body16,
+                    fontSize: body14,
                     color: AppColors.blackMainColor,
                   ),
                 ),
@@ -87,7 +90,7 @@ class ActivityItemBox extends StatelessWidget {
                       TextSpan(
                         text: 'CO',
                         style: montserratLight.copyWith(
-                          fontSize: body14,
+                          fontSize: body12,
                           color: AppColors.blackMainColor,
                         ),
                       ),
