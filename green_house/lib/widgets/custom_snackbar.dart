@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
- errorSnackBar(String successMsg){
-  return  Get.snackbar(
+errorSnackBar(String successMsg) {
+  return Get.snackbar(
     "Error",
     successMsg,
     icon: const Icon(
@@ -13,16 +13,14 @@ import 'package:get/get.dart';
     backgroundColor: Colors.red,
     colorText: Colors.white,
     snackbarStatus: (status) {
-      if(status==SnackbarStatus.CLOSED)
-      {
-      }
+      if (status == SnackbarStatus.CLOSED) {}
     },
   );
 }
 
-successSnackBar(String successMsg){
-  return  Get.snackbar(
-    "Notification",
+successSnackBar(String successMsg) {
+  return Get.snackbar(
+    "Notificación",
     successMsg,
     icon: const Icon(
       Icons.check,
@@ -32,9 +30,7 @@ successSnackBar(String successMsg){
     backgroundColor: Get.theme.primaryColor,
     colorText: Colors.white,
     snackbarStatus: (status) {
-      if(status==SnackbarStatus.CLOSED)
-      {
-      }
+      if (status == SnackbarStatus.CLOSED) {}
     },
   );
 }

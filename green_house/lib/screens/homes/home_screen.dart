@@ -5,6 +5,7 @@ import 'package:green_house/screens/homes/components/emission_box.dart';
 import 'package:green_house/screens/homes/home_setting_screen.dart';
 import '../../services/firestore_services/firestore_services.dart';
 import '../../widgets/custom_app_bar.dart';
+import '../../charts/pie_chart.dart';
 
 class HomeScreen extends StatelessWidget {
   final String homeId;
@@ -57,51 +58,38 @@ class HomeScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 padding: const EdgeInsets.only(bottom: 40.0),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     /// vert dot icon
                     SizedBox(height: screenHeight(context) * 0.024),
 
                     /// filter icon with chart
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        const SizedBox(),
-                        Container(
-                          margin: EdgeInsets.only(
-                              left: screenHeight(context) * 0.06),
-                          height: screenHeight(context) * 0.22,
-                          width: screenHeight(context) * 0.22,
-                          padding: const EdgeInsets.all(12.0),
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: AppColors.whiteColor,
-                            boxShadow: [
-                              mainShadow,
-                            ],
-                          ),
-                          child: SvgPicture.asset(AppImages.threePieceImage),
-                        ),
-                        Container(
-                          height: 44.0,
-                          width: 44.0,
-                          margin: const EdgeInsets.only(right: 16.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(radius10),
-                            color: AppColors.primaryColor,
-                          ),
-                          child: Center(
-                            child: SvgPicture.asset(
-                              AppIcons.filterIcon,
-                              fit: BoxFit.scaleDown,
-                              height: 24.0,
-                              width: 24.0,
-                            ),
-                          ),
-                        ),
-                      ],
+                    Container(
+                      margin:
+                          EdgeInsets.only(left: screenHeight(context) * 0.06),
+                      height: screenHeight(context) * 0.22,
+                      width: screenHeight(context) * 0.22,
+                      padding: const EdgeInsets.all(12.0),
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.whiteColor,
+                        boxShadow: [
+                          mainShadow,
+                        ],
+                      ),
+                      child: FutureBuilder(
+                          future:
+                              firestoreService.homeEmissionTotalByType(homeId),
+                          builder: (context, AsyncSnapshot snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.waiting) {
+                              return const Center(
+                                  child: CircularProgressIndicator());
+                            }
+                            final emissionTotals = snapshot.data;
+                            return PieChartWidget(emissionTotals);
+                          }),
                     ),
 
                     ///

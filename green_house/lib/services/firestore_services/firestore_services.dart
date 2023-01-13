@@ -307,4 +307,37 @@ class FirestoreService {
     });
     return total;
   }
+
+  Future<Map<String, double>> homeEmissionTotalByType(String? homeId) async {
+    Map<String, double> totalByType;
+    double totalPower = 0.0;
+    double totalTransport = 0.0;
+
+    final homeEmissionList = await getHomeEmission(homeId);
+    homeEmissionList.forEach((emission) {
+      if (emission['emission_type'] == 'power') {
+        totalPower = totalPower + emission['emission_value'];
+      } else {
+        totalTransport = totalTransport + emission['emission_value'];
+      }
+    });
+    totalByType = {'transport': totalTransport, 'power': totalPower};
+    return totalByType;
+  }
+
+  Future<Map<double, double>> currentUserEmissionTotal() async {
+    Map<double, double> totalByType;
+    double totalPower = 0.0;
+    double totalTransport = 0.0;
+    final userEmissionList = await getCurrentUserEmission();
+    userEmissionList.forEach((emission) {
+      if (emission['emission_type'] == 'power') {
+        totalPower = totalPower + emission['emission_value'];
+      } else {
+        totalTransport = totalTransport + emission['emission_value'];
+      }
+    });
+    totalByType = {1: totalTransport, 2: totalPower};
+    return totalByType;
+  }
 }
