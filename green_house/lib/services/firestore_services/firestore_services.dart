@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:green_house/models/home_members.dart';
 
+import '../../constants/app_colors.dart';
 import '../../models/emission_model.dart';
 import '../../models/user_model.dart';
 import '../../models/home_model.dart';
@@ -299,6 +301,26 @@ class FirestoreService {
     return userEmissionList;
   }
 
+  Future<Iterable> getUserEmission(String userId) async {
+    final emissionsDocs =
+        await docEmission.where('emission_user', isEqualTo: userId).get();
+    final userEmissionList = emissionsDocs.docs
+        .map((doc) => json.decode(json.encode(doc.data())))
+        .toList();
+    return userEmissionList;
+  }
+
+  Future<Iterable> getHomeUserEmission(String homeId, String userId) async {
+    final emissionsDocs = await docEmission
+        .where('emission_user', isEqualTo: userId)
+        .where('emission_home', isEqualTo: homeId)
+        .get();
+    final homeUserEmissionList = emissionsDocs.docs
+        .map((doc) => json.decode(json.encode(doc.data())))
+        .toList();
+    return homeUserEmissionList;
+  }
+
   Future<double> homeEmissionTotal(String? homeId) async {
     double total = 0.0;
     final homeEmissionList = await getHomeEmission(homeId);
@@ -339,5 +361,37 @@ class FirestoreService {
     });
     totalByType = {1: totalTransport, 2: totalPower};
     return totalByType;
+  }
+
+  Future<Map<double, double>> homeUserEmissionTotal(
+      String homeId, String userId) async {
+    Map<double, double> totalByType;
+    double totalPower = 0.0;
+    double totalTransport = 0.0;
+    final userEmissionList = await getHomeUserEmission(homeId, userId);
+    userEmissionList.forEach((emission) {
+      if (emission['emission_type'] == 'power') {
+        totalPower = totalPower + emission['emission_value'];
+      } else {
+        totalTransport = totalTransport + emission['emission_value'];
+      }
+    });
+    totalByType = {1: totalTransport, 2: totalPower};
+    return totalByType;
+  }
+
+  Future<List> getHomeUserEmissionList(String homeId) async {
+    final homeUsers = await getHomeUserList(homeId);
+    List<Map> userEmission = [];
+    homeUsers.forEach((user) async {
+      Map userEmissionValue = await homeUserEmissionTotal(homeId, user['id']);
+      userEmission.add({
+        'userName': user['username'],
+        'email': user['email'],
+        'powerValue': userEmissionValue[2],
+        'transportValue': userEmissionValue[1]
+      });
+    });
+    return userEmission;
   }
 }

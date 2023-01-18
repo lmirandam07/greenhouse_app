@@ -42,7 +42,13 @@ class _BarChartWidgetState extends State<BarChartWidget> {
   List<BarChartGroupData> _chartGroups() {
     return points.entries
         .map((point) => BarChartGroupData(x: point.key.toInt(), barRods: [
-              BarChartRodData(toY: point.value, color: AppColors.primaryColor)
+              BarChartRodData(
+                  toY: point.value,
+                  color: point.key == 1
+                      ? AppColors.blueColor
+                      : AppColors.powerColor,
+                  width: 15,
+                  borderRadius: BorderRadius.zero)
             ]))
         .toList();
   }

@@ -33,7 +33,8 @@ class EmissionBox extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text('Emisiones de “X”',
+                Text(
+                  'Emisiones de “X”',
                   style: montserratRegular.copyWith(
                     fontSize: body15,
                     color: AppColors.blackMainColor,
@@ -59,11 +60,12 @@ class EmissionBox extends StatelessWidget {
           ),
           SizedBox(width: screenHeight(context) * 0.015),
           InkWell(
-            onTap: () {},
+            onTap: () {
+              print('a');
+            },
             child: Padding(
               padding: const EdgeInsets.all(14.0),
-              child:
-              SvgPicture.asset(AppIcons.dropdownArrowIcon),
+              child: SvgPicture.asset(AppIcons.dropdownArrowIcon),
             ),
           ),
         ],

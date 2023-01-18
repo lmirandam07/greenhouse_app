@@ -1,6 +1,7 @@
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:green_house/constants/app_colors.dart';
 import '../services/firestore_services/firestore_services.dart';
 
 class PieChartWidget extends StatelessWidget {
@@ -14,23 +15,26 @@ class PieChartWidget extends StatelessWidget {
         aspectRatio: 1.0,
         child: PieChart(PieChartData(
           sections: _chartSections(emissionByType),
-          centerSpaceRadius: 48.0,
+          centerSpaceRadius: 50.0,
         )));
   }
 
   List<PieChartSectionData> _chartSections(Map<String, double> emissionByType) {
     final List<PieChartSectionData> list = [];
 
-    // for (var sector in emissionByType.keys) {
-    //   const double radius = 40.0;
-    //   final data = PieChartSectionData(
-    //     color: sector.color,
-    //     value: sector.value,
-    //     radius: radius,
-    //     title: '',
-    //   );
-    //   list.add(data);
-    // }
+    for (var type in emissionByType.entries) {
+      final data = PieChartSectionData(
+          color: type.key == 'transport'
+              ? AppColors.blueColor
+              : AppColors.powerColor,
+          value: type.value,
+          radius: 40,
+          title: type.key + "\n(${type.value})",
+          titlePositionPercentageOffset: 1.8,
+          titleStyle:
+              const TextStyle(fontWeight: FontWeight.bold, fontSize: 12));
+      list.add(data);
+    }
     return list;
   }
 }

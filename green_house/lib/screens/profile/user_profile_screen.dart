@@ -4,6 +4,7 @@ import 'package:green_house/constants/exports.dart';
 import 'package:green_house/screens/profile/edit_profile_screen.dart';
 
 import '../../charts/bar_chart.dart';
+import '../../charts/components/legends.dart';
 import '../../services/firestore_services/firestore_services.dart';
 import '../household/components/activity_item_box.dart';
 
@@ -132,6 +133,7 @@ class UserProfileScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+                      SizedBox(height: screenHeight(context) * 0.02),
 
                       FutureBuilder(
                           future: firestoreService.currentUserEmissionTotal(),

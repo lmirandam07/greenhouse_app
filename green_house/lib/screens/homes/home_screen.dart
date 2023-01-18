@@ -66,11 +66,8 @@ class HomeScreen extends StatelessWidget {
 
                     /// filter icon with chart
                     Container(
-                      margin:
-                          EdgeInsets.only(left: screenHeight(context) * 0.06),
                       height: screenHeight(context) * 0.22,
                       width: screenHeight(context) * 0.22,
-                      padding: const EdgeInsets.all(12.0),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: AppColors.whiteColor,
@@ -94,9 +91,19 @@ class HomeScreen extends StatelessWidget {
 
                     ///
                     SizedBox(height: screenHeight(context) * 0.02),
-                    const EmissionBox(),
-                    const EmissionBox(),
-                    const EmissionBox(),
+
+                    FutureBuilder(
+                        future:
+                            firestoreService.getHomeUserEmissionList(homeId),
+                        builder: (context, AsyncSnapshot snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: LinearProgressIndicator());
+                          }
+                          final data = snapshot.data;
+                          return EmissionBox();
+                        }),
                   ],
                 ),
               ),
