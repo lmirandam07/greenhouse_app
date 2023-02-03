@@ -380,18 +380,28 @@ class FirestoreService {
     return totalByType;
   }
 
-  Future<List> getHomeUserEmissionList(String homeId) async {
-    final homeUsers = await getHomeUserList(homeId);
-    List<Map> userEmission = [];
-    homeUsers.forEach((user) async {
-      Map userEmissionValue = await homeUserEmissionTotal(homeId, user['id']);
+  getHomeUserEmissionData(
+      String homeId, Iterable homeUsers, List<Map> userEmission) async {
+    for (var user in homeUsers) {
+      Map<double, double> userEmissionValue =
+          await homeUserEmissionTotal(homeId, user['id']);
       userEmission.add({
         'userName': user['username'],
         'email': user['email'],
         'powerValue': userEmissionValue[2],
-        'transportValue': userEmissionValue[1]
+        'transportValue': userEmissionValue[1],
+        'totalEmision': userEmissionValue[2]! + userEmissionValue[1]!
       });
-    });
+    }
+
+    return userEmission;
+  }
+
+  Future<Iterable> getHomeUserEmissionList(String homeId) async {
+    final homeUsers = await getHomeUserList(homeId);
+    List<Map> userEmission = [];
+    final List<Map> userEmissionList =
+        await getHomeUserEmissionData(homeId, homeUsers, userEmission);
     return userEmission;
   }
 }

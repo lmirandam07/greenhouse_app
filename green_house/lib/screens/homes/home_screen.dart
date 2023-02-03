@@ -102,7 +102,7 @@ class HomeScreen extends StatelessWidget {
                                 child: LinearProgressIndicator());
                           }
                           final data = snapshot.data;
-                          return EmissionBox();
+                          return EmissionBox(homeId);
                         }),
                   ],
                 ),
