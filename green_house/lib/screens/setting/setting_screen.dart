@@ -4,12 +4,14 @@ import 'package:green_house/constants/exports.dart';
 import 'package:green_house/screens/auth/login/login_screen.dart';
 import 'package:green_house/screens/setting/controller/setting_controller.dart';
 
+import '../../services/firestore_services/firestore_services.dart';
 import 'components/setting_box.dart';
 
 class SettingScreen extends StatelessWidget {
   SettingScreen({Key? key}) : super(key: key);
 
   final SettingController settingController = Get.put(SettingController());
+  final firestoreService = FirestoreService();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,7 @@ class SettingScreen extends StatelessWidget {
                 onTap: null,
                 titleText: 'Notificaciones',
                 iconPath: AppIcons.notificationIcon,
-                subTitleText: 'Activadas',
+                subTitleText: 'Activar',
                 suffix: Obx(() {
                   return FlutterSwitch(
                     width: 48.0,
@@ -47,6 +49,7 @@ class SettingScreen extends StatelessWidget {
                     onToggle: (val) {
                       settingController.status.value =
                           !settingController.status.value;
+                      firestoreService.setNotification(val);
                     },
                   );
                 }),

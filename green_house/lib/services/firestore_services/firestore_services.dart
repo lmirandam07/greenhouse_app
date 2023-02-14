@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:green_house/models/home_members.dart';
 
@@ -242,6 +243,16 @@ class FirestoreService {
     return homeUsers;
   }
 
+  Future<QuerySnapshot<Map<String, dynamic>>> getHomeUsersAccepted(
+      String homeId) async {
+    final homeUsers = await docHome
+        .doc(homeId)
+        .collection('home_members')
+        .where('member_status', isEqualTo: 'accepted')
+        .get();
+    return homeUsers;
+  }
+
   Future<List> getHomeUsersId(String homeId) async {
     List homesUsersId = [];
     final homeUsers = await getHomeUsers(homeId);
@@ -251,8 +262,26 @@ class FirestoreService {
     return homesUsersId;
   }
 
+  Future<List> getHomeUsersIdAccepted(String homeId) async {
+    List homesUsersId = [];
+    final homeUsers = await getHomeUsersAccepted(homeId);
+    homeUsers.docs.forEach((homes) {
+      homesUsersId.add(homes.data()['member_id']);
+    });
+    return homesUsersId;
+  }
+
   Future<Iterable> getHomeUserList(String homeId) async {
     final homeUsersId = await getHomeUsersId(homeId);
+    final homeUsersList = await docUser.where('id', whereIn: homeUsersId).get();
+    final homeUserDocs = homeUsersList.docs
+        .map((doc) => json.decode(json.encode(doc.data())))
+        .toList();
+    return homeUserDocs;
+  }
+
+  Future<Iterable> getHomeUserAcceptedList(String homeId) async {
+    final homeUsersId = await getHomeUsersIdAccepted(homeId);
     final homeUsersList = await docUser.where('id', whereIn: homeUsersId).get();
     final homeUserDocs = homeUsersList.docs
         .map((doc) => json.decode(json.encode(doc.data())))
@@ -398,10 +427,18 @@ class FirestoreService {
   }
 
   Future<Iterable> getHomeUserEmissionList(String homeId) async {
-    final homeUsers = await getHomeUserList(homeId);
+    final homeUsers = await getHomeUserAcceptedList(homeId);
     List<Map> userEmission = [];
     final List<Map> userEmissionList =
         await getHomeUserEmissionData(homeId, homeUsers, userEmission);
     return userEmission;
+  }
+
+  setNotification(bool activate) async {
+    if (activate) {
+      await FirebaseMessaging.instance.subscribeToTopic('notificaciones');
+    } else {
+      await FirebaseMessaging.instance.unsubscribeFromTopic('notificaciones');
+    }
   }
 }
