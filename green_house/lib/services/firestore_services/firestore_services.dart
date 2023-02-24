@@ -311,23 +311,43 @@ class FirestoreService {
   }
 
   Future<Iterable> getHomeEmission(String? homeId) async {
-    final emissionsDocs =
+    QuerySnapshot<Map<String, dynamic>> emissionsDocs =
         await docEmission.where('emission_home', isEqualTo: homeId).get();
-    final homeEmissionList = emissionsDocs.docs
-        .map((doc) => json.decode(json.encode(doc.data())))
-        .toList();
-    return homeEmissionList;
+
+    List<Map<String, dynamic>> emissionsWithUsers = [];
+    for (DocumentSnapshot<Map<String, dynamic>> emissionSnapshot
+        in emissionsDocs.docs) {
+      final emissionData = emissionSnapshot.data();
+      final userSnapshot =
+          await docUser.doc(emissionData?['emission_user']).get();
+
+      final userData = userSnapshot.data();
+      Map<String, dynamic> result = {...?emissionData, ...?userData};
+      emissionsWithUsers.add(result);
+    }
+    return emissionsWithUsers;
   }
 
   Future<Iterable> getCurrentUserEmission() async {
     final userData = await getCurrentUserData();
-    final emissionsDocs = await docEmission
+    QuerySnapshot<Map<String, dynamic>> emissionsDocs = await docEmission
         .where('emission_user', isEqualTo: userData['id'])
         .get();
-    final userEmissionList = emissionsDocs.docs
-        .map((doc) => json.decode(json.encode(doc.data())))
-        .toList();
-    return userEmissionList;
+
+    List<Map<String, dynamic>> emissionsWithHome = [];
+    var c = 0;
+    for (DocumentSnapshot<Map<String, dynamic>> emissionSnapshot
+        in emissionsDocs.docs) {
+      final emissionData = emissionSnapshot.data();
+      final homeSnapshot =
+          await docHome.doc(emissionData?['emission_home']).get();
+
+      final homeData = homeSnapshot.data();
+      Map<String, dynamic> result = {...?emissionData, ...?homeData};
+      emissionsWithHome.add(result);
+    }
+    print(emissionsWithHome);
+    return emissionsWithHome;
   }
 
   Future<Iterable> getUserEmission(String userId) async {

@@ -207,21 +207,22 @@ class UserProfileScreen extends StatelessWidget {
                                   child: LinearProgressIndicator());
                             }
                             if (snapshot.hasData && snapshot.data.length > 0) {
-                              final homeEmission = snapshot.data;
+                              final userEmission = snapshot.data;
                               Color color;
                               return ListView.builder(
                                   shrinkWrap: true,
-                                  itemCount: homeEmission.length,
+                                  itemCount: userEmission.length,
                                   itemBuilder: (context, index) {
-                                    if (homeEmission[index]['emission_type'] ==
+                                    if (userEmission[index]['emission_type'] ==
                                         'power') {
                                       color = AppColors.powerColor;
                                     } else {
                                       color = AppColors.blueColor;
                                     }
                                     return ActivityItemBox(
-                                        homeEmission[index]['emission_title'],
-                                        homeEmission[index]['emission_value'],
+                                        userEmission[index]['emission_title'],
+                                        userEmission[index]['emission_value'],
+                                        userEmission[index]['home_name'],
                                         color);
                                   });
                             } else {

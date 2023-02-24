@@ -5,8 +5,10 @@ import '../../../constants/exports.dart';
 class ActivityItemBox extends StatelessWidget {
   final String emissionTitle;
   final double emission_value;
+  final String emissionData;
   final Color color;
-  const ActivityItemBox(this.emissionTitle, this.emission_value, this.color,
+  const ActivityItemBox(
+      this.emissionTitle, this.emission_value, this.emissionData, this.color,
       {Key? key})
       : super(key: key);
 
@@ -47,15 +49,34 @@ class ActivityItemBox extends StatelessWidget {
                   width: 0.8,
                 ),
               ),
-              child: Center(
-                child: Text(
-                  emissionTitle,
-                  style: montserratRegular.copyWith(
-                    fontSize: body14,
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.blackColor,
+              child: Column(
+                children: [
+                  SizedBox(height: screenHeight(context) * 0.01),
+                  Center(
+                    child: RichText(
+                      text: TextSpan(
+                        text: emissionTitle,
+                        style: montserratRegular.copyWith(
+                          fontSize: body14,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.blackColor,
+                        ),
+                      ),
+                    ),
                   ),
-                ),
+                  Center(
+                    child: RichText(
+                      text: TextSpan(
+                        text: emissionData,
+                        style: montserratRegular.copyWith(
+                          fontSize: body10,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.blackHintColor,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               ),
             ),
           ),

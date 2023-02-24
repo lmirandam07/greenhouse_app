@@ -220,10 +220,11 @@ class HouseHoldScreen extends StatelessWidget {
                                                           ['emission_title'],
                                                       homeEmission[index]
                                                           ['emission_value'],
+                                                      homeEmission[index]
+                                                          ['username'],
                                                       color);
                                                 });
                                           } else {
-                                            print('No hay datos');
                                             return const Center(
                                                 child: Text(
                                               'No hay actividad reciente en este hogar',
