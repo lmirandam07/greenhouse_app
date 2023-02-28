@@ -311,9 +311,10 @@ class FirestoreService {
   }
 
   Future<Iterable> getHomeEmission(String? homeId) async {
-    QuerySnapshot<Map<String, dynamic>> emissionsDocs =
-        await docEmission.where('emission_home', isEqualTo: homeId).get();
-
+    QuerySnapshot<Map<String, dynamic>> emissionsDocs = await docEmission
+        .where('emission_home', isEqualTo: homeId)
+        .orderBy('emission_register_date', descending: true)
+        .get();
     List<Map<String, dynamic>> emissionsWithUsers = [];
     for (DocumentSnapshot<Map<String, dynamic>> emissionSnapshot
         in emissionsDocs.docs) {
@@ -346,7 +347,6 @@ class FirestoreService {
       Map<String, dynamic> result = {...?emissionData, ...?homeData};
       emissionsWithHome.add(result);
     }
-    print(emissionsWithHome);
     return emissionsWithHome;
   }
 
@@ -364,9 +364,15 @@ class FirestoreService {
         .where('emission_user', isEqualTo: userId)
         .where('emission_home', isEqualTo: homeId)
         .get();
-    final homeUserEmissionList = emissionsDocs.docs
-        .map((doc) => json.decode(json.encode(doc.data())))
-        .toList();
+    final homeUserEmissionList = emissionsDocs.docs.map((doc) {
+      Map<String, dynamic> data = doc.data();
+      data.forEach((key, value) {
+        if (value is Timestamp) {
+          data[key] = value.toDate();
+        }
+      });
+      return data;
+    }).toList();
     return homeUserEmissionList;
   }
 

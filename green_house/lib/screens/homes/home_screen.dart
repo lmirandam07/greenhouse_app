@@ -52,6 +52,7 @@ class HomeScreen extends StatelessWidget {
                         isLeadingIcon: false, titleText: homeName);
                   }
                 }),
+            SizedBox(height: screenHeight(context) * 0.04),
 
             ///
             Expanded(
@@ -90,7 +91,7 @@ class HomeScreen extends StatelessWidget {
                     ),
 
                     ///
-                    SizedBox(height: screenHeight(context) * 0.02),
+                    SizedBox(height: screenHeight(context) * 0.06),
 
                     FutureBuilder(
                         future:

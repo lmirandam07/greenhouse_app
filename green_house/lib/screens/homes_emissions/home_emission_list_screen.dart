@@ -5,15 +5,14 @@ import 'package:green_house/screens/homes/homes_screen.dart';
 import 'package:green_house/widgets/custom_button.dart';
 
 import '../../widgets/custom_app_bar.dart';
-import '../homes_emissions/home_emission_list_screen.dart';
-import 'components/activity_item_box.dart';
 
 import '../../services/firestore_services/firestore_services.dart';
+import '../household/components/activity_item_box.dart';
 
-class HouseHoldScreen extends StatelessWidget {
-  String? homeName;
-  String? homeId;
-  HouseHoldScreen([this.homeName, this.homeId]);
+class HomeEmissionsListScreen extends StatelessWidget {
+  final String? homeName;
+  final String? homeId;
+  HomeEmissionsListScreen(this.homeName, this.homeId);
   final firestoreService = FirestoreService();
 
   @override
@@ -29,18 +28,13 @@ class HouseHoldScreen extends StatelessWidget {
                 if (snapshot.hasData) {
                   final homesList = snapshot.data;
 
-                  if (homeId == null) {
-                    homeName = homesList[0]['home_name'];
-                    homeId = homesList[0]['home_id'];
-                  }
-
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       /// top app bar
                       CustomAppBar(
-                        isLeadingIcon: true,
+                        isLeadingIcon: false,
                         titleText: homeName,
                       ),
 
@@ -52,104 +46,8 @@ class HouseHoldScreen extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              SizedBox(height: screenHeight(context) * 0.02),
-
-                              FutureBuilder<Object>(
-                                  future: firestoreService
-                                      .homeEmissionTotal(homeId),
-                                  builder: (context, AsyncSnapshot snapshot) {
-                                    if (snapshot.connectionState ==
-                                        ConnectionState.waiting) {
-                                      return const Center(
-                                          child: CircularProgressIndicator());
-                                    }
-                                    final total = snapshot.data;
-                                    Color colorTotal;
-                                    if (total >= 20 && total <= 40) {
-                                      colorTotal = AppColors.notifyColor;
-                                    } else if (total > 40) {
-                                      colorTotal = AppColors.redColor;
-                                    } else {
-                                      colorTotal = AppColors.primaryColor;
-                                    }
-
-                                    return Center(
-                                      child: Container(
-                                        height: screenHeight(context) * 0.23,
-                                        width: screenHeight(context) * 0.23,
-                                        decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: AppColors.whiteColor,
-                                          boxShadow: [
-                                            mainShadow,
-                                          ],
-                                        ),
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: AppColors.whiteColor,
-                                            border: Border.all(
-                                              width: 12.0,
-                                              color: colorTotal,
-                                            ),
-                                          ),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text(
-                                                '${total.toStringAsFixed(2)} kg',
-                                                style:
-                                                    montserratSemiBold.copyWith(
-                                                  fontSize: body22,
-                                                  color:
-                                                      AppColors.blackMainColor,
-                                                ),
-                                              ),
-                                              RichText(
-                                                text: TextSpan(
-                                                  children: [
-                                                    TextSpan(
-                                                      text: 'CO',
-                                                      style: montserratLight
-                                                          .copyWith(
-                                                        fontSize: body20,
-                                                        color: AppColors
-                                                            .blackMainColor,
-                                                      ),
-                                                    ),
-                                                    WidgetSpan(
-                                                      child:
-                                                          Transform.translate(
-                                                        offset: const Offset(
-                                                            0.0, 0.0),
-                                                        child: Text(
-                                                          '2',
-                                                          style:
-                                                              montserratRegular
-                                                                  .copyWith(
-                                                            fontSize: body12,
-                                                            color: AppColors
-                                                                .blackMainColor,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }),
-
                               /// recent activity
-                              SizedBox(height: screenHeight(context) * 0.01),
+                              SizedBox(height: screenHeight(context) * 0.02),
                               Container(
                                 width: screenWidth(context),
                                 margin: EdgeInsets.symmetric(
@@ -179,7 +77,7 @@ class HouseHoldScreen extends StatelessWidget {
                                       ),
                                       child: Center(
                                         child: Text(
-                                          'Actividad reciente',
+                                          'Historial de Emisiones',
                                           style: montserratMedium.copyWith(
                                             fontSize: body20,
                                             color: AppColors.whiteColor,
@@ -202,13 +100,8 @@ class HouseHoldScreen extends StatelessWidget {
                                           }
                                           if (snapshot.hasData &&
                                               snapshot.data.length > 0) {
-                                            final homeEmissionList =
-                                                snapshot.data;
-                                            int n = homeEmissionList.length < 3
-                                                ? homeEmissionList.length
-                                                : 3;
-                                            final homeEmission =
-                                                homeEmissionList.sublist(0, n);
+                                            final homeEmission = snapshot.data;
+
                                             Color color;
                                             return ListView.builder(
                                                 shrinkWrap: true,
@@ -243,18 +136,7 @@ class HouseHoldScreen extends StatelessWidget {
                                         }),
 
                                     SizedBox(
-                                        height: screenHeight(context) * 0.01),
-                                    Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 5.0),
-                                      child: CustomButton(
-                                        onTap: () {
-                                          Get.to(() => HomeEmissionsListScreen(
-                                              homeName, homeId));
-                                        },
-                                        btnText: 'Ver más',
-                                      ),
-                                    ),
+                                        height: screenHeight(context) * 0.02),
                                   ],
                                 ),
                               ),

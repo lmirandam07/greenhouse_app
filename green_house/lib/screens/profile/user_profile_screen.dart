@@ -222,6 +222,8 @@ class UserProfileScreen extends StatelessWidget {
                                     return ActivityItemBox(
                                         userEmission[index]['emission_title'],
                                         userEmission[index]['emission_value'],
+                                        userEmission[index]
+                                            ['emission_register_date'],
                                         userEmission[index]['home_name'],
                                         color);
                                   });

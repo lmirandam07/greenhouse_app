@@ -26,7 +26,7 @@ class BottomNavBar extends GetView<BottomNavController> {
       floatingActionButton: Transform.rotate(
         angle: 45,
         child: Padding(
-          padding: const EdgeInsets.only(bottom: 30.0, right: 40),
+          padding: const EdgeInsets.only(bottom: 10.0, right: 8.0),
           child: FloatingActionButton(
             onPressed: () {
               showMaterialModalBottomSheet(

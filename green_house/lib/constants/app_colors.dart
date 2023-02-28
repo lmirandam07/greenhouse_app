@@ -5,7 +5,9 @@ class AppColors {
   static const Color notifyColor = Color.fromARGB(255, 247, 215, 34);
   static const Color powerColor = Color.fromARGB(255, 247, 148, 34);
   static const Color primaryDarkColor = Color(0xff9AC93B);
+  static const Color gasColor = Color.fromARGB(255, 224, 58, 58);
   static const Color redColor = Color(0xffFF0000);
+  static const Color trashColor = Color.fromARGB(255, 105, 53, 226);
   static const Color whiteColor = Color(0xffFFFFFF);
   static const Color blackColor = Color(0xff000000);
   static const Color blackMainColor = Color(0xff373737);

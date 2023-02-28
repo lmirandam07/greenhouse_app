@@ -25,6 +25,17 @@ class EmissionType extends StatelessWidget {
             title: const Text('Energia'),
             leading: const Icon(Icons.lightbulb, color: AppColors.powerColor),
             onTap: () => Get..dialog(ReIssueDialogPower()),
+          ),
+          ListTile(
+            title: const Text('Gas'),
+            leading: const Icon(Icons.gas_meter, color: AppColors.gasColor),
+            onTap: () => Get..dialog(ReIssueDialogPower()),
+          ),
+          ListTile(
+            title: const Text('Basura'),
+            leading: const Icon(Icons.restore_from_trash,
+                color: AppColors.trashColor),
+            onTap: () => Get..dialog(ReIssueDialogPower()),
           )
         ],
       ),

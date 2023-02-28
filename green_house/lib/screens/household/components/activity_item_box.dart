@@ -1,19 +1,25 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../constants/exports.dart';
 
 class ActivityItemBox extends StatelessWidget {
   final String emissionTitle;
   final double emission_value;
+  final Timestamp emission_date;
   final String emissionData;
   final Color color;
-  const ActivityItemBox(
-      this.emissionTitle, this.emission_value, this.emissionData, this.color,
+  const ActivityItemBox(this.emissionTitle, this.emission_value,
+      this.emission_date, this.emissionData, this.color,
       {Key? key})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final DateTime date =
+        DateTime.fromMillisecondsSinceEpoch(emission_date.seconds * 1000);
+    String formattedDate = DateFormat('yyyy-MM-dd').format(date);
     return Container(
       height: screenHeight(context) * 0.08,
       margin: EdgeInsets.only(
@@ -67,7 +73,7 @@ class ActivityItemBox extends StatelessWidget {
                   Center(
                     child: RichText(
                       text: TextSpan(
-                        text: emissionData,
+                        text: emissionData + ' - ' + formattedDate,
                         style: montserratRegular.copyWith(
                           fontSize: body10,
                           fontWeight: FontWeight.w400,
