@@ -188,16 +188,30 @@ class ReIssueDialogPower extends StatelessWidget {
 
                 ///
                 const SizedBox(height: 30.0),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: CustomButtonEmission(
-                    onTap: () {
-                      emissionController.createEmissionController('power');
-                    },
-                    btnText: 'Registrar',
-                    color: AppColors.powerColor,
-                  ),
-                ),
+                Center(
+                    child: Row(
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: CustomButtonEmission(
+                          onTap: () {
+                            Get.back();
+                          },
+                          btnText: 'Cancelar',
+                          color: AppColors.powerColor,
+                        )),
+                    Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: CustomButtonEmission(
+                          onTap: () {
+                            emissionController
+                                .createEmissionController('power');
+                          },
+                          btnText: 'Registrar',
+                          color: AppColors.powerColor,
+                        ))
+                  ],
+                )),
 
                 const SizedBox(height: 20.0),
               ],

@@ -4,6 +4,8 @@ import 'package:green_house/constants/exports.dart';
 
 import 'emission_power_dialog.dart';
 import 'emission_transport_dialog.dart';
+import 'emission_gas_dialog.dart';
+import 'emission_trash_dialog.dart';
 
 class EmissionType extends StatelessWidget {
   const EmissionType({Key? key}) : super(key: key);
@@ -29,13 +31,13 @@ class EmissionType extends StatelessWidget {
           ListTile(
             title: const Text('Gas'),
             leading: const Icon(Icons.gas_meter, color: AppColors.gasColor),
-            onTap: () => Get..dialog(ReIssueDialogPower()),
+            onTap: () => Get..dialog(ReIssueDialogGas()),
           ),
           ListTile(
             title: const Text('Basura'),
             leading: const Icon(Icons.restore_from_trash,
                 color: AppColors.trashColor),
-            onTap: () => Get..dialog(ReIssueDialogPower()),
+            onTap: () => Get..dialog(ReIssueDialogTrash()),
           )
         ],
       ),

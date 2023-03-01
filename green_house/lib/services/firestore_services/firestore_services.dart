@@ -389,16 +389,27 @@ class FirestoreService {
     Map<String, double> totalByType;
     double totalPower = 0.0;
     double totalTransport = 0.0;
+    double totalGas = 0.0;
+    double totalTrash = 0.0;
 
     final homeEmissionList = await getHomeEmission(homeId);
     homeEmissionList.forEach((emission) {
       if (emission['emission_type'] == 'power') {
         totalPower = totalPower + emission['emission_value'];
-      } else {
+      } else if (emission['emission_type'] == 'transport') {
         totalTransport = totalTransport + emission['emission_value'];
+      } else if (emission['emission_type'] == 'gas') {
+        totalGas = totalGas + emission['emission_value'];
+      } else if (emission['emission_type'] == 'trash') {
+        totalTrash = totalTrash + emission['emission_value'];
       }
     });
-    totalByType = {'transport': totalTransport, 'power': totalPower};
+    totalByType = {
+      'transporte': totalTransport,
+      'energia': totalPower,
+      'gas': totalGas,
+      'basura': totalTrash
+    };
     return totalByType;
   }
 
@@ -406,15 +417,26 @@ class FirestoreService {
     Map<double, double> totalByType;
     double totalPower = 0.0;
     double totalTransport = 0.0;
+    double totalGas = 0.0;
+    double totalTrash = 0.0;
     final userEmissionList = await getCurrentUserEmission();
     userEmissionList.forEach((emission) {
       if (emission['emission_type'] == 'power') {
         totalPower = totalPower + emission['emission_value'];
-      } else {
+      } else if (emission['emission_type'] == 'transport') {
         totalTransport = totalTransport + emission['emission_value'];
+      } else if (emission['emission_type'] == 'gas') {
+        totalGas = totalGas + emission['emission_value'];
+      } else if (emission['emission_type'] == 'trash') {
+        totalTrash = totalTrash + emission['emission_value'];
       }
     });
-    totalByType = {1: totalTransport, 2: totalPower};
+    totalByType = {
+      1: totalTransport,
+      2: totalPower,
+      3: totalGas,
+      4: totalTrash
+    };
     return totalByType;
   }
 
@@ -423,15 +445,26 @@ class FirestoreService {
     Map<double, double> totalByType;
     double totalPower = 0.0;
     double totalTransport = 0.0;
+    double totalGas = 0.0;
+    double totalTrash = 0.0;
     final userEmissionList = await getHomeUserEmission(homeId, userId);
     userEmissionList.forEach((emission) {
       if (emission['emission_type'] == 'power') {
         totalPower = totalPower + emission['emission_value'];
-      } else {
+      } else if (emission['emission_type'] == 'transport') {
         totalTransport = totalTransport + emission['emission_value'];
+      } else if (emission['emission_type'] == 'gas') {
+        totalGas = totalGas + emission['emission_value'];
+      } else if (emission['emission_type'] == 'trash') {
+        totalTrash = totalTrash + emission['emission_value'];
       }
     });
-    totalByType = {1: totalTransport, 2: totalPower};
+    totalByType = {
+      1: totalTransport,
+      2: totalPower,
+      3: totalGas,
+      4: totalTrash
+    };
     return totalByType;
   }
 
@@ -445,7 +478,12 @@ class FirestoreService {
         'email': user['email'],
         'powerValue': userEmissionValue[2],
         'transportValue': userEmissionValue[1],
-        'totalEmision': userEmissionValue[2]! + userEmissionValue[1]!
+        'gasValue': userEmissionValue[3],
+        'trashValue': userEmissionValue[4],
+        'totalEmision': userEmissionValue[2]! +
+            userEmissionValue[1]! +
+            userEmissionValue[3]! +
+            userEmissionValue[4]!
       });
     }
 

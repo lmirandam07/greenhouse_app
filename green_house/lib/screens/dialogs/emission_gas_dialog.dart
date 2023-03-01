@@ -6,8 +6,8 @@ import 'package:green_house/widgets/custom_button_emission.dart';
 
 import '../../constants/exports.dart';
 
-class ReIssueDialogPower extends StatelessWidget {
-  ReIssueDialogPower({Key? key}) : super(key: key);
+class ReIssueDialogGas extends StatelessWidget {
+  ReIssueDialogGas({Key? key}) : super(key: key);
 
   final EmissionController emissionController = Get.put(EmissionController());
 
@@ -39,7 +39,7 @@ class ReIssueDialogPower extends StatelessWidget {
                   padding: EdgeInsets.symmetric(
                       vertical: screenHeight(context) * 0.02),
                   decoration: BoxDecoration(
-                    color: AppColors.powerColor,
+                    color: AppColors.gasColor,
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(radius10),
                       topLeft: Radius.circular(radius10),
@@ -80,7 +80,7 @@ class ReIssueDialogPower extends StatelessWidget {
                           borderRadius: BorderRadius.circular(radius10),
                           color: AppColors.whiteColor,
                           border: Border.all(
-                            color: AppColors.powerColor,
+                            color: AppColors.gasColor,
                             width: 1.0,
                           ),
                         ),
@@ -121,7 +121,7 @@ class ReIssueDialogPower extends StatelessWidget {
                           _itemSelected = value as String;
                           emissionController.homeController.text =
                               _itemSelected.split('_')[1];
-                        }, AppColors.powerColor),
+                        }, AppColors.gasColor),
                       ),
                     ],
                   ),
@@ -136,7 +136,7 @@ class ReIssueDialogPower extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          'Monto',
+                          'Tanques de gas',
                           style: montserratRegular.copyWith(
                             fontSize: 16.0,
                             color: AppColors.blackColor,
@@ -150,7 +150,7 @@ class ReIssueDialogPower extends StatelessWidget {
                           borderRadius: BorderRadius.circular(radius10),
                           color: AppColors.whiteColor,
                           border: Border.all(
-                            color: AppColors.powerColor,
+                            color: AppColors.gasColor,
                             width: 1.0,
                           ),
                         ),
@@ -158,16 +158,6 @@ class ReIssueDialogPower extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Text(
-                                '\$',
-                                style: montserratRegular.copyWith(
-                                  fontSize: 17.0,
-                                  color: AppColors.powerColor,
-                                ),
-                              ),
-                            ),
                             Expanded(
                               child: TextFormField(
                                 controller: emissionController.valueController,
@@ -179,6 +169,16 @@ class ReIssueDialogPower extends StatelessWidget {
                                 ),
                               ),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Text(
+                                'tanques',
+                                style: montserratRegular.copyWith(
+                                  fontSize: 10.0,
+                                  color: AppColors.gasColor,
+                                ),
+                              ),
+                            )
                           ],
                         ),
                       ),
@@ -188,16 +188,29 @@ class ReIssueDialogPower extends StatelessWidget {
 
                 ///
                 const SizedBox(height: 30.0),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: CustomButtonEmission(
-                    onTap: () {
-                      emissionController.createEmissionController('power');
-                    },
-                    btnText: 'Registrar',
-                    color: AppColors.powerColor,
-                  ),
-                ),
+                Center(
+                    child: Row(
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: CustomButtonEmission(
+                          onTap: () {
+                            Get.back();
+                          },
+                          btnText: 'Cancelar',
+                          color: AppColors.gasColor,
+                        )),
+                    Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: CustomButtonEmission(
+                          onTap: () {
+                            emissionController.createEmissionController('gas');
+                          },
+                          btnText: 'Registrar',
+                          color: AppColors.gasColor,
+                        ))
+                  ],
+                )),
 
                 const SizedBox(height: 20.0),
               ],

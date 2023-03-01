@@ -219,8 +219,17 @@ class HouseHoldScreen extends StatelessWidget {
                                                       'power') {
                                                     color =
                                                         AppColors.powerColor;
-                                                  } else {
+                                                  } else if (homeEmission[index]
+                                                          ['emission_type'] ==
+                                                      'transport') {
                                                     color = AppColors.blueColor;
+                                                  } else if (homeEmission[index]
+                                                          ['emission_type'] ==
+                                                      'gas') {
+                                                    color = AppColors.gasColor;
+                                                  } else {
+                                                    color =
+                                                        AppColors.trashColor;
                                                   }
                                                   return ActivityItemBox(
                                                       homeEmission[index]

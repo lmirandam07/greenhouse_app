@@ -5,6 +5,7 @@ import 'package:green_house/screens/dialogs/controller/emission_controller.dart'
 import 'package:green_house/widgets/custom_button_emission.dart';
 
 import '../../constants/exports.dart';
+import '../../widgets/custom_button.dart';
 
 class ReIssueDialogTrash extends StatelessWidget {
   ReIssueDialogTrash({Key? key}) : super(key: key);
@@ -39,7 +40,7 @@ class ReIssueDialogTrash extends StatelessWidget {
                   padding: EdgeInsets.symmetric(
                       vertical: screenHeight(context) * 0.02),
                   decoration: BoxDecoration(
-                    color: AppColors.gasColor,
+                    color: AppColors.trashColor,
                     borderRadius: BorderRadius.only(
                       topRight: Radius.circular(radius10),
                       topLeft: Radius.circular(radius10),
@@ -80,7 +81,7 @@ class ReIssueDialogTrash extends StatelessWidget {
                           borderRadius: BorderRadius.circular(radius10),
                           color: AppColors.whiteColor,
                           border: Border.all(
-                            color: AppColors.gasColor,
+                            color: AppColors.trashColor,
                             width: 1.0,
                           ),
                         ),
@@ -121,7 +122,7 @@ class ReIssueDialogTrash extends StatelessWidget {
                           _itemSelected = value as String;
                           emissionController.homeController.text =
                               _itemSelected.split('_')[1];
-                        }, AppColors.gasColor),
+                        }, AppColors.trashColor),
                       ),
                     ],
                   ),
@@ -136,7 +137,7 @@ class ReIssueDialogTrash extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          'Monto',
+                          'Cantidad de bolsas',
                           style: montserratRegular.copyWith(
                             fontSize: 16.0,
                             color: AppColors.blackColor,
@@ -150,7 +151,7 @@ class ReIssueDialogTrash extends StatelessWidget {
                           borderRadius: BorderRadius.circular(radius10),
                           color: AppColors.whiteColor,
                           border: Border.all(
-                            color: AppColors.gasColor,
+                            color: AppColors.trashColor,
                             width: 1.0,
                           ),
                         ),
@@ -158,16 +159,6 @@ class ReIssueDialogTrash extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Text(
-                                '\$',
-                                style: montserratRegular.copyWith(
-                                  fontSize: 17.0,
-                                  color: AppColors.gasColor,
-                                ),
-                              ),
-                            ),
                             Expanded(
                               child: TextFormField(
                                 controller: emissionController.valueController,
@@ -176,6 +167,16 @@ class ReIssueDialogTrash extends StatelessWidget {
                                   border: InputBorder.none,
                                   contentPadding:
                                       EdgeInsets.only(left: 16.0, bottom: 10.0),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Text(
+                                'bolsas',
+                                style: montserratRegular.copyWith(
+                                  fontSize: 12.0,
+                                  color: AppColors.trashColor,
                                 ),
                               ),
                             ),
@@ -188,16 +189,30 @@ class ReIssueDialogTrash extends StatelessWidget {
 
                 ///
                 const SizedBox(height: 30.0),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: CustomButtonEmission(
-                    onTap: () {
-                      emissionController.createEmissionController('power');
-                    },
-                    btnText: 'Registrar',
-                    color: AppColors.gasColor,
-                  ),
-                ),
+                Center(
+                    child: Row(
+                  children: [
+                    Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: CustomButtonEmission(
+                          onTap: () {
+                            Get.back();
+                          },
+                          btnText: 'Cancelar',
+                          color: AppColors.trashColor,
+                        )),
+                    Padding(
+                        padding: const EdgeInsets.only(left: 10.0),
+                        child: CustomButtonEmission(
+                          onTap: () {
+                            emissionController
+                                .createEmissionController('trash');
+                          },
+                          btnText: 'Registrar',
+                          color: AppColors.trashColor,
+                        ))
+                  ],
+                )),
 
                 const SizedBox(height: 20.0),
               ],

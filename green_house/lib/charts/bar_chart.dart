@@ -46,7 +46,11 @@ class _BarChartWidgetState extends State<BarChartWidget> {
                   toY: point.value,
                   color: point.key == 1
                       ? AppColors.blueColor
-                      : AppColors.powerColor,
+                      : point.key == 2
+                          ? AppColors.powerColor
+                          : point.key == 3
+                              ? AppColors.gasColor
+                              : AppColors.trashColor,
                   width: 15,
                   borderRadius: BorderRadius.zero)
             ]))
@@ -63,6 +67,12 @@ class _BarChartWidgetState extends State<BarChartWidget> {
               break;
             case 2:
               text = 'Energia';
+              break;
+            case 3:
+              text = 'Gas';
+              break;
+            case 4:
+              text = 'Basura';
               break;
           }
 

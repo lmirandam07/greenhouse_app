@@ -42,6 +42,14 @@ class EmissionController extends GetxController {
       co2_value = value * 0.30;
       co2_value = double.parse(co2_value.toStringAsFixed(2));
       print(co2_value);
+    } else if (type == 'gas') {
+      co2_value = value * 0.30;
+      co2_value = double.parse(co2_value.toStringAsFixed(2));
+      print(co2_value);
+    } else if (type == 'trash') {
+      co2_value = value * 0.30;
+      co2_value = double.parse(co2_value.toStringAsFixed(2));
+      print(co2_value);
     }
     try {
       final emission = EmissionModel(

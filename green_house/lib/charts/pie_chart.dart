@@ -24,15 +24,19 @@ class PieChartWidget extends StatelessWidget {
 
     for (var type in emissionByType.entries) {
       final data = PieChartSectionData(
-          color: type.key == 'transport'
+          color: type.key == 'transporte'
               ? AppColors.blueColor
-              : AppColors.powerColor,
+              : type.key == 'energia'
+                  ? AppColors.powerColor
+                  : type.key == 'gas'
+                      ? AppColors.gasColor
+                      : AppColors.trashColor,
           value: type.value,
           radius: 40,
           title: type.key + "\n(${type.value})",
-          titlePositionPercentageOffset: 1.8,
+          titlePositionPercentageOffset: 1.5,
           titleStyle:
-              const TextStyle(fontWeight: FontWeight.bold, fontSize: 12));
+              const TextStyle(fontWeight: FontWeight.bold, fontSize: 11));
       list.add(data);
     }
     return list;

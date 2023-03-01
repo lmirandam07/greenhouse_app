@@ -57,18 +57,18 @@ class EmissionBox extends StatelessWidget {
                                   color: AppColors.blackMainColor,
                                 ),
                               ),
-                              SizedBox(height: screenHeight(context) * 0.01),
+                              SizedBox(height: screenHeight(context) * 0.005),
                               Stack(
                                 children: [
                                   Container(
-                                    height: 4.0,
+                                    height: 2.0,
                                     width: screenWidth(context),
                                     color: AppColors.primaryColor,
                                   ),
                                 ],
                               ),
                               Text(
-                                "Emisiones de Energia: ${homeUsersEmissions[index]['powerValue']} CO2 kg",
+                                "Emisiones de Energía: ${homeUsersEmissions[index]['powerValue']} CO2 kg",
                                 style: montserratRegular.copyWith(
                                   fontSize: body12,
                                   color: AppColors.blackMainColor,
@@ -82,8 +82,22 @@ class EmissionBox extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "Emisiones Totales: ${homeUsersEmissions[index]['totalEmision']} CO2 kg",
+                                "Emisiones de Gas: ${homeUsersEmissions[index]['gasValue']} CO2 kg",
                                 style: montserratRegular.copyWith(
+                                  fontSize: body12,
+                                  color: AppColors.blackMainColor,
+                                ),
+                              ),
+                              Text(
+                                "Emisiones de Basura: ${homeUsersEmissions[index]['trashValue']} CO2 kg",
+                                style: montserratRegular.copyWith(
+                                  fontSize: body12,
+                                  color: AppColors.blackMainColor,
+                                ),
+                              ),
+                              Text(
+                                "Emisiones Totales: ${homeUsersEmissions[index]['totalEmision']} CO2 kg",
+                                style: montserratSemiBold.copyWith(
                                   fontSize: body12,
                                   color: AppColors.blackMainColor,
                                 ),
@@ -93,7 +107,7 @@ class EmissionBox extends StatelessWidget {
                         );
                       });
                 } else {
-                  return Center(child: Text('No hay emisones'));
+                  return Center(child: Text('No hay emisiones'));
                 }
               })
         ],

@@ -19,8 +19,8 @@ class CustomButtonEmission extends StatelessWidget {
     return Bounceable(
       onTap: onTap,
       child: Container(
-        height: 55.0,
-        width: screenWidth(context),
+        height: 40.0,
+        width: 160,
         padding: const EdgeInsets.all(3.0),
         decoration: BoxDecoration(
           color: AppColors.whiteColor,
