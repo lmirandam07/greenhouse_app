@@ -1,5 +1,5 @@
 import 'dart:convert';
-
+import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -496,6 +496,30 @@ class FirestoreService {
     final List<Map> userEmissionList =
         await getHomeUserEmissionData(homeId, homeUsers, userEmission);
     return userEmission;
+  }
+
+  getEmissionData(String emissionId) async {
+    final emissionDoc = await docEmission.doc(emissionId).get();
+    final emissionData = emissionDoc.data();
+
+    if (emissionData != null &&
+        emissionData.containsKey('emission_registered_date')) {
+      final emissionDate = DateTime.fromMillisecondsSinceEpoch(
+          emissionData['emission_registered_date'].millisecondsSinceEpoch);
+
+      final formattedDate = DateFormat('dd/MM/yyyy').format(emissionDate);
+      emissionData['emission_registered_date'] = formattedDate;
+    }
+
+    return emissionData;
+  }
+
+  updateEmission(Map<String, Object?> data, String emissionId) async {
+    await docEmission.doc(emissionId).update(data);
+  }
+
+  deleteEmission(String emissionId) async {
+    await docEmission.doc(emissionId).delete();
   }
 
   setNotification(bool activate) async {

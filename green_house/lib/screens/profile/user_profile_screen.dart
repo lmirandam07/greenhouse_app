@@ -216,10 +216,19 @@ class UserProfileScreen extends StatelessWidget {
                                     if (userEmission[index]['emission_type'] ==
                                         'power') {
                                       color = AppColors.powerColor;
-                                    } else {
+                                    } else if (userEmission[index]
+                                            ['emission_type'] ==
+                                        'transport') {
                                       color = AppColors.blueColor;
+                                    } else if (userEmission[index]
+                                            ['emission_type'] ==
+                                        'gas') {
+                                      color = AppColors.gasColor;
+                                    } else {
+                                      color = AppColors.trashColor;
                                     }
                                     return ActivityItemBox(
+                                        userEmission[index]['emission_id'],
                                         userEmission[index]['emission_title'],
                                         userEmission[index]['emission_value'],
                                         userEmission[index]

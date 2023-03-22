@@ -233,6 +233,8 @@ class HouseHoldScreen extends StatelessWidget {
                                                   }
                                                   return ActivityItemBox(
                                                       homeEmission[index]
+                                                          ['emission_id'],
+                                                      homeEmission[index]
                                                           ['emission_title'],
                                                       homeEmission[index]
                                                           ['emission_value'],
