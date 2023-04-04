@@ -104,7 +104,7 @@ class HouseHoldScreen extends StatelessWidget {
                                                 '${total.toStringAsFixed(2)} kg',
                                                 style:
                                                     montserratSemiBold.copyWith(
-                                                  fontSize: body22,
+                                                  fontSize: body16,
                                                   color:
                                                       AppColors.blackMainColor,
                                                 ),
@@ -116,7 +116,7 @@ class HouseHoldScreen extends StatelessWidget {
                                                       text: 'CO',
                                                       style: montserratLight
                                                           .copyWith(
-                                                        fontSize: body20,
+                                                        fontSize: body14,
                                                         color: AppColors
                                                             .blackMainColor,
                                                       ),

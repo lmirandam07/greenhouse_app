@@ -185,6 +185,64 @@ class ReIssueDialogGas extends StatelessWidget {
                     ],
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 16.0, right: 16.0, bottom: 16.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Peso del tanque',
+                          style: montserratRegular.copyWith(
+                            fontSize: 16.0,
+                            color: AppColors.blackColor,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 40.0,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(radius10),
+                          color: AppColors.whiteColor,
+                          border: Border.all(
+                            color: AppColors.gasColor,
+                            width: 1.0,
+                          ),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                controller:
+                                    emissionController.gasSizeController,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding:
+                                      EdgeInsets.only(left: 16.0, bottom: 10.0),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Text(
+                                'lbs',
+                                style: montserratRegular.copyWith(
+                                  fontSize: 10.0,
+                                  color: AppColors.gasColor,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
 
                 ///
                 const SizedBox(height: 30.0),

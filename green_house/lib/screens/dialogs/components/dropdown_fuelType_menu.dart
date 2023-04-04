@@ -2,23 +2,21 @@ import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:green_house/constants/exports.dart';
 
-class DropdownTransportMenu extends StatefulWidget {
+class DropdownFuelTypeMenu extends StatefulWidget {
   final Function(String?) onChanged;
   final Color dropdownColor;
-  DropdownTransportMenu(this.onChanged,
+  DropdownFuelTypeMenu(this.onChanged,
       [this.dropdownColor = AppColors.primaryColor]);
 
   @override
-  State<DropdownTransportMenu> createState() => DropdownTransportMenuState();
+  State<DropdownFuelTypeMenu> createState() => DropdownFuelTypeMenuState();
 }
 
-class DropdownTransportMenuState extends State<DropdownTransportMenu> {
+class DropdownFuelTypeMenuState extends State<DropdownFuelTypeMenu> {
   final List<String> items = [
-    'Carro',
-    'Metrobus',
-    'Bicicleta',
-    'Metro',
-    'Caminando'
+    '91 octanos',
+    '95 octanos',
+    'Diesel',
   ];
   String? selectedValue;
 
@@ -36,7 +34,7 @@ class DropdownTransportMenuState extends State<DropdownTransportMenu> {
                 ),
                 Expanded(
                   child: Text(
-                    'Transportes',
+                    'Gasolina',
                     style: TextStyle(
                       fontSize: 12,
                       fontWeight: FontWeight.bold,

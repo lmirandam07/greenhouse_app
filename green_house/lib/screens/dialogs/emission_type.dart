@@ -19,8 +19,9 @@ class EmissionType extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           ListTile(
-            title: const Text('Transporte'),
-            leading: const Icon(Icons.train_sharp, color: AppColors.blueColor),
+            title: const Text('Gasolina'),
+            leading:
+                const Icon(Icons.local_gas_station, color: AppColors.blueColor),
             onTap: () => Get.dialog(ReIssueDialogTransport()),
           ),
           ListTile(
@@ -29,7 +30,7 @@ class EmissionType extends StatelessWidget {
             onTap: () => Get..dialog(ReIssueDialogPower()),
           ),
           ListTile(
-            title: const Text('Gas'),
+            title: const Text('Tanques de Gas'),
             leading: const Icon(Icons.gas_meter, color: AppColors.gasColor),
             onTap: () => Get..dialog(ReIssueDialogGas()),
           ),

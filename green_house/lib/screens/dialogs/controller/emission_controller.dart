@@ -14,6 +14,8 @@ class EmissionController extends GetxController {
   TextEditingController valueController = TextEditingController();
   TextEditingController homeController = TextEditingController();
   TextEditingController transportTypeController = TextEditingController();
+  TextEditingController gasSizeController = TextEditingController();
+  TextEditingController bagSizeController = TextEditingController();
 
   final botomNavBar = BottomNavController();
   final firestoreService = FirestoreService();
@@ -27,7 +29,6 @@ class EmissionController extends GetxController {
 
     // Transport multipliers
     double time_value = 0.0;
-
     String title = titleController.text;
     double value = double.parse(valueController.text);
     String home = homeController.text;
@@ -35,21 +36,19 @@ class EmissionController extends GetxController {
 
     if (type == 'power') {
       kwh_value = value * 0.17;
-      co2_value = kwh_value * 0.30;
+      co2_value = kwh_value * 0.182;
       co2_value = double.parse(co2_value.toStringAsFixed(2));
-      print(co2_value);
     } else if (type == 'transport') {
-      co2_value = value * 0.30;
+      co2_value = value / 3.25;
       co2_value = double.parse(co2_value.toStringAsFixed(2));
-      print(co2_value);
     } else if (type == 'gas') {
-      co2_value = value * 0.30;
+      int gasSize = int.parse(gasSizeController.text);
+      co2_value = (value * gasSize * 6.79) / 5;
       co2_value = double.parse(co2_value.toStringAsFixed(2));
-      print(co2_value);
     } else if (type == 'trash') {
-      co2_value = value * 0.30;
+      int bagSize = int.parse(bagSizeController.text);
+      co2_value = value * ((bagSize * 2.936533191) / 5) * 1.47;
       co2_value = double.parse(co2_value.toStringAsFixed(2));
-      print(co2_value);
     }
     try {
       final emission = EmissionModel(
@@ -63,6 +62,8 @@ class EmissionController extends GetxController {
       titleController.clear();
       valueController.clear();
       homeController.clear();
+      bagSizeController.clear();
+      gasSizeController.clear();
       botomNavBar.homeFun();
       Get.to(() => BottomNavBar());
       isLoading(false);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:green_house/screens/dialogs/components/dropdown_transport_menu.dart';
+import 'package:green_house/screens/dialogs/components/dropdown_fuelType_menu.dart';
 import 'package:green_house/screens/dialogs/components/dropdown_menu.dart';
 import 'package:green_house/widgets/custom_button_emission.dart';
 
@@ -106,7 +106,7 @@ class ReIssueDialogTransport extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          'Tipo de transporte',
+                          'Tipo de gasolina',
                           style: montserratRegular.copyWith(
                             fontSize: 16.0,
                             color: AppColors.blackColor,
@@ -116,7 +116,7 @@ class ReIssueDialogTransport extends StatelessWidget {
                       Container(
                         height: 40.0,
                         width: 150,
-                        child: DropdownTransportMenu((value) {
+                        child: DropdownFuelTypeMenu((value) {
                           String _itemSelected;
                           _itemSelected = value as String;
                           emissionController.transportTypeController.text =
@@ -165,7 +165,7 @@ class ReIssueDialogTransport extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Text(
-                          'Duración del recorrido',
+                          'Monto pagado',
                           style: montserratRegular.copyWith(
                             fontSize: 16.0,
                             color: AppColors.blackColor,
@@ -190,7 +190,7 @@ class ReIssueDialogTransport extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 8.0),
                               child: Text(
-                                'mins',
+                                '\$',
                                 style: montserratRegular.copyWith(
                                   fontSize: 10.0,
                                   color: AppColors.blueColor,

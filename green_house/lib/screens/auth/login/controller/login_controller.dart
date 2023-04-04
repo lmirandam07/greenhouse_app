@@ -4,11 +4,13 @@ import 'package:get/get.dart';
 import 'package:green_house/screens/bottom/bottom_nav_screen.dart';
 import 'package:green_house/widgets/custom_snackbar.dart';
 
+import '../../../../services/firestore_services/firestore_services.dart';
+
 class LoginController extends GetxController {
   final formKey = GlobalKey<FormState>();
   TextEditingController emailController = TextEditingController();
   TextEditingController passController = TextEditingController();
-
+  final firestoreService = FirestoreService();
   RxBool isPassObscure = true.obs;
   var isLoading = false.obs;
 

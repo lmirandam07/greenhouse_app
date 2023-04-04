@@ -186,6 +186,64 @@ class ReIssueDialogTrash extends StatelessWidget {
                     ],
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 16.0, right: 16.0, bottom: 16.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Tamaño de las bolsas',
+                          style: montserratRegular.copyWith(
+                            fontSize: 16.0,
+                            color: AppColors.blackColor,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 40.0,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(radius10),
+                          color: AppColors.whiteColor,
+                          border: Border.all(
+                            color: AppColors.trashColor,
+                            width: 1.0,
+                          ),
+                        ),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: TextFormField(
+                                controller:
+                                    emissionController.bagSizeController,
+                                keyboardType: TextInputType.number,
+                                decoration: const InputDecoration(
+                                  border: InputBorder.none,
+                                  contentPadding:
+                                      EdgeInsets.only(left: 16.0, bottom: 10.0),
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: Text(
+                                'gls',
+                                style: montserratRegular.copyWith(
+                                  fontSize: 12.0,
+                                  color: AppColors.trashColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
 
                 ///
                 const SizedBox(height: 30.0),

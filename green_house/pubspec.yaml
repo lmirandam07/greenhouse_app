@@ -48,6 +48,7 @@ dependencies:
   dropdown_button2: ^1.9.2
   modal_bottom_sheet: ^2.1.2
   fl_chart: ^0.60.0
+  google_sign_in: ^5.2.1
 
 dev_dependencies:
   change_app_package_name: ^1.1.0
