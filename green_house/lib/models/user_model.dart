@@ -1,12 +1,12 @@
 class UserModel {
   String id;
-  final String name;
-  final String username;
-  final String password;
-  final String email;
+  final String? name;
+  final String? username;
+  final String? password;
+  final String? email;
 
   UserModel(
-      { this.id='',
+      {this.id = '',
       required this.name,
       required this.username,
       required this.email,

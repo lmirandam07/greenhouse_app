@@ -150,7 +150,7 @@ class LoginScreen extends StatelessWidget {
                                 padding: const EdgeInsets.symmetric(
                                     horizontal: 10.0),
                                 child: Text(
-                                  'O Iniciar sesión en uso',
+                                  'O Iniciar sesión con',
                                   style: montserratRegular.copyWith(
                                     fontSize: body12,
                                     color: AppColors.blackMainColor
@@ -174,8 +174,7 @@ class LoginScreen extends StatelessWidget {
                         SizedBox(height: screenHeight(context) * 0.02),
                         GoogleButton(
                           onTap: () async {
-                            await FirestoreService.signInWithGoogle(
-                                context: context);
+                            loginController.signInGoogle(context);
                           },
                         ),
 

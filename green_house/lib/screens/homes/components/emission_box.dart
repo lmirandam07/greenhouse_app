@@ -96,7 +96,7 @@ class EmissionBox extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "Emisiones Totales: ${homeUsersEmissions[index]['totalEmision']} CO2 kg",
+                                "Emisiones Totales: ${homeUsersEmissions[index]['totalEmision'].toStringAsFixed(2)} CO2 kg",
                                 style: montserratSemiBold.copyWith(
                                   fontSize: body12,
                                   color: AppColors.blackMainColor,

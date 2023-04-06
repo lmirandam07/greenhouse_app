@@ -154,7 +154,7 @@ class SignupScreen extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10.0),
                               child: Text(
-                                'O registrador en uso',
+                                'O inicia sesisón con',
                                 style: montserratRegular.copyWith(
                                   fontSize: body12,
                                   color:
@@ -176,7 +176,9 @@ class SignupScreen extends StatelessWidget {
                       /// google button
                       SizedBox(height: screenHeight(context) * 0.02),
                       GoogleButton(
-                        onTap: () {},
+                        onTap: () async {
+                          signupController.signUpGoogle(context);
+                        },
                       ),
 
                       /// already have account

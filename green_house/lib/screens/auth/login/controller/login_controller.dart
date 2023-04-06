@@ -40,4 +40,27 @@ class LoginController extends GetxController {
       isLoading(false);
     }
   }
+
+  signInGoogle(context) async {
+    try {
+      isLoading(true);
+      await FirestoreService.signInWithGoogle(context: context)
+          .then((value) async {
+        successSnackBar('Inicio exitoso');
+        emailController.clear();
+        passController.clear();
+        Get.offAll(BottomNavBar());
+        isLoading(false);
+      });
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        errorSnackBar('No existe este usuario intente nuevamente.');
+      } else if (e.code == 'wrong-password') {
+        errorSnackBar('Contraseña incorrecta. Favor intente nuevamente');
+      } else {
+        errorSnackBar('Ups! Algo ha pasado. Intente nuevamente');
+      }
+      isLoading(false);
+    }
+  }
 }
