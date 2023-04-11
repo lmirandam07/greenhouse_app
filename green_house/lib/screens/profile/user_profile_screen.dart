@@ -28,40 +28,48 @@ class UserProfileScreen extends StatelessWidget {
               children: [
                 /// user image
                 SizedBox(height: screenHeight(context) * 0.02),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const SizedBox(),
-                    const SizedBox(),
-                    Image.asset(
-                      AppImages.avatarImage,
-                      height: screenHeight(context) * 0.16,
-                    ),
-                    Bounceable(
-                      onTap: () {
-                        Get.to(EditProfileScreen());
-                      },
-                      child: Container(
-                        height: 45.0,
-                        width: 45.0,
-                        margin: const EdgeInsets.only(right: 16.0),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(radius15),
-                          color: AppColors.primaryColor,
-                        ),
-                        child: Center(
-                          child: SvgPicture.asset(
-                            AppIcons.pencilIcon,
-                            fit: BoxFit.scaleDown,
-                            height: 24.0,
-                            width: 24.0,
+                FutureBuilder(
+                    future: firestoreService.getCurrentUserData(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      final user = snapshot.data;
+                      return Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const SizedBox(),
+                          const SizedBox(),
+                          CircleAvatar(
+                            radius: 60.0,
+                            backgroundImage: NetworkImage(user['profile']),
                           ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+                          Bounceable(
+                            onTap: () {
+                              Get.to(EditProfileScreen());
+                            },
+                            child: Container(
+                              height: 45.0,
+                              width: 45.0,
+                              margin: const EdgeInsets.only(right: 16.0),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(radius15),
+                                color: AppColors.primaryColor,
+                              ),
+                              child: Center(
+                                child: SvgPicture.asset(
+                                  AppIcons.pencilIcon,
+                                  fit: BoxFit.scaleDown,
+                                  height: 24.0,
+                                  width: 24.0,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      );
+                    }),
 
                 /// texts
                 FutureBuilder(

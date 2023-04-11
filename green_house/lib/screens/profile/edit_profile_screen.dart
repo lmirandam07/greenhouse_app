@@ -7,6 +7,7 @@ import 'package:green_house/screens/profile/controller/profile_controller.dart';
 import 'package:green_house/widgets/custom_button.dart';
 import 'package:green_house/widgets/custom_text_field.dart';
 import '../../services/firestore_services/firestore_services.dart';
+import 'components/profileImageSelector.dart';
 
 class EditProfileScreen extends StatelessWidget {
   EditProfileScreen({Key? key}) : super(key: key);
@@ -29,20 +30,24 @@ class EditProfileScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                /// user image
-                SizedBox(height: screenHeight(context) * 0.02),
-                Image.asset(
-                  AppImages.avatarImage,
-                  height: screenHeight(context) * 0.16,
-                ),
-
                 /// btn
-                SizedBox(height: screenHeight(context) * 0.016),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: screenHeight(context) * 0.1),
-                  child: CustomButton(onTap: () {}, btnText: 'Cambiar Avatar'),
-                ),
+                SizedBox(height: screenHeight(context) * 0.036),
+                FutureBuilder(
+                    future: firestoreService.getCurrentUserData(),
+                    builder: (context, AsyncSnapshot snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                      final user = snapshot.data;
+                      return ProfileImageSelector(
+                        userId: user['id'],
+                        currentImageUrl: user['profile'],
+                        onImageSelected: (imageUrl) {
+                          print('Perfil');
+                          profileController.profileController.text = imageUrl;
+                        },
+                      );
+                    }),
 
                 /// field
                 SizedBox(height: screenHeight(context) * 0.032),

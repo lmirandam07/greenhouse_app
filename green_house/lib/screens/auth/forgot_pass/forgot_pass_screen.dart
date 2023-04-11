@@ -9,12 +9,12 @@ import 'controller/forgot_pass_controller.dart';
 class ForgotPassScreen extends StatelessWidget {
   ForgotPassScreen({Key? key}) : super(key: key);
 
-  final ForgotPassController forgotPassController = Get.put(ForgotPassController());
+  final ForgotPassController forgotPassController =
+      Get.put(ForgotPassController());
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       /// body
       body: SafeArea(
         child: SizedBox(
@@ -36,43 +36,13 @@ class ForgotPassScreen extends StatelessWidget {
                   ),
                 ),
 
-                /// pass field
                 SizedBox(height: screenHeight(context) * 0.02),
-                Obx(() {
-                  return CustomTextField(
-                    controller: forgotPassController.passController,
-                    headText: 'Contraseña',
-                    hintText: '•••••••••••••••••••••••',
-                    prefixIconPath: AppIcons.lockIcon,
-                    obscureText: forgotPassController.passObscure.value,
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        forgotPassController.passObscure.value =
-                        !forgotPassController.passObscure.value;
-                      },
-                      icon: SvgPicture.asset(AppIcons.eyeIcon),
-                    ),
-                  );
-                }),
-
-                /// repeat pass field
-                SizedBox(height: screenHeight(context) * 0.02),
-                Obx(() {
-                  return CustomTextField(
-                    controller: forgotPassController.repeatPassController,
-                    headText: 'Repetir Contraseña',
-                    hintText: '•••••••••••••••••••••••',
-                    prefixIconPath: AppIcons.lockIcon,
-                    obscureText: forgotPassController.repeatPassObscure.value,
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        forgotPassController.repeatPassObscure.value =
-                        !forgotPassController.repeatPassObscure.value;
-                      },
-                      icon: SvgPicture.asset(AppIcons.eyeIcon),
-                    ),
-                  );
-                }),
+                CustomTextField(
+                  controller: forgotPassController.emailController,
+                  headText: 'Correo',
+                  hintText: 'ejemplo@gmail.com',
+                  prefixIconPath: AppIcons.lockIcon,
+                ),
 
                 /// buttons
                 SizedBox(height: screenHeight(context) * 0.024),
@@ -83,8 +53,11 @@ class ForgotPassScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: CustomButton(
-                          onTap: () {},
-                          btnText: 'Guardar',
+                          onTap: () async {
+                            await forgotPassController.resetPassword(
+                                forgotPassController.emailController.text);
+                          },
+                          btnText: 'Restaurar',
                         ),
                       ),
                       SizedBox(width: screenHeight(context) * 0.024),
@@ -93,20 +66,17 @@ class ForgotPassScreen extends StatelessWidget {
                           onTap: () {
                             Get.back();
                           },
-                          btnText: 'Descartar',
+                          btnText: 'Regresar',
                         ),
                       ),
                     ],
                   ),
                 ),
-
-
               ],
             ),
           ),
         ),
       ),
-
     );
   }
 }

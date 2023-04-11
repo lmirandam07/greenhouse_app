@@ -49,6 +49,9 @@ dependencies:
   modal_bottom_sheet: ^2.1.2
   fl_chart: ^0.60.0
   google_sign_in: ^5.2.1
+  firebase_storage: ^11.1.0
+  cached_network_image: ^3.2.3
+  image_picker: ^0.8.7+1
 
 dev_dependencies:
   change_app_package_name: ^1.1.0

@@ -11,6 +11,7 @@ import '../user_profile_screen.dart';
 class ProfileController extends GetxController {
   TextEditingController userNameController = TextEditingController();
   TextEditingController nameController = TextEditingController();
+  TextEditingController profileController = TextEditingController();
   final botomNavBar = BottomNavController();
   final firestoreService = FirestoreService();
   var isLoading = false.obs;
@@ -19,17 +20,30 @@ class ProfileController extends GetxController {
     final currentUser =
         await firestoreService.getCurrentUserData().then((value) async {
       if (userNameController.text.isEmpty && nameController.text.isEmpty) {
-        userdata = {'username': value['username'], 'name': value['name']};
+        userdata = {
+          'username': value['username'],
+          'name': value['name'],
+          'profile': profileController.text
+        };
       } else if (nameController.text.isEmpty &&
           userNameController.text.isNotEmpty) {
-        userdata = {'username': userNameController.text, 'name': value['name']};
+        userdata = {
+          'username': userNameController.text,
+          'name': value['name'],
+          'profile': profileController.text
+        };
       } else if (nameController.text.isNotEmpty &&
           userNameController.text.isEmpty) {
-        userdata = {'username': value['username'], 'name': nameController.text};
+        userdata = {
+          'username': value['username'],
+          'name': nameController.text,
+          'profile': profileController.text
+        };
       } else {
         userdata = {
           'username': userNameController.text,
-          'name': nameController.text
+          'name': nameController.text,
+          'profile': profileController.text
         };
       }
       try {
