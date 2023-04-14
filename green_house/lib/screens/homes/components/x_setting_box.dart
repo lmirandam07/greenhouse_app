@@ -13,8 +13,9 @@ class XSettingBox extends StatelessWidget {
   final String homeId;
   final String ownerId;
   final String homeName;
+  final String userProfile;
   XSettingBox(this.userName, this.email, this.userId, this.homeId, this.ownerId,
-      this.homeName,
+      this.homeName, this.userProfile,
       {Key? key})
       : super(key: key);
 
@@ -55,14 +56,10 @@ class XSettingBox extends StatelessWidget {
                     Container(
                       height: 42.0,
                       width: 42.0,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(radius10),
-                        color: AppColors.primaryColor,
-                      ),
                       child: Center(
-                        child: SvgPicture.asset(
-                          AppIcons.userWhiteIcon,
-                          color: AppColors.whiteColor,
+                        child: CircleAvatar(
+                          radius: 20.0,
+                          backgroundImage: NetworkImage(userProfile),
                         ),
                       ),
                     ),
