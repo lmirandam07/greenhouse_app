@@ -23,8 +23,9 @@ Future<void> main() async {
         email: 'ah@test.com',
         password: '123456');
     when(firebaseRepo.createUser(user, 'aht'))
-        .thenAnswer((realInvocation) => 'Success');
-    expect(firebaseRepo.createUser(user, 'aht'), 'Success');
+        .thenAnswer((realInvocation) => 'Se creo correctamente el usuario');
+    expect(firebaseRepo.createUser(user, 'aht'),
+        'Se creo correctamente el usuario');
   });
 
   test('Exception en crear usuario', () async {
@@ -34,9 +35,35 @@ Future<void> main() async {
         email: 'ah@test.com',
         password: '123');
     when(firebaseRepo.createUser(user, '1'))
-        .thenAnswer((realInvocation) => throw Exception());
+        .thenThrow(Exception('No se pudo crear el usuario correctamente'));
 
-    expect(firebaseRepo.createUser(user, '1'), isException);
+    expect(() => firebaseRepo.createUser(user, '1'), throwsException);
+    expect(
+        () => firebaseRepo.createUser(user, '1'),
+        throwsA(predicate((dynamic e) =>
+            e is Exception &&
+            e.toString() ==
+                'Exception: No se pudo crear el usuario correctamente')));
+  });
+
+  test('crear modelo miembros de hogares', () {
+    final members = HomeMembersModel(
+        member_id: '1', member_role: 'owner', member_status: 'accepted');
+    when(firebaseRepo.createHomeMembers('1', members))
+        .thenAnswer((realInvocation) => 'Creacion exitosa');
+    expect(firebaseRepo.createHomeMembers('1', members), 'Creacion exitosa');
+  });
+
+  test('Exception en crear modelo miembros de hogares', () {
+    final members = HomeMembersModel(
+        member_id: '1', member_role: 'owner', member_status: 'accepted');
+    when(firebaseRepo.createHomeMembers('1', members))
+        .thenThrow(Exception('No se pudo crear los miembros del hogar'));
+    expect(()=>firebaseRepo.createHomeMembers('1', members), throwsException);
+    expect(()=>firebaseRepo.createHomeMembers('1', members), throwsA(predicate((dynamic e) =>
+            e is Exception &&
+            e.toString() ==
+                'Exception: No se pudo crear los miembros del hogar')));
   });
 
   test('crear hogar', () async {
@@ -45,16 +72,15 @@ Future<void> main() async {
         owner_id: '1',
         activated: true,
         ubication: {'lat': 0.0, 'lon': 0.0});
-    final members = HomeMembersModel(
-        member_id: '1', member_role: 'owner', member_status: 'accepted');
     final List<HomeMembersModel>? listMembers = [];
     when(firebaseRepo.createHome(home, listMembers))
-        .thenAnswer((realInvocation) async => 'Success');
+        .thenAnswer((realInvocation) async => 'Se creo correctamente el hogar');
 
-    expect(await firebaseRepo.createHome(home, listMembers), 'Success');
+    expect(await firebaseRepo.createHome(home, listMembers),
+        'Se creo correctamente el hogar');
   });
 
-  test('Error crear hogar', () async {
+  test('Exception crear hogar', () async {
     final home = HomeModel(
         home_name: 'Casa Prueba',
         owner_id: '1',
@@ -64,9 +90,15 @@ Future<void> main() async {
         member_id: '1', member_role: 'owner', member_status: 'accepted');
     final List<HomeMembersModel>? listMembers = [];
     when(firebaseRepo.createHome(home, listMembers))
-        .thenAnswer((realInvocation) async => 'Failed');
+        .thenThrow(Exception('No se pudo crear el hogar correctamente'));
 
-    expect(await firebaseRepo.createHome(home, listMembers), 'Failed');
+    expect(() => firebaseRepo.createHome(home, listMembers), throwsException);
+    expect(
+        () => firebaseRepo.createHome(home, listMembers),
+        throwsA(predicate((dynamic e) =>
+            e is Exception &&
+            e.toString() ==
+                'Exception: No se pudo crear el hogar correctamente')));
   });
 
   test('Usuario Existe', () async {

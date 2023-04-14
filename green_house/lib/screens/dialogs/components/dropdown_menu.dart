@@ -6,16 +6,16 @@ import 'package:green_house/constants/exports.dart';
 import '../../../services/firestore_services/firestore_services.dart';
 import '../controller/emission_controller.dart';
 
-class DropdownMenu extends StatefulWidget {
+class DropdownMenuC extends StatefulWidget {
   final Function(String?) onChanged;
   final Color dropdownColor;
-  DropdownMenu(this.onChanged, [this.dropdownColor = AppColors.primaryColor]);
+  const DropdownMenuC(this.onChanged, [this.dropdownColor = AppColors.primaryColor]);
 
   @override
-  State<DropdownMenu> createState() => _DropdownMenuState();
+  State<DropdownMenuC> createState() => _DropdownMenuCState();
 }
 
-class _DropdownMenuState extends State<DropdownMenu> {
+class _DropdownMenuCState extends State<DropdownMenuC> {
   final firestoreService = FirestoreService();
   final List<String> homes = [];
 
