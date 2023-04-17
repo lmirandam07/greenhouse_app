@@ -52,7 +52,7 @@ class HomeScreen extends StatelessWidget {
                         isLeadingIcon: false, titleText: homeName);
                   }
                 }),
-            SizedBox(height: screenHeight(context) * 0.04),
+            SizedBox(height: screenHeight(context) * 0.05),
 
             ///
             Expanded(
@@ -63,7 +63,7 @@ class HomeScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     /// vert dot icon
-                    SizedBox(height: screenHeight(context) * 0.024),
+                    SizedBox(height: screenHeight(context) * 0.040),
 
                     /// filter icon with chart
                     Container(
@@ -92,7 +92,28 @@ class HomeScreen extends StatelessWidget {
 
                     ///
                     SizedBox(height: screenHeight(context) * 0.06),
-
+                    Container(
+                      width: screenWidth(context),
+                      padding: EdgeInsets.symmetric(
+                          vertical: screenHeight(context) * 0.02),
+                      decoration: BoxDecoration(
+                        color: AppColors.primaryColor,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(radius10),
+                          topRight: Radius.circular(radius10),
+                        ),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'Emisiones por integrantes',
+                          style: montserratMedium.copyWith(
+                            fontSize: body20,
+                            color: AppColors.whiteColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: screenHeight(context) * 0.02),
                     FutureBuilder(
                         future:
                             firestoreService.getHomeUserEmissionList(homeId),

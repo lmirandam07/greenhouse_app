@@ -518,6 +518,7 @@ class FirestoreService {
       userEmission.add({
         'userName': user['username'],
         'email': user['email'],
+        'profile':user['profile'],
         'powerValue': userEmissionValue[2],
         'transportValue': userEmissionValue[1],
         'gasValue': userEmissionValue[3],

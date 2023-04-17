@@ -240,10 +240,12 @@ class MockFirebaseTest extends _i1.Mock implements _i3.FirebaseTest {
             _i7.Future<Map<String, dynamic>>.value(<String, dynamic>{}),
       ) as _i7.Future<Map<String, dynamic>>);
   @override
-  dynamic getHomeData(String? homeId) => super.noSuchMethod(Invocation.method(
-        #getHomeData,
-        [homeId],
-      ));
+  dynamic getHomeData(String? homeId) => super.noSuchMethod(
+        Invocation.method(
+          #getHomeData,
+          [homeId],
+        ),
+      );
   @override
   dynamic updateHomeStatus(
     String? homeId,

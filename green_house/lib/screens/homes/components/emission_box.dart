@@ -50,12 +50,25 @@ class EmissionBox extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
-                              Text(
-                                "Emisiones de ${homeUsersEmissions[index]['userName']}",
-                                style: montserratRegular.copyWith(
-                                  fontSize: body15,
-                                  color: AppColors.blackMainColor,
-                                ),
+                              Column(
+                                children: [
+                                  Center(
+                                    child: CircleAvatar(
+                                      radius: 30.0,
+                                      backgroundImage: NetworkImage(
+                                          homeUsersEmissions[index]['profile']),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                      height: screenHeight(context) * 0.002),
+                                  Text(
+                                    "${homeUsersEmissions[index]['userName']}",
+                                    style: montserratRegular.copyWith(
+                                      fontSize: body15,
+                                      color: AppColors.blackMainColor,
+                                    ),
+                                  ),
+                                ],
                               ),
                               SizedBox(height: screenHeight(context) * 0.005),
                               Stack(
@@ -68,35 +81,35 @@ class EmissionBox extends StatelessWidget {
                                 ],
                               ),
                               Text(
-                                "Emisiones de Energía: ${homeUsersEmissions[index]['powerValue']} CO2 kg",
+                                "Emisiones de Energía: ${homeUsersEmissions[index]['powerValue']}kg CO2",
                                 style: montserratRegular.copyWith(
                                   fontSize: body12,
                                   color: AppColors.blackMainColor,
                                 ),
                               ),
                               Text(
-                                "Emisiones de Transporte: ${homeUsersEmissions[index]['transportValue']} CO2 kg",
+                                "Emisiones de Transporte: ${homeUsersEmissions[index]['transportValue']}kg CO2",
                                 style: montserratRegular.copyWith(
                                   fontSize: body12,
                                   color: AppColors.blackMainColor,
                                 ),
                               ),
                               Text(
-                                "Emisiones de Gas: ${homeUsersEmissions[index]['gasValue']} CO2 kg",
+                                "Emisiones de Gas: ${homeUsersEmissions[index]['gasValue']}kg CO2",
                                 style: montserratRegular.copyWith(
                                   fontSize: body12,
                                   color: AppColors.blackMainColor,
                                 ),
                               ),
                               Text(
-                                "Emisiones de Basura: ${homeUsersEmissions[index]['trashValue']} CO2 kg",
+                                "Emisiones de Basura: ${homeUsersEmissions[index]['trashValue']}kg CO2",
                                 style: montserratRegular.copyWith(
                                   fontSize: body12,
                                   color: AppColors.blackMainColor,
                                 ),
                               ),
                               Text(
-                                "Emisiones Totales: ${homeUsersEmissions[index]['totalEmision'].toStringAsFixed(2)} CO2 kg",
+                                "Emisiones Totales: ${homeUsersEmissions[index]['totalEmision'].toStringAsFixed(2)}kg CO2",
                                 style: montserratSemiBold.copyWith(
                                   fontSize: body12,
                                   color: AppColors.blackMainColor,

@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter_test/flutter_test.dart';
 import 'package:green_house/models/home_model.dart';
 import 'package:green_house/services/firestore_services/firestore_services.dart';
@@ -172,11 +174,57 @@ Future<void> main() async {
   });
 
   test('Obtener cantidad de usuarios por casa', () async {
-    when(firebaseRepo.getUserHomeCount('x7vbc')).thenAnswer((realInvocation) async=> {'count':2,'status':'accepted'});
+    when(firebaseRepo.getUserHomeCount('x7vbc')).thenAnswer(
+        (realInvocation) async => {'count': 2, 'status': 'accepted'});
     expect(await firebaseRepo.getUserHomeCount('x7vbc'), isMap);
     expect(await firebaseRepo.getUserHomeCount('x7vbc'), isNotEmpty);
+  });
 
+  test('Diccionario vacio de información de cantdad de usuarios por hogar',
+      () async {
+    when(firebaseRepo.getUserHomeCount('x7vbc'))
+        .thenAnswer((realInvocation) async => {});
+    expect(await firebaseRepo.getUserHomeCount('x7vbc'), isMap);
+    expect(await firebaseRepo.getUserHomeCount('x7vbc'), isEmpty);
+  });
+
+  test('Obtener informacion de un hogar', () async {
+    when(firebaseRepo.getHomeData('x7vbc'))
+        .thenAnswer((realInvocation) => 'Exito');
+    expect(firebaseRepo.getHomeData('x7vbc'), 'Exito');
+  });
+  test('Exception en Obtener informacion de un hogar', () async {
+    when(firebaseRepo.getHomeData('x7vbc')).thenThrow(
+        Exception('No se pudo realizar la operación. Volver a intentar'));
+    expect(() => firebaseRepo.getHomeData('x7vbc'), throwsException);
+  });
+
+  test('Obtener lista de usuarios de una casa', () async{
+    when(firebaseRepo.getHomeUserList('x7vbc'))
+        .thenAnswer((realInvocation) async => [
+              {
+                'username': 'aherrera',
+                'email': 'ah@test.com',
+                'name': 'Alex',
+                'profile': 'profile.com'
+              }
+            ]);
+    expect(await firebaseRepo.getHomeUserList('x7vbc'), isList);
+    expect(await firebaseRepo.getHomeUserList('x7vbc'), isNotEmpty);
   });
 
 
+  test('Lista vacia de usuarios de una casa', () async{
+    when(firebaseRepo.getHomeUserList('x7vbc'))
+        .thenAnswer((realInvocation) async => [
+             
+            ]);
+    expect(await firebaseRepo.getHomeUserList('x7vbc'), isEmpty);
+  });
+
+  test('Exception en Lista de usuarios de una casa', () async{
+    when(firebaseRepo.getHomeUserList(''))
+        .thenThrow(Exception('No se ha podido realizar la operacion. Vuelva a intentarlo'));
+    expect(()=> firebaseRepo.getHomeUserList(''), throwsException);
+  });
 }
