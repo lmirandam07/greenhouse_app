@@ -199,7 +199,7 @@ Future<void> main() async {
     expect(() => firebaseRepo.getHomeData('x7vbc'), throwsException);
   });
 
-  test('Obtener lista de usuarios de una casa', () async{
+  test('Obtener lista de usuarios de una casa', () async {
     when(firebaseRepo.getHomeUserList('x7vbc'))
         .thenAnswer((realInvocation) async => [
               {
@@ -213,18 +213,208 @@ Future<void> main() async {
     expect(await firebaseRepo.getHomeUserList('x7vbc'), isNotEmpty);
   });
 
-
-  test('Lista vacia de usuarios de una casa', () async{
+  test('Lista vacia de usuarios de una casa', () async {
     when(firebaseRepo.getHomeUserList('x7vbc'))
-        .thenAnswer((realInvocation) async => [
-             
-            ]);
+        .thenAnswer((realInvocation) async => []);
     expect(await firebaseRepo.getHomeUserList('x7vbc'), isEmpty);
   });
 
-  test('Exception en Lista de usuarios de una casa', () async{
-    when(firebaseRepo.getHomeUserList(''))
-        .thenThrow(Exception('No se ha podido realizar la operacion. Vuelva a intentarlo'));
-    expect(()=> firebaseRepo.getHomeUserList(''), throwsException);
+  test('Exception en Lista de usuarios de una casa', () async {
+    when(firebaseRepo.getHomeUserList('')).thenThrow(Exception(
+        'No se ha podido realizar la operacion. Vuelva a intentarlo'));
+    expect(() => firebaseRepo.getHomeUserList(''), throwsException);
+  });
+
+  test('Validar si un usario acepto la invitacion de un hogar', () async {
+    when(firebaseRepo.userHomeStatus('x7vbc', 'z8abc'))
+        .thenAnswer((realInvocation) async => true);
+
+    expect(await firebaseRepo.userHomeStatus('x7vbc', 'z8abc'), isTrue);
+    expect(await firebaseRepo.userHomeStatus('x7vbc', 'z8abc'), isNotNull);
+  });
+
+  test('Validar si un usario rechazo la invitacion de un hogar', () async {
+    when(firebaseRepo.userHomeStatus('x7vbc', 'z7abc'))
+        .thenAnswer((realInvocation) async => false);
+
+    expect(await firebaseRepo.userHomeStatus('x7vbc', 'z7abc'), isFalse);
+    expect(await firebaseRepo.userHomeStatus('x7vbc', 'z7abc'), isNotNull);
+  });
+
+  test('Exception en validar si un usario acepto la invitacion de un hogar',
+      () async {
+    when(firebaseRepo.userHomeStatus('x7vbc', 'z8abc')).thenThrow(
+        Exception('No se pudo ejecutar la accion. Favor volver a intentarlo'));
+
+    expect(
+        () => firebaseRepo.userHomeStatus('x7vbc', 'z8abc'), throwsException);
+  });
+
+  test('Validar si el usuario en la sesion acepto la invitacion de un hogar',
+      () async {
+    when(firebaseRepo.currentUserHomeStatus('x7vbc'))
+        .thenAnswer((realInvocation) async => true);
+
+    expect(await firebaseRepo.currentUserHomeStatus('x7vbc'), isTrue);
+    expect(await firebaseRepo.currentUserHomeStatus('x7vbc'), isNotNull);
+  });
+
+  test('Validar si el usuario en la sesion rechazo la invitacion de un hogar',
+      () async {
+    when(firebaseRepo.currentUserHomeStatus('x7vbc'))
+        .thenAnswer((realInvocation) async => false);
+
+    expect(await firebaseRepo.currentUserHomeStatus('x7vbc'), isFalse);
+    expect(await firebaseRepo.currentUserHomeStatus('x7vbc'), isNotNull);
+  });
+
+  test(
+      'Exception en validar si el usuario en la sesion  acepto la invitacion de un hogar',
+      () async {
+    when(firebaseRepo.currentUserHomeStatus('x7vbc')).thenThrow(
+        Exception('No se pudo ejecutar la accion. Favor volver a intentarlo'));
+
+    expect(() => firebaseRepo.currentUserHomeStatus('x7vbc'), throwsException);
+  });
+
+  test('Obtener lista de emisiones de una casa', () async {
+    when(firebaseRepo.getHomeEmission('x7vbc'))
+        .thenAnswer((realInvocation) async => [
+              {
+                'emision_home': 'x7vbc',
+                'emision_register_date': 'Tue,28 Feb 2023 1:37:00',
+                'emision_tile': 'Emision de Prueba',
+                'emision_type': 'power',
+                'emision_user': 'z7abc'
+              }
+            ]);
+    expect(await firebaseRepo.getHomeEmission('x7vbc'), isList);
+    expect(await firebaseRepo.getHomeEmission('x7vbc'), isNotEmpty);
+  });
+
+  test('Lista vacia de emisiones de una casa', () async {
+    when(firebaseRepo.getHomeEmission('x7vbc'))
+        .thenAnswer((realInvocation) async => []);
+    expect(await firebaseRepo.getHomeUserList('x7vbc'), isEmpty);
+  });
+
+  test('Exception en Lista de emisiones de una casa', () async {
+    when(firebaseRepo.getHomeEmission('')).thenThrow(Exception(
+        'No se ha podido realizar la operacion. Vuelva a intentarlo'));
+    expect(() => firebaseRepo.getHomeUserList(''), throwsException);
+  });
+
+  test('Obtener lista de emisiones del usuario actual en sesion', () async {
+    when(firebaseRepo.getCurrentUserEmission())
+        .thenAnswer((realInvocation) async => [
+              {
+                'emision_home': 'x7vbc',
+                'emision_register_date': 'Tue,28 Feb 2023 1:37:00',
+                'emision_tile': 'Emision de Prueba',
+                'emision_type': 'power',
+                'emision_user': 'z7abc'
+              }
+            ]);
+    expect(await firebaseRepo.getCurrentUserEmission(), isList);
+    expect(await firebaseRepo.getCurrentUserEmission(), isNotEmpty);
+  });
+
+  test('Lista vacia de emisiones del usuario actual en sesion', () async {
+    when(firebaseRepo.getCurrentUserEmission())
+        .thenAnswer((realInvocation) async => []);
+    expect(await firebaseRepo.getCurrentUserEmission(), isEmpty);
+  });
+
+  test('Exception en Lista de emisiones del usuario actual en sesion',
+      () async {
+    when(firebaseRepo.getCurrentUserEmission()).thenThrow(Exception(
+        'No se ha podido realizar la operacion. Vuelva a intentarlo'));
+    expect(() => firebaseRepo.getCurrentUserEmission(), throwsException);
+  });
+
+  test('Obtener lista de emisiones de un usuario', () async {
+    when(firebaseRepo.getUserEmission('z7abc'))
+        .thenAnswer((realInvocation) async => [
+              {
+                'emision_home': 'x7vbc',
+                'emision_register_date': 'Tue,28 Feb 2023 1:37:00',
+                'emision_tile': 'Emision de Prueba',
+                'emision_type': 'power',
+                'emision_user': 'z7abc'
+              }
+            ]);
+    expect(await firebaseRepo.getUserEmission('z7abc'), isList);
+    expect(await firebaseRepo.getUserEmission('z7abc'), isNotEmpty);
+  });
+
+  test('Lista vacia de emisiones de un usuario', () async {
+    when(firebaseRepo.getUserEmission('z7abc'))
+        .thenAnswer((realInvocation) async => []);
+    expect(await firebaseRepo.getHomeUserList('x7vbc'), isEmpty);
+  });
+
+  test('Exception en Lista de emisiones de un usuario', () async {
+    when(firebaseRepo.getUserEmission('')).thenThrow(Exception(
+        'No se ha podido realizar la operacion. Vuelva a intentarlo'));
+    expect(() => firebaseRepo.getUserEmission(''), throwsException);
+  });
+
+  test('Obtener lista de emisiones del usuario en sesion en una casa',
+      () async {
+    when(firebaseRepo.getHomeUserEmissionList('x7vbc'))
+        .thenAnswer((realInvocation) async => [
+              {
+                'emision_home': 'x7vbc',
+                'emision_register_date': 'Tue,28 Feb 2023 1:37:00',
+                'emision_tile': 'Emision de Prueba',
+                'emision_type': 'power',
+                'emision_user': 'z7abc'
+              }
+            ]);
+    expect(await firebaseRepo.getHomeUserEmissionList('x7vbc'), isList);
+    expect(await firebaseRepo.getHomeUserEmissionList('x7vbc'), isNotEmpty);
+  });
+
+  test('Lista vacia de emisiones de un usuario en sesion en una casa',
+      () async {
+    when(firebaseRepo.getHomeUserEmissionList('x7vbc'))
+        .thenAnswer((realInvocation) async => []);
+    expect(await firebaseRepo.getHomeUserEmissionList('x7vbc'), isEmpty);
+  });
+
+  test('Exception en Lista de emisiones de un usuario en sesion en una casa',
+      () async {
+    when(firebaseRepo.getHomeUserEmissionList('')).thenThrow(Exception(
+        'No se ha podido realizar la operacion. Vuelva a intentarlo'));
+    expect(() => firebaseRepo.getHomeUserEmissionList(''), throwsException);
+  });
+
+  test('Obtener lista de emisiones de un usuario en una casa', () async {
+    when(firebaseRepo.getHomeUserEmission('x7vbc', 'z7abc'))
+        .thenAnswer((realInvocation) async => [
+              {
+                'emision_home': 'x7vbc',
+                'emision_register_date': 'Tue,28 Feb 2023 1:37:00',
+                'emision_tile': 'Emision de Prueba',
+                'emision_type': 'power',
+                'emision_user': 'z7abc'
+              }
+            ]);
+    expect(await firebaseRepo.getHomeUserEmission('x7vbc', 'z7abc'), isList);
+    expect(
+        await firebaseRepo.getHomeUserEmission('x7vbc', 'z7abc'), isNotEmpty);
+  });
+
+  test('Lista vacia de emisiones de un usuario en una casa', () async {
+    when(firebaseRepo.getHomeUserEmission('x7vbc', 'z7abc'))
+        .thenAnswer((realInvocation) async => []);
+    expect(await firebaseRepo.getHomeUserEmission('x7vbc', 'z7abc'), isEmpty);
+  });
+
+  test('Exception en Lista de emisiones de un usuario en una casa', () async {
+    when(firebaseRepo.getHomeUserEmission('x7vbc', 'z7abc')).thenThrow(
+        Exception(
+            'No se ha podido realizar la operacion. Vuelva a intentarlo'));
+    expect(() => firebaseRepo.getHomeUserList(''), throwsException);
   });
 }
