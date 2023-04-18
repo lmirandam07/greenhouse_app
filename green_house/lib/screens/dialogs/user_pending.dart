@@ -3,15 +3,9 @@ import 'package:get/get.dart';
 import 'package:green_house/constants/exports.dart';
 import 'package:green_house/widgets/custom_button.dart';
 
-import '../../services/firestore_services/firestore_services.dart';
-import '../homes/components/x_setting_box.dart';
-import '../homes/home_setting_screen.dart';
-
 class UserPendingDialog extends StatelessWidget {
   final String username;
   UserPendingDialog(this.username, {Key? key}) : super(key: key);
-
-  final firestoreService = FirestoreService();
 
   @override
   Widget build(BuildContext context) {

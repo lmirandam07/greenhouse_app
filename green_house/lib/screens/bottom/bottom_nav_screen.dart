@@ -15,6 +15,8 @@ import 'controller/bottom_nav_controller.dart';
 class BottomNavBar extends GetView<BottomNavController> {
   String? homeName;
   String? homeId;
+
+  static var routeName;
   BottomNavBar([this.homeName, this.homeId]);
 
   @override

@@ -350,7 +350,7 @@ Future<void> main() async {
   test('Lista vacia de emisiones de un usuario', () async {
     when(firebaseRepo.getUserEmission('z7abc'))
         .thenAnswer((realInvocation) async => []);
-    expect(await firebaseRepo.getHomeUserList('x7vbc'), isEmpty);
+    expect(await firebaseRepo.getUserEmission('z7abc'), isEmpty);
   });
 
   test('Exception en Lista de emisiones de un usuario', () async {
@@ -412,9 +412,9 @@ Future<void> main() async {
   });
 
   test('Exception en Lista de emisiones de un usuario en una casa', () async {
-    when(firebaseRepo.getHomeUserEmission('x7vbc', 'z7abc')).thenThrow(
+    when(firebaseRepo.getHomeUserEmission('', '')).thenThrow(
         Exception(
             'No se ha podido realizar la operacion. Vuelva a intentarlo'));
-    expect(() => firebaseRepo.getHomeUserList(''), throwsException);
+    expect(() => firebaseRepo.getHomeUserEmission('',''), throwsException);
   });
 }
