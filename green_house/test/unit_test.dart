@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter_test/flutter_test.dart';
 import 'package:green_house/models/home_model.dart';
 import 'package:green_house/services/firestore_services/firestore_services.dart';
@@ -412,9 +410,108 @@ Future<void> main() async {
   });
 
   test('Exception en Lista de emisiones de un usuario en una casa', () async {
-    when(firebaseRepo.getHomeUserEmission('', '')).thenThrow(
-        Exception(
-            'No se ha podido realizar la operacion. Vuelva a intentarlo'));
-    expect(() => firebaseRepo.getHomeUserEmission('',''), throwsException);
+    when(firebaseRepo.getHomeUserEmission('', '')).thenThrow(Exception(
+        'No se ha podido realizar la operacion. Vuelva a intentarlo'));
+    expect(() => firebaseRepo.getHomeUserEmission('', ''), throwsException);
+  });
+
+  test('Obteniendo las emisiones totales de un hogar', () async {
+    when(firebaseRepo.homeEmissionTotal('testHomeId'))
+        .thenAnswer((realInvocation) async => 14.56);
+
+    expect(await firebaseRepo.homeEmissionTotal('testHomeId'), 14.56);
+    expect(await firebaseRepo.homeEmissionTotal('testHomeId'), isA<double>());
+    expect(await firebaseRepo.homeEmissionTotal('testHomeId'), isNotNull);
+  });
+  test('Obteniendo las emisiones totales de un hogar sin emisiones', () async {
+    when(firebaseRepo.homeEmissionTotal('testHomeId'))
+        .thenAnswer((realInvocation) async => 0);
+
+    expect(await firebaseRepo.homeEmissionTotal('testHomeId'), isZero);
+    expect(await firebaseRepo.homeEmissionTotal('testHomeId'), isNotNull);
+  });
+  test('Exception en Obteniendo las emisiones totales de un hogar', () async {
+    when(firebaseRepo.homeEmissionTotal('')).thenThrow(
+        Exception('No se ha podido obtener la informacion. Volver a intentar'));
+
+    expect(() => firebaseRepo.homeEmissionTotal(''), throwsException);
+  });
+
+  test('Obteniendo las emisiones totales de un hogar por tipo', () async {
+    when(firebaseRepo.homeEmissionTotalByType('testHomeId')).thenAnswer(
+        (realInvocation) async =>
+            {'power': 14.56, 'transport': 20.0, 'gas': 37.38, 'trash': 5.67});
+    expect(await firebaseRepo.homeEmissionTotalByType('testHomeId'), isMap);
+    expect(await firebaseRepo.homeEmissionTotalByType('testHomeId'), isNotNull);
+  });
+
+  test('Exception en Obteniendo las emisiones totales de un hogar por tipo',
+      () async {
+    when(firebaseRepo.homeEmissionTotalByType('')).thenThrow(
+        Exception('No se ha podido obtener la informacion. Volver a intentar'));
+
+    expect(() => firebaseRepo.homeEmissionTotalByType(''), throwsException);
+  });
+
+  test('Obteniendo las emisiones totales de un usuario en un hogar', () async {
+    when(firebaseRepo.homeUserEmissionTotal('testHomeId', 'testUserId'))
+        .thenAnswer(
+            (realInvocation) async => {1: 14.56, 2: 20.0, 3: 37.38, 4: 5.67});
+    expect(await firebaseRepo.homeUserEmissionTotal('testHomeId', 'testUserId'),
+        isMap);
+    expect(await firebaseRepo.homeUserEmissionTotal('testHomeId', 'testUserId'),
+        isNotNull);
+  });
+
+  test(
+      'Exception en Obteniendo las emisiones totales de un usuario en un hogar',
+      () async {
+    when(firebaseRepo.homeUserEmissionTotal('', '')).thenThrow(
+        Exception('No se ha podido obtener la informacion. Volver a intentar'));
+
+    expect(() => firebaseRepo.homeUserEmissionTotal('', ''), throwsException);
+  });
+
+  test('Obteniendo las emisiones totales de un usuario en un hogar por tipo',
+      () async {
+    when(firebaseRepo.getHomeUserEmissionList('testHomeId'))
+        .thenAnswer((realInvocation) async => [
+              {
+                'userName': 'testUser',
+                'email': 'test@gmail.com',
+                'profile': 'profile.com',
+                'powerValue': 20.0,
+                'transportValue': 35.67,
+                'gasValue': 17.96,
+                'trashValue': 27.35,
+                'totalEmision': 100.98
+              }
+            ]);
+    expect(await firebaseRepo.getHomeUserEmissionList('testHomeId'), isList);
+    expect(await firebaseRepo.getHomeUserEmissionList('testHomeId'), isNotNull);
+  });
+
+  test(
+      'Exception en Obteniendo las emisiones totales de un usuario en un hogar por tipo',
+      () async {
+    when(firebaseRepo.getHomeUserEmissionList('')).thenThrow(
+        Exception('No se ha podido obtener la informacion. Volver a intentar'));
+
+    expect(() => firebaseRepo.getHomeUserEmissionList(''), throwsException);
+  });
+
+  test('Obteniendo las emisiones totales del usuario en sesion', () async {
+    when(firebaseRepo.currentUserEmissionTotal()).thenAnswer(
+        (realInvocation) async => {1: 14.56, 2: 20.0, 3: 37.38, 4: 5.67});
+    expect(await firebaseRepo.currentUserEmissionTotal(), isMap);
+    expect(await firebaseRepo.currentUserEmissionTotal(), isNotNull);
+  });
+
+  test('Exception en Obteniendo las emisiones totales del usuario en sesion',
+      () async {
+    when(firebaseRepo.currentUserEmissionTotal()).thenThrow(
+        Exception('No se ha podido obtener la informacion. Volver a intentar'));
+
+    expect(() => firebaseRepo.currentUserEmissionTotal(), throwsException);
   });
 }
