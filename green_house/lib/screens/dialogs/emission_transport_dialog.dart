@@ -5,6 +5,7 @@ import 'package:green_house/screens/dialogs/components/dropdown_menu.dart';
 import 'package:green_house/widgets/custom_button_emission.dart';
 
 import '../../constants/exports.dart';
+import 'components/dropdown_transportType_menu.dart';
 import 'controller/emission_controller.dart';
 
 class ReIssueDialogTransport extends StatelessWidget {
@@ -97,6 +98,34 @@ class ReIssueDialogTransport extends StatelessWidget {
                     ],
                   ),
                 ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 16.0, right: 16.0, bottom: 16.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Text(
+                          'Tipo de Vehiculo',
+                          style: montserratRegular.copyWith(
+                            fontSize: 16.0,
+                            color: AppColors.blackColor,
+                          ),
+                        ),
+                      ),
+                      Container(
+                        height: 40.0,
+                        width: 150,
+                        child: DropdownTransportTypeMenu((value) {
+                          String _itemSelected;
+                          _itemSelected = value as String;
+                          emissionController.transportTypeController.text =
+                              _itemSelected;
+                        }, AppColors.blueColor),
+                      ),
+                    ],
+                  ),
+                ),
 
                 Padding(
                   padding: const EdgeInsets.only(
@@ -119,7 +148,7 @@ class ReIssueDialogTransport extends StatelessWidget {
                         child: DropdownFuelTypeMenu((value) {
                           String _itemSelected;
                           _itemSelected = value as String;
-                          emissionController.transportTypeController.text =
+                          emissionController.fuelTypeController.text =
                               _itemSelected;
                         }, AppColors.blueColor),
                       ),
