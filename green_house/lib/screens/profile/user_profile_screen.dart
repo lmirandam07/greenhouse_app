@@ -242,7 +242,8 @@ class UserProfileScreen extends StatelessWidget {
                                         userEmission[index]
                                             ['emission_register_date'],
                                         userEmission[index]['home_name'],
-                                        color);
+                                        color,
+                                        userEmission['emission_user']);
                                   });
                             } else {
                               return const Center(

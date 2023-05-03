@@ -135,7 +135,9 @@ class HomeEmissionsListScreen extends StatelessWidget {
                                                           'emission_register_date'],
                                                       homeEmission[index]
                                                           ['username'],
-                                                      color);
+                                                      color,
+                                                      homeEmission[index]
+                                                          ['emission_user']);
                                                 });
                                           } else {
                                             return const Center(

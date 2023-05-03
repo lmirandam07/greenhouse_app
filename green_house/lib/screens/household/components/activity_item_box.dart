@@ -13,9 +13,16 @@ class ActivityItemBox extends StatelessWidget {
   final double emission_value;
   final Timestamp emission_date;
   final String emissionData;
+  final String emissionUserId;
   final Color color;
-  const ActivityItemBox(this.emissionId, this.emissionTitle,
-      this.emission_value, this.emission_date, this.emissionData, this.color,
+  const ActivityItemBox(
+      this.emissionId,
+      this.emissionTitle,
+      this.emission_value,
+      this.emission_date,
+      this.emissionData,
+      this.color,
+      this.emissionUserId,
       {Key? key})
       : super(key: key);
 
@@ -150,7 +157,8 @@ class ActivityItemBox extends StatelessWidget {
         ),
         onTapDown: (details) {
           Timer(Duration(milliseconds: 800), () {
-            Get.dialog(RemoveUserDialog(emissionId, emissionTitle, color));
+            Get.dialog(RemoveUserDialog(
+                emissionId, emissionTitle, color, emissionUserId));
           });
         },
       ),

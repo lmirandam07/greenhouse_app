@@ -37,6 +37,7 @@ void main() {
     // Define test data
     final String emissionId = '1';
     final String emissionTitle = 'My Emission';
+    final String emissionUser = 'aherrera';
     final double emissionValue = 12.34;
     final DateTime emissionDate = DateTime(2022, 1, 1);
     final String emissionData = 'Data';
@@ -46,13 +47,13 @@ void main() {
     await tester.pumpWidget(
       MaterialApp(
         home: ActivityItemBox(
-          emissionId,
-          emissionTitle,
-          emissionValue,
-          Timestamp.fromDate(emissionDate),
-          emissionData,
-          color,
-        ),
+            emissionId,
+            emissionTitle,
+            emissionValue,
+            Timestamp.fromDate(emissionDate),
+            emissionData,
+            color,
+            emissionUser),
       ),
     );
 
