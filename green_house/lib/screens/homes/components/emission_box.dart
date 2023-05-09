@@ -81,28 +81,28 @@ class EmissionBox extends StatelessWidget {
                                 ],
                               ),
                               Text(
-                                "Emisiones de Energía: ${homeUsersEmissions[index]['powerValue']}kg CO2",
+                                "Emisiones de Energía: ${homeUsersEmissions[index]['powerValue'].toStringAsFixed(2)}kg CO2",
                                 style: montserratRegular.copyWith(
                                   fontSize: body12,
                                   color: AppColors.blackMainColor,
                                 ),
                               ),
                               Text(
-                                "Emisiones de Transporte: ${homeUsersEmissions[index]['transportValue']}kg CO2",
+                                "Emisiones de Transporte: ${homeUsersEmissions[index]['transportValue'].toStringAsFixed(2)}kg CO2",
                                 style: montserratRegular.copyWith(
                                   fontSize: body12,
                                   color: AppColors.blackMainColor,
                                 ),
                               ),
                               Text(
-                                "Emisiones de Gas: ${homeUsersEmissions[index]['gasValue']}kg CO2",
+                                "Emisiones de Gas: ${homeUsersEmissions[index]['gasValue'].toStringAsFixed(2)}kg CO2",
                                 style: montserratRegular.copyWith(
                                   fontSize: body12,
                                   color: AppColors.blackMainColor,
                                 ),
                               ),
                               Text(
-                                "Emisiones de Basura: ${homeUsersEmissions[index]['trashValue']}kg CO2",
+                                "Emisiones de Basura: ${homeUsersEmissions[index]['trashValue'].toStringAsFixed(2)}kg CO2",
                                 style: montserratRegular.copyWith(
                                   fontSize: body12,
                                   color: AppColors.blackMainColor,

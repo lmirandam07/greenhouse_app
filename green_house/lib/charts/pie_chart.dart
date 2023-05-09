@@ -31,9 +31,10 @@ class PieChartWidget extends StatelessWidget {
                   : type.key == 'gas'
                       ? AppColors.gasColor
                       : AppColors.trashColor,
-          value: type.value,
+          value: double.parse((type.value).toStringAsFixed(2)),
           radius: 40,
-          title: type.key + "\n(${type.value})",
+          title:
+              type.key + "\n(${double.parse((type.value).toStringAsFixed(2))})",
           titlePositionPercentageOffset: 1.5,
           titleStyle:
               const TextStyle(fontWeight: FontWeight.bold, fontSize: 11));

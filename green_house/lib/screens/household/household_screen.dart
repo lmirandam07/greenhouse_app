@@ -64,15 +64,7 @@ class HouseHoldScreen extends StatelessWidget {
                                           child: CircularProgressIndicator());
                                     }
                                     final total = snapshot.data;
-                                    Color colorTotal;
-                                    if (total >= 20 && total <= 40) {
-                                      colorTotal = AppColors.notifyColor;
-                                    } else if (total > 40) {
-                                      colorTotal = AppColors.redColor;
-                                    } else {
-                                      colorTotal = AppColors.primaryColor;
-                                    }
-
+                                    Color colorTotal = AppColors.primaryColor;
                                     return Center(
                                       child: Container(
                                         height: screenHeight(context) * 0.23,
