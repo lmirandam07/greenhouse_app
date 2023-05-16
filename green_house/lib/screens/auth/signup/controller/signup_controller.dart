@@ -67,17 +67,25 @@ class SignupController extends GetxController {
       isLoading(true);
       await FirestoreService.signInWithGoogle(context: context)
           .then((value) async {
-        final user = UserModel(
-            name: value?.displayName,
-            username: value?.displayName,
-            email: value?.email,
-            password: '123456');
-        successSnackBar('Inicio exitoso');
-        firestoreService.createUser(user, value?.uid);
-        emailController.clear();
-        passController.clear();
-        Get.offAll(BottomNavBar());
-        isLoading(false);
+        if (await firestoreService.validateUserExistByEmail(value?.email)) {
+          successSnackBar('Inicio exitoso');
+          emailController.clear();
+          passController.clear();
+          Get.offAll(BottomNavBar());
+          isLoading(false);
+        } else {
+          final user = UserModel(
+              name: value?.displayName,
+              username: value?.displayName,
+              email: value?.email,
+              password: '123456');
+          await firestoreService.createUser(user, value?.uid);
+          successSnackBar('Inicio exitoso');
+          emailController.clear();
+          passController.clear();
+          Get.offAll(BottomNavBar());
+          isLoading(false);
+        }
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {

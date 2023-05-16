@@ -97,6 +97,15 @@ class FirestoreService {
     }
   }
 
+  Future<bool> validateUserExistByEmail(String? email) async {
+    final result = await docUser.where('email', isEqualTo: email).get();
+    if (result.size > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   Future<bool> validateUserHomeExist(String homeId, String username) async {
     final user = await getUserData(username);
     final result = await docHome
@@ -186,6 +195,7 @@ class FirestoreService {
 
   Future<Iterable> getUserHomeAcceptedList() async {
     final userHomesId = await getUserHomesAcceptedId();
+    print(userHomesId);
     final userHomeList = await docHome
         .where('home_id', whereIn: userHomesId)
         .where('activated', isEqualTo: true)
@@ -518,7 +528,7 @@ class FirestoreService {
       userEmission.add({
         'userName': user['username'],
         'email': user['email'],
-        'profile':user['profile'],
+        'profile': user['profile'],
         'powerValue': userEmissionValue[2],
         'transportValue': userEmissionValue[1],
         'gasValue': userEmissionValue[3],

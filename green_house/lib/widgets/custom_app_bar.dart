@@ -48,6 +48,7 @@ class CustomAppBar extends StatelessWidget {
               ? Bounceable(
                   onTap: () {
                     Get.defaultDialog(
+                      contentPadding: const EdgeInsets.only(top: 5, bottom: 1),
                       title: "Seleccionar Hogar",
                       buttonColor: AppColors.primaryDarkColor,
                       content: Column(
@@ -67,7 +68,7 @@ class CustomAppBar extends StatelessWidget {
                                     children: [
                                       Container(
                                         height: 80,
-                                        width: 200,
+                                        width: 125,
                                         child: ListView.builder(
                                           shrinkWrap: true,
                                           itemCount: homes.length,
@@ -79,10 +80,13 @@ class CustomAppBar extends StatelessWidget {
                                           }),
                                         ),
                                       ),
-                                      CustomSizeButton(
-                                          onTap: () => Get.back(),
-                                          btnText: 'Regresar',
-                                          height: 45)
+                                      Container(
+                                        margin: EdgeInsets.only(top: 15),
+                                        child: CustomSizeButton(
+                                            onTap: () => Get.back(),
+                                            btnText: 'Regresar',
+                                            height: 35),
+                                      )
                                     ],
                                   );
                                 } else {

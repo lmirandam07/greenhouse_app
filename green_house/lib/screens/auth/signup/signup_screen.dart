@@ -154,7 +154,7 @@ class SignupScreen extends StatelessWidget {
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 10.0),
                               child: Text(
-                                'O inicia sesisón con',
+                                'O registrate con',
                                 style: montserratRegular.copyWith(
                                   fontSize: body12,
                                   color:
@@ -183,31 +183,34 @@ class SignupScreen extends StatelessWidget {
 
                       /// already have account
                       SizedBox(height: screenHeight(context) * 0.05),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Ya tienes una cuenta?',
-                            style: montserratRegular.copyWith(
-                              fontSize: body16,
-                              color: AppColors.blackMainColor,
-                            ),
-                          ),
-                          const SizedBox(width: 8.0),
-                          GestureDetector(
-                            onTap: () {
-                              Get.to(LoginScreen());
-                            },
-                            child: Text(
-                              'Ingresa',
-                              style: montserratBold.copyWith(
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 20.0),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              'Ya tienes una cuenta?',
+                              style: montserratRegular.copyWith(
                                 fontSize: body16,
-                                color: AppColors.primaryColor,
+                                color: AppColors.blackMainColor,
                               ),
                             ),
-                          ),
-                        ],
+                            const SizedBox(width: 8.0),
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(LoginScreen());
+                              },
+                              child: Text(
+                                'Ingresa',
+                                style: montserratBold.copyWith(
+                                  fontSize: body16,
+                                  color: AppColors.primaryColor,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),

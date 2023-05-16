@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:green_house/screens/bottom/bottom_nav_screen.dart';
 import 'package:green_house/widgets/custom_snackbar.dart';
 
+import '../../../../models/user_model.dart';
 import '../../../../services/firestore_services/firestore_services.dart';
 
 class LoginController extends GetxController {
@@ -46,11 +47,25 @@ class LoginController extends GetxController {
       isLoading(true);
       await FirestoreService.signInWithGoogle(context: context)
           .then((value) async {
-        successSnackBar('Inicio exitoso');
-        emailController.clear();
-        passController.clear();
-        Get.offAll(BottomNavBar());
-        isLoading(false);
+        if (await firestoreService.validateUserExistByEmail(value?.email)) {
+          successSnackBar('Inicio exitoso');
+          emailController.clear();
+          passController.clear();
+          Get.offAll(BottomNavBar());
+          isLoading(false);
+        } else {
+          final user = UserModel(
+              name: value?.displayName,
+              username: value?.displayName,
+              email: value?.email,
+              password: '123456');
+          await firestoreService.createUser(user, value?.uid);
+          successSnackBar('Inicio exitoso');
+          emailController.clear();
+          passController.clear();
+          Get.offAll(BottomNavBar());
+          isLoading(false);
+        }
       });
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
