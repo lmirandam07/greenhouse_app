@@ -4,6 +4,8 @@ class UserModel {
   final String? username;
   final String? password;
   final String? email;
+  final String profile =
+      'https://firebasestorage.googleapis.com/v0/b/green-house-app-4828a.appspot.com/o/default%2Fdefault.png?alt=media&token=6589ce94-d767-4fd5-b728-cf1d55fa77d7';
 
   UserModel(
       {this.id = '',
@@ -17,6 +19,7 @@ class UserModel {
         'name': name,
         'username': username,
         'password': password,
-        'email': email
+        'email': email,
+        'profile': profile
       };
 }
