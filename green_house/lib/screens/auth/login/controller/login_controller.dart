@@ -58,7 +58,8 @@ class LoginController extends GetxController {
               name: value?.displayName,
               username: value?.displayName,
               email: value?.email,
-              password: '123456');
+              password: '123456',
+              profile: 'https://firebasestorage.googleapis.com/v0/b/green-house-app-4828a.appspot.com/o/default%2Fdefault.png?alt=media&token=6589ce94-d767-4fd5-b728-cf1d55fa77d7');
           await firestoreService.createUser(user, value?.uid);
           successSnackBar('Inicio exitoso');
           emailController.clear();
