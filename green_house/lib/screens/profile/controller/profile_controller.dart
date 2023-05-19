@@ -19,25 +19,61 @@ class ProfileController extends GetxController {
   Future<dynamic> UpdateUser() async {
     final currentUser =
         await firestoreService.getCurrentUserData().then((value) async {
-      if (userNameController.text.isEmpty && nameController.text.isEmpty) {
+      if (userNameController.text.isEmpty &&
+          nameController.text.isEmpty &&
+          profileController.text.isEmpty) {
+        userdata = {
+          'username': value['username'],
+          'name': value['name'],
+          'profile': value['profile']
+        };
+      } else if (nameController.text.isNotEmpty &&
+          userNameController.text.isEmpty &&
+          profileController.text.isEmpty) {
+        userdata = {
+          'username': value['username'],
+          'name': nameController.text,
+          'profile': value['profile'],
+        };
+      } else if (nameController.text.isEmpty &&
+          userNameController.text.isNotEmpty &&
+          profileController.text.isEmpty) {
+        userdata = {
+          'username': userNameController.text,
+          'name': value['name'],
+          'profile': value['profile'],
+        };
+      } else if (nameController.text.isEmpty &&
+          userNameController.text.isEmpty &&
+          profileController.text.isNotEmpty) {
         userdata = {
           'username': value['username'],
           'name': value['name'],
           'profile': profileController.text
         };
       } else if (nameController.text.isEmpty &&
-          userNameController.text.isNotEmpty) {
+          userNameController.text.isNotEmpty &&
+          profileController.text.isNotEmpty) {
         userdata = {
           'username': userNameController.text,
           'name': value['name'],
           'profile': profileController.text
         };
       } else if (nameController.text.isNotEmpty &&
-          userNameController.text.isEmpty) {
+          userNameController.text.isEmpty &&
+          profileController.text.isNotEmpty) {
         userdata = {
           'username': value['username'],
           'name': nameController.text,
           'profile': profileController.text
+        };
+      } else if (nameController.text.isNotEmpty &&
+          userNameController.text.isNotEmpty &&
+          profileController.text.isEmpty) {
+        userdata = {
+          'username': userNameController.text,
+          'name': nameController.text,
+          'profile': value['profile'],
         };
       } else {
         userdata = {
@@ -64,7 +100,6 @@ class ProfileController extends GetxController {
           }
         });
       } catch (e) {
-        print(e);
         isLoading(false);
       }
     });
