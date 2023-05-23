@@ -263,7 +263,7 @@ class ReIssueDialogTransport extends StatelessWidget {
                         child: CustomButtonEmission(
                           onTap: () {
                             emissionController
-                                .createEmissionController('power');
+                                .createEmissionController('transport');
                           },
                           btnText: 'Registrar',
                           color: AppColors.blueColor,

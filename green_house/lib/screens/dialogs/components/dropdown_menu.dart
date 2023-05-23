@@ -9,7 +9,8 @@ import '../controller/emission_controller.dart';
 class DropdownMenuC extends StatefulWidget {
   final Function(String?) onChanged;
   final Color dropdownColor;
-  const DropdownMenuC(this.onChanged, [this.dropdownColor = AppColors.primaryColor]);
+  const DropdownMenuC(this.onChanged,
+      [this.dropdownColor = AppColors.primaryColor]);
 
   @override
   State<DropdownMenuC> createState() => _DropdownMenuCState();
@@ -20,9 +21,12 @@ class _DropdownMenuCState extends State<DropdownMenuC> {
   final List<String> homes = [];
 
   String? homeSelected;
+
   final EmissionController emissionController = Get.put(EmissionController());
   @override
   Widget build(BuildContext context) {
+    var homeSelectedText = homeSelected ?? 'Hogares';
+    print(homeSelectedText);
     return Scaffold(
       body: Center(
         child: DropdownButtonHideUnderline(
@@ -48,7 +52,7 @@ class _DropdownMenuCState extends State<DropdownMenuC> {
                         Expanded(
                           child: Text(
                             'Hogares',
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,

@@ -157,6 +157,9 @@ class EditProfileScreen extends StatelessWidget {
                       Expanded(
                         child: CustomButton(
                           onTap: () {
+                            profileController.profileController.clear();
+                            profileController.userNameController.clear();
+                            profileController.nameController.clear();
                             Get.back();
                           },
                           btnText: 'Descartar',

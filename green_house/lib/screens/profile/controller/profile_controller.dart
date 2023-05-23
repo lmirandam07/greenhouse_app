@@ -89,12 +89,18 @@ class ProfileController extends GetxController {
             .then((value) async {
           if (value) {
             errorSnackBar('Ya existe el usuario');
+            profileController.clear();
+            userNameController.clear();
+            nameController.clear();
             isLoading(false);
           } else {
             await firestoreService.UpdateUserData(userdata).then((value) async {
               botomNavBar.profile();
               Get.to(() => BottomNavBar());
               successSnackBar('Perfil actualizado exitosamente');
+              profileController.clear();
+              userNameController.clear();
+              nameController.clear();
               isLoading(false);
             });
           }
