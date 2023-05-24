@@ -25,8 +25,6 @@ class _DropdownMenuCState extends State<DropdownMenuC> {
   final EmissionController emissionController = Get.put(EmissionController());
   @override
   Widget build(BuildContext context) {
-    var homeSelectedText = homeSelected ?? 'Hogares';
-    print(homeSelectedText);
     return Scaffold(
       body: Center(
         child: DropdownButtonHideUnderline(
@@ -52,7 +50,7 @@ class _DropdownMenuCState extends State<DropdownMenuC> {
                         Expanded(
                           child: Text(
                             'Hogares',
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 12,
                               fontWeight: FontWeight.bold,
                               color: Colors.white,
@@ -77,7 +75,15 @@ class _DropdownMenuCState extends State<DropdownMenuC> {
                             ))
                         .toList(),
                     value: homeSelected,
-                    onChanged: widget.onChanged,
+                    onChanged: (value) {
+                      setState(() {
+                        homeSelected = value as String;
+                      });
+                      String homeSelectedVal = '';
+                      homeSelectedVal = value as String;
+                      emissionController.homeController.text =
+                          homeSelectedVal.split('_')[1];
+                    },
                     icon: const Icon(
                       Icons.arrow_forward_ios_outlined,
                     ),

@@ -1,6 +1,9 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:green_house/constants/exports.dart';
+import 'package:get/get.dart';
+
+import '../controller/emission_controller.dart';
 
 class DropdownTransportTypeMenu extends StatefulWidget {
   final Function(String?) onChanged;
@@ -20,6 +23,7 @@ class DropdownTransportTypeMenuState extends State<DropdownTransportTypeMenu> {
     'Motocicleta',
   ];
   String? selectedValue;
+  final EmissionController emissionController = Get.put(EmissionController());
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +69,9 @@ class DropdownTransportTypeMenuState extends State<DropdownTransportTypeMenu> {
               setState(() {
                 selectedValue = value as String;
               });
+              String selected = '';
+              selected = value as String;
+              emissionController.transportTypeController.text = selected;
             },
             icon: const Icon(
               Icons.arrow_forward_ios_outlined,

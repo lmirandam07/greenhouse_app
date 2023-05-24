@@ -1,6 +1,9 @@
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:green_house/constants/exports.dart';
+import 'package:get/get.dart';
+
+import '../controller/emission_controller.dart';
 
 class DropdownTransportMenu extends StatefulWidget {
   final Function(String?) onChanged;
@@ -15,6 +18,7 @@ class DropdownTransportMenu extends StatefulWidget {
 class DropdownTransportMenuState extends State<DropdownTransportMenu> {
   final List<String> items = ['5', '13', '33', '55'];
   String? selectedValue;
+  final EmissionController emissionController = Get.put(EmissionController());
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +64,8 @@ class DropdownTransportMenuState extends State<DropdownTransportMenu> {
               setState(() {
                 selectedValue = value as String;
               });
+              String selected = '';
+              selected = value as String;
             },
             icon: const Icon(
               Icons.arrow_forward_ios_outlined,
