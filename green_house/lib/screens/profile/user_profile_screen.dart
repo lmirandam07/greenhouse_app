@@ -242,6 +242,7 @@ class UserProfileScreen extends StatelessWidget {
                                         userEmission[index]
                                             ['emission_register_date'],
                                         userEmission[index]['home_name'],
+                                        userEmission[index]['emission_user'],
                                         color,
                                         userEmission[index]['emission_user']);
                                   });

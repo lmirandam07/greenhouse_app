@@ -74,9 +74,11 @@ class CustomAppBar extends StatelessWidget {
                                           itemCount: homes.length,
                                           itemBuilder: ((context, index) {
                                             return HomeSelect(
-                                                homeId: homes[index]['home_id'],
-                                                homeName: homes[index]
-                                                    ['home_name']);
+                                              homeId: homes[index]['home_id'],
+                                              homeName: homes[index]
+                                                  ['home_name'],
+                                              ownerId: homes[index]['owner_id'],
+                                            );
                                           }),
                                         ),
                                       ),
@@ -147,11 +149,13 @@ class CustomAppBar extends StatelessWidget {
 class HomeSelect extends StatelessWidget {
   final String homeId;
   final String homeName;
+  final String ownerId;
   final botomNavBar = BottomNavController();
   HomeSelect({
     Key? key,
     required this.homeId,
     required this.homeName,
+    required this.ownerId,
   }) : super(key: key);
 
   final firestoreService = FirestoreService();
@@ -176,7 +180,7 @@ class HomeSelect extends StatelessWidget {
                   onPressed: () {
                     botomNavBar.analyticFun();
                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => BottomNavBar(homeName, homeId)));
+                        builder: (context) => BottomNavBar(homeName, homeId,ownerId)));
                   },
                   child: Center(
                     child: Text(homeName),

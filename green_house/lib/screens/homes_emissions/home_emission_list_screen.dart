@@ -12,7 +12,8 @@ import '../household/components/activity_item_box.dart';
 class HomeEmissionsListScreen extends StatelessWidget {
   final String? homeName;
   final String? homeId;
-  HomeEmissionsListScreen(this.homeName, this.homeId);
+  final String? ownerId;
+  HomeEmissionsListScreen(this.homeName, this.homeId, this.ownerId);
   final firestoreService = FirestoreService();
 
   @override
@@ -135,6 +136,7 @@ class HomeEmissionsListScreen extends StatelessWidget {
                                                           'emission_register_date'],
                                                       homeEmission[index]
                                                           ['username'],
+                                                      ownerId,
                                                       color,
                                                       homeEmission[index]
                                                           ['emission_user']);

@@ -14,10 +14,11 @@ import '../homes/home_setting_screen.dart';
 class RemoveUserDialog extends StatelessWidget {
   final String emissionId;
   final String emissionTitle;
+  final String? ownerId;
   final Color color;
   final String emissionUser;
-  RemoveUserDialog(
-      this.emissionId, this.emissionTitle, this.color, this.emissionUser,
+  RemoveUserDialog(this.emissionId, this.emissionTitle, this.color,
+      this.emissionUser, this.ownerId,
       {Key? key})
       : super(key: key);
 
@@ -47,7 +48,8 @@ class RemoveUserDialog extends StatelessWidget {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const Center(child: LinearProgressIndicator());
                 }
-                if (emissionUser == snapshot.data['id']) {
+                if (emissionUser == snapshot.data['id'] ||
+                    ownerId == snapshot.data['id']) {
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.start,

@@ -13,7 +13,8 @@ import '../../services/firestore_services/firestore_services.dart';
 class HouseHoldScreen extends StatelessWidget {
   String? homeName;
   String? homeId;
-  HouseHoldScreen([this.homeName, this.homeId]);
+  String? ownerId;
+  HouseHoldScreen([this.homeName, this.homeId, this.ownerId]);
   final firestoreService = FirestoreService();
 
   @override
@@ -32,6 +33,7 @@ class HouseHoldScreen extends StatelessWidget {
                   if (homeId == null) {
                     homeName = homesList[0]['home_name'];
                     homeId = homesList[0]['home_id'];
+                    ownerId = homesList[0]['owner_id'];
                   }
 
                   return Column(
@@ -234,6 +236,7 @@ class HouseHoldScreen extends StatelessWidget {
                                                           'emission_register_date'],
                                                       homeEmission[index]
                                                           ['username'],
+                                                          ownerId,
                                                       color,
                                                       homeEmission[index]
                                                           ['emission_user']);
@@ -255,7 +258,7 @@ class HouseHoldScreen extends StatelessWidget {
                                       child: CustomButton(
                                         onTap: () {
                                           Get.to(() => HomeEmissionsListScreen(
-                                              homeName, homeId));
+                                              homeName, homeId,ownerId));
                                         },
                                         btnText: 'Ver más',
                                       ),

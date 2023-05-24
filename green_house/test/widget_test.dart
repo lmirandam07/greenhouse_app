@@ -39,6 +39,7 @@ void main() {
     final String emissionTitle = 'My Emission';
     final String emissionUser = 'aherrera';
     final double emissionValue = 12.34;
+    final String ownerId = '1';
     final DateTime emissionDate = DateTime(2022, 1, 1);
     final String emissionData = 'Data';
     final Color color = Colors.red;
@@ -52,6 +53,7 @@ void main() {
             emissionValue,
             Timestamp.fromDate(emissionDate),
             emissionData,
+            ownerId,
             color,
             emissionUser),
       ),

@@ -15,9 +15,10 @@ import 'controller/bottom_nav_controller.dart';
 class BottomNavBar extends GetView<BottomNavController> {
   String? homeName;
   String? homeId;
+  String? ownerId;
 
   static var routeName;
-  BottomNavBar([this.homeName, this.homeId]);
+  BottomNavBar([this.homeName, this.homeId, this.ownerId]);
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +71,7 @@ class BottomNavBar extends GetView<BottomNavController> {
             children: [
               Expanded(
                 child: controller.analytic.value == true
-                    ? HouseHoldScreen(homeName, homeId)
+                    ? HouseHoldScreen(homeName, homeId, ownerId)
                     : controller.home.value == true
                         ? HomesScreen()
                         : controller.profile.value == true
